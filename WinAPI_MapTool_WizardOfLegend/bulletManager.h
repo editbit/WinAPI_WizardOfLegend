@@ -2,18 +2,18 @@
 #include "gameNode.h"
 #include "bullet.h"
 
-class bulletManager : public GameNode
+class BulletManager : public GameNode
 {
-	vector<bullet*> _vBullet;
-	vector<bullet*>::iterator _viBullet;
+	vector<Bullet*> _vBullet;
+	vector<Bullet*>::iterator _viBullet;
 public:
 	virtual HRESULT init();
 	virtual void update();
 	virtual void render();
 	virtual void release();
 
-	vector<bullet*> getvBullet() { return _vBullet; }
-	bulletManager() {}
-	~bulletManager() {}
+	vector<Bullet*> getvBullet() { return _vBullet; }
+	BulletManager() {}
+	~BulletManager() {}
 };
 

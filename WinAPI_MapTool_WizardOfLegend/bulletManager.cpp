@@ -1,20 +1,20 @@
 #include "stdafx.h"
 #include "bulletManager.h"
 
-HRESULT bulletManager::init()
+HRESULT BulletManager::init()
 {
 	return S_OK;
 }
 
-void bulletManager::update()
+void BulletManager::update()
 {
 
 }
 
-void bulletManager::render()
+void BulletManager::render()
 {
 }
 
-void bulletManager::release()
+void BulletManager::release()
 {
 }

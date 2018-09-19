@@ -99,14 +99,14 @@
     <Filter Include="MainGame\씬\게임씬\플레이어%28나중에 추가%29">
       <UniqueIdentifier>{76ce5d82-10f3-4c71-b2ab-8ceeee70a1c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="물체">
+    <Filter Include="Stuff">
       <UniqueIdentifier>{d655e312-0f47-4cfc-acb0-9e415a162a49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="적">
-      <UniqueIdentifier>{5811e7f9-ee22-4bd0-b14a-85b2518a186b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="스킬">
+    <Filter Include="Skill">
       <UniqueIdentifier>{06c449f5-05d5-4f4a-acb9-2de58d4f3d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{5811e7f9-ee22-4bd0-b14a-85b2518a186b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -258,37 +258,37 @@
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClInclude>
     <ClInclude Include="Stuff.h">
-      <Filter>물체</Filter>
+      <Filter>Stuff</Filter>
     </ClInclude>
     <ClInclude Include="AwlTrap.h">
-      <Filter>물체</Filter>
+      <Filter>Stuff</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h">
-      <Filter>물체</Filter>
+      <Filter>Stuff</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Magician.h">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Rogue.h">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ShadowEnemy.h">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Dash.h">
-      <Filter>스킬</Filter>
+      <Filter>Skill</Filter>
     </ClInclude>
     <ClInclude Include="IceDash.h">
-      <Filter>스킬</Filter>
+      <Filter>Skill</Filter>
     </ClInclude>
     <ClInclude Include="Dummy.h">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="FireDash.h">
       <Filter>헤더 파일</Filter>
@@ -434,37 +434,37 @@
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClCompile>
     <ClCompile Include="AwlTrap.cpp">
-      <Filter>물체</Filter>
+      <Filter>Stuff</Filter>
     </ClCompile>
     <ClCompile Include="Stuff.cpp">
-      <Filter>물체</Filter>
+      <Filter>Stuff</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
-      <Filter>물체</Filter>
+      <Filter>Stuff</Filter>
     </ClCompile>
     <ClCompile Include="ShadowEnemy.cpp">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Rogue.cpp">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Magician.cpp">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Dash.cpp">
-      <Filter>스킬</Filter>
+      <Filter>Skill</Filter>
     </ClCompile>
     <ClCompile Include="IceDash.cpp">
-      <Filter>스킬</Filter>
+      <Filter>Skill</Filter>
     </ClCompile>
     <ClCompile Include="Dummy.cpp">
-      <Filter>적</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="FireDash.cpp">
       <Filter>소스 파일</Filter>
