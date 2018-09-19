@@ -160,6 +160,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCard.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="FireDash.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="IceDash.h" />
     <ClInclude Include="Magician.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCard.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="FireDash.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="IceDash.cpp" />
     <ClCompile Include="Magician.cpp" />
