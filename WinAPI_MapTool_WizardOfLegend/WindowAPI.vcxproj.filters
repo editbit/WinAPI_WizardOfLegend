@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="GameFramework2D">
+      <UniqueIdentifier>{9fbd4086-f21e-4a3b-b3d1-8ac4c5f5fa1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\매니져">
+      <UniqueIdentifier>{5ce72af8-e27e-4d87-81a9-202553e2a4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\이미지">
+      <UniqueIdentifier>{fb39b492-861b-45db-9ab0-9b03a9eaad69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{0197a609-4f17-4b09-bb41-10cc33d95d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\유틸">
+      <UniqueIdentifier>{0e047507-cff2-4a5e-8198-0c562e8e0211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\WinMain">
+      <UniqueIdentifier>{4a79707c-1728-49f2-ba7d-dc17dad14387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\애드온">
+      <UniqueIdentifier>{3cda2323-bee5-498c-bfe6-dfac759959ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\애드온\총알">
+      <UniqueIdentifier>{bf483cdc-0061-43a7-b258-9a4fa4e2fc54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\데이터 입출력">
+      <UniqueIdentifier>{a80d3547-a461-4a54-a784-a91080ecb022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\데이터 입출력\TXT데이터">
+      <UniqueIdentifier>{19e3a24c-eb76-48b4-a382-3874eebdfd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\데이터 입출력\싱글톤데이터">
+      <UniqueIdentifier>{452265ae-e465-42dd-8e7f-28e8719da539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\데이터 입출력\INI데이터">
+      <UniqueIdentifier>{099fb0a7-c9ae-4204-b02b-52bb71ca0033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\로딩">
+      <UniqueIdentifier>{7f7e5c41-672d-4ff5-b6e3-026a2efaa45f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\액터">
+      <UniqueIdentifier>{1a04f8b4-c7be-4006-b6df-f2d5efd83435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\애니메이션">
+      <UniqueIdentifier>{8f828bfa-0ab5-4a74-b070-242ad9b66752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\이펙트">
+      <UniqueIdentifier>{aa84c84e-6e3f-43e4-9923-f67a664100ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\매니져\렌더">
+      <UniqueIdentifier>{6ffdf735-11ca-43db-b794-8cb57119cce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\매니져\카메라">
+      <UniqueIdentifier>{2f9a6893-1952-4acc-ac4d-96a2bf1d9f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\매니져\렌더\테스트용">
+      <UniqueIdentifier>{1333e206-3662-4337-a3ea-f4d67c287678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬">
+      <UniqueIdentifier>{39ff0c44-8bac-4104-8f64-6f11bff616bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬\LoadingScene">
+      <UniqueIdentifier>{341396ee-3e30-486f-8e55-bddb70a82424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\애드온\체력바">
+      <UniqueIdentifier>{413af328-8855-4598-a0a0-8dcf58fca46b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\매니져\매니져%28임시%29">
+      <UniqueIdentifier>{96e20af2-c278-43ed-bf1c-148474ce4076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬\타일맵">
+      <UniqueIdentifier>{af1e0dad-dec0-47e9-8dce-5fea0c17f11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\타일">
+      <UniqueIdentifier>{c5b6d0a2-9d2e-4d80-b525-860e13448752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬\타일맵\팩맨">
+      <UniqueIdentifier>{9c4a0f7f-7b97-40dd-872d-a62510a31ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="MainGame\씬\시작씬">
+      <UniqueIdentifier>{54d23078-85af-4e21-a464-9cf792ecd317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬\타일맵\WizardOfLegendMaptool">
+      <UniqueIdentifier>{c90c50b4-0b0f-461a-900a-f9850bbb9b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬\게임씬">
+      <UniqueIdentifier>{8875b686-f1bd-40a2-a808-5a081fcd9121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\씬\게임씬\플레이어%28나중에 추가%29">
+      <UniqueIdentifier>{76ce5d82-10f3-4c71-b2ab-8ceeee70a1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="물체">
+      <UniqueIdentifier>{d655e312-0f47-4cfc-acb0-9e415a162a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="적">
+      <UniqueIdentifier>{5811e7f9-ee22-4bd0-b14a-85b2518a186b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="스킬">
+      <UniqueIdentifier>{06c449f5-05d5-4f4a-acb9-2de58d4f3d88}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="commonMacroFunction.h">
+      <Filter>GameFramework2D\유틸</Filter>
+    </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="randomFuntion.h">
+      <Filter>GameFramework2D\유틸</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>GameFramework2D\이미지</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>GameFramework2D\애드온\총알</Filter>
+    </ClInclude>
+    <ClInclude Include="saveData.h">
+      <Filter>GameFramework2D\데이터 입출력\싱글톤데이터</Filter>
+    </ClInclude>
+    <ClInclude Include="progressBar.h">
+      <Filter>GameFramework2D\애드온\체력바</Filter>
+    </ClInclude>
+    <ClInclude Include="txtData.h">
+      <Filter>GameFramework2D\데이터 입출력\TXT데이터</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>GameFramework2D\WinMain</Filter>
+    </ClInclude>
+    <ClInclude Include="iniData.h">
+      <Filter>GameFramework2D\데이터 입출력\INI데이터</Filter>
+    </ClInclude>
+    <ClInclude Include="singletonBase.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="loading.h">
+      <Filter>GameFramework2D\로딩</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>MainGame\씬\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameNode.h">
+      <Filter>GameFramework2D\WinMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>GameFramework2D\매니져\카메라</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
+      <Filter>GameFramework2D\매니져\렌더</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="actor.h">
+      <Filter>GameFramework2D\액터</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>GameFramework2D\애니메이션</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>GameFramework2D\이펙트</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>GameFramework2D\애드온\총알</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
+    <ClInclude Include="backgroundActor.h">
+      <Filter>GameFramework2D\매니져\렌더</Filter>
+    </ClInclude>
+    <ClInclude Include="cloud.h">
+      <Filter>GameFramework2D\매니져\렌더\테스트용</Filter>
+    </ClInclude>
+    <ClInclude Include="stone.h">
+      <Filter>GameFramework2D\매니져\렌더\테스트용</Filter>
+    </ClInclude>
+    <ClInclude Include="MyEffectManager.h">
+      <Filter>GameFramework2D\매니져\매니져%28임시%29</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>GameFramework2D\유틸</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarTest.h">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarTile.h">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClInclude>
+    <ClInclude Include="tankGameScene.h">
+      <Filter>MainGame\씬\타일맵\팩맨</Filter>
+    </ClInclude>
+    <ClInclude Include="tank.h">
+      <Filter>MainGame\씬\타일맵\팩맨</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>MainGame\씬\시작씬</Filter>
+    </ClInclude>
+    <ClInclude Include="tileMap.h">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClInclude>
+    <ClInclude Include="maptoolScene.h">
+      <Filter>MainGame\씬\타일맵</Filter>
+    </ClInclude>
+    <ClInclude Include="MaptoolCard.h">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectCard.h">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainCard.h">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayScene.h">
+      <Filter>MainGame\씬\게임씬</Filter>
+    </ClInclude>
+    <ClInclude Include="TankEnemy.h">
+      <Filter>MainGame\씬\타일맵\팩맨</Filter>
+    </ClInclude>
+    <ClInclude Include="Wizard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\씬\게임씬\플레이어%28나중에 추가%29</Filter>
+    </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyCard.h">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClInclude>
+    <ClInclude Include="Stuff.h">
+      <Filter>물체</Filter>
+    </ClInclude>
+    <ClInclude Include="AwlTrap.h">
+      <Filter>물체</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>물체</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>적</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>적</Filter>
+    </ClInclude>
+    <ClInclude Include="Magician.h">
+      <Filter>적</Filter>
+    </ClInclude>
+    <ClInclude Include="Rogue.h">
+      <Filter>적</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowEnemy.h">
+      <Filter>적</Filter>
+    </ClInclude>
+    <ClInclude Include="Dash.h">
+      <Filter>스킬</Filter>
+    </ClInclude>
+    <ClInclude Include="IceDash.h">
+      <Filter>스킬</Filter>
+    </ClInclude>
+    <ClInclude Include="Dummy.h">
+      <Filter>적</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>GameFramework2D\WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="winMain.cpp">
+      <Filter>GameFramework2D\WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>GameFramework2D\이미지</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>GameFramework2D\유틸</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>GameFramework2D\애드온\총알</Filter>
+    </ClCompile>
+    <ClCompile Include="saveData.cpp">
+      <Filter>GameFramework2D\데이터 입출력\싱글톤데이터</Filter>
+    </ClCompile>
+    <ClCompile Include="progressBar.cpp">
+      <Filter>GameFramework2D\애드온\체력바</Filter>
+    </ClCompile>
+    <ClCompile Include="txtData.cpp">
+      <Filter>GameFramework2D\데이터 입출력\TXT데이터</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="iniData.cpp">
+      <Filter>GameFramework2D\데이터 입출력\INI데이터</Filter>
+    </ClCompile>
+    <ClCompile Include="loading.cpp">
+      <Filter>GameFramework2D\로딩</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>MainGame\씬\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameNode.cpp">
+      <Filter>GameFramework2D\WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>GameFramework2D\매니져\카메라</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>GameFramework2D\매니져\렌더</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="actor.cpp">
+      <Filter>GameFramework2D\액터</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>GameFramework2D\애니메이션</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>GameFramework2D\이펙트</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>GameFramework2D\애드온\총알</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="backgroundActor.cpp">
+      <Filter>GameFramework2D\매니져\렌더</Filter>
+    </ClCompile>
+    <ClCompile Include="cloud.cpp">
+      <Filter>GameFramework2D\매니져\렌더\테스트용</Filter>
+    </ClCompile>
+    <ClCompile Include="stone.cpp">
+      <Filter>GameFramework2D\매니져\렌더\테스트용</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEffectManager.cpp">
+      <Filter>GameFramework2D\매니져\매니져%28임시%29</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarTest.cpp">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarTile.cpp">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClCompile>
+    <ClCompile Include="tankGameScene.cpp">
+      <Filter>MainGame\씬\타일맵\팩맨</Filter>
+    </ClCompile>
+    <ClCompile Include="tank.cpp">
+      <Filter>MainGame\씬\타일맵\팩맨</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>MainGame\씬\시작씬</Filter>
+    </ClCompile>
+    <ClCompile Include="tileMap.cpp">
+      <Filter>GameFramework2D\타일</Filter>
+    </ClCompile>
+    <ClCompile Include="maptoolScene.cpp">
+      <Filter>MainGame\씬\타일맵</Filter>
+    </ClCompile>
+    <ClCompile Include="MaptoolCard.cpp">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectCard.cpp">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainCard.cpp">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayScene.cpp">
+      <Filter>MainGame\씬\게임씬</Filter>
+    </ClCompile>
+    <ClCompile Include="TankEnemy.cpp">
+      <Filter>MainGame\씬\타일맵\팩맨</Filter>
+    </ClCompile>
+    <ClCompile Include="Wizard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MainGame\씬\게임씬\플레이어%28나중에 추가%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyCard.cpp">
+      <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
+    </ClCompile>
+    <ClCompile Include="AwlTrap.cpp">
+      <Filter>물체</Filter>
+    </ClCompile>
+    <ClCompile Include="Stuff.cpp">
+      <Filter>물체</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>물체</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowEnemy.cpp">
+      <Filter>적</Filter>
+    </ClCompile>
+    <ClCompile Include="Rogue.cpp">
+      <Filter>적</Filter>
+    </ClCompile>
+    <ClCompile Include="Magician.cpp">
+      <Filter>적</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>적</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>적</Filter>
+    </ClCompile>
+    <ClCompile Include="Dash.cpp">
+      <Filter>스킬</Filter>
+    </ClCompile>
+    <ClCompile Include="IceDash.cpp">
+      <Filter>스킬</Filter>
+    </ClCompile>
+    <ClCompile Include="Dummy.cpp">
+      <Filter>적</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
