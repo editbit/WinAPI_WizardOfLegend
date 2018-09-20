@@ -55,6 +55,7 @@ HRESULT GamePlayScene::init()
 
 	BULLETMANAGER->setLinkEnemyManaer(_enemyManager);
 	BULLETMANAGER->setLinkPlayer(_wizard);
+	BULLETMANAGER->setLinkTileMap(_tileMap->getTiles());
 	Bomb::setLinkTileMap(_tileMap->getTiles());
 	return S_OK;
 }

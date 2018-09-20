@@ -7,6 +7,7 @@
 class Bullet;
 class Actor;
 class EnemyManager;
+class tagTile;
 
 class BulletManager : public SingletonBase<BulletManager>
 {
@@ -16,6 +17,7 @@ class BulletManager : public SingletonBase<BulletManager>
 	vector<Bullet*>::iterator _viBullet;
 
 
+	tagTile *_tiles;
 	EnemyManager *_enemyManager;
 	Actor *_player;
 
@@ -32,6 +34,7 @@ public:
 	vector<Bullet*>& getPlayerBullets() { return _playerBullets; }
 	vector<Bullet*>& getEnemyBullets() { return _enemyBullets; }
 
+	void setLinkTileMap(tagTile* tiles) { _tiles = tiles; }
 	void setLinkPlayer(Actor * p) { _player = p; }
 	void setLinkEnemyManaer(EnemyManager * em) { _enemyManager = em; }
 

@@ -2,6 +2,8 @@
 #include "bullet.h"
 #include "EnemyManager.h"
 #include "bulletManager.h"
+#include "tileNode.h"
+#include "Stuff.h"
 
 HRESULT BulletManager::init()
 {
@@ -62,6 +64,7 @@ bool BulletManager::collideEnemy(Bullet* b)
 
 void BulletManager::update()
 {
+	int x, y;
 	for (int i = 0; i < _playerBullets.size(); ++i)
 	{
 		if (_playerBullets[i] == NULL)
@@ -70,6 +73,18 @@ void BulletManager::update()
 
 		collideEnemy(_playerBullets[i]);
 		
+
+
+		x = _playerBullets[i]->getX() / TILESIZE, y = _playerBullets[i]->getY() / TILESIZE;
+
+		if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&
+			_tiles[y*TILEX + x].objType != OBJECT_BLOCK1)
+		{
+			_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys());
+			_tiles[y*TILEX + x].objType = OBJECT_NONE;
+			_playerBullets[i]->setIsActive(false);
+		}
+
 		if (!_playerBullets[i]->getIsActive())
 			_playerBullets[i] = NULL;
 	}
@@ -81,6 +96,15 @@ void BulletManager::update()
 		_enemyBullets[i]->update();
 
 		collidePlayer(_enemyBullets[i]);
+
+		x = _enemyBullets[i]->getX() / TILESIZE, y = _enemyBullets[i]->getY() / TILESIZE;
+		if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&
+			_tiles[y*TILEX + x].objType != OBJECT_BLOCK1)
+		{
+			_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys());
+			_tiles[y*TILEX + x].objType = OBJECT_NONE;
+			_enemyBullets[i]->setIsActive(false);
+		}
 
 		if (!_enemyBullets[i]->getIsActive())
 			_enemyBullets[i] = NULL;

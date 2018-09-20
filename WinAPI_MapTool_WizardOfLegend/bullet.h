@@ -1,5 +1,6 @@
 #pragma once
 #include "actor.h"
+
 class Bullet : public Actor
 {
 protected:
@@ -9,6 +10,7 @@ protected:
 	float _range;		// ºÒ¸´»ç°Å¸®
 
 	float _fireX, _fireY;
+
 public:
 	virtual HRESULT init(float radius, float speed, float power, float range, const char* imageName = "");
 	virtual HRESULT init();

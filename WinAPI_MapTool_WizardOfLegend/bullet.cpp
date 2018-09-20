@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "bullet.h"
+
 HRESULT Bullet::init(float radius, float speed, float power, float range, const char * imageName)
 {
 	_image = IMAGEMANAGER->findImage(imageName);

@@ -36,6 +36,7 @@ bool Bomb::collide(Actor * a, vector<Enemy*>& em)
 			em[i]->damaged(this);
 		}
 	}
+
 	_isActive = false;
 
 	collideStuff(em);

@@ -4,6 +4,8 @@
 
 HRESULT Dash::init()
 {
+	_timer = 0;
+	_count = 0;
 	return S_OK;
 }
 
