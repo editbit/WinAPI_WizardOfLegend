@@ -70,6 +70,11 @@ inline void Ellipse(HDC hdc, RECT _rc)
 	Ellipse(hdc, _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 
+inline void Ellipse(HDC hdc, RECT _rc, int camX, int camY)
+{
+	Ellipse(hdc, _rc.left - camX, _rc.top - camY, _rc.right - camX, _rc.bottom - camY);
+}
+
 //ADDED
 //사각라인 그리기
 inline void RectangleLine(HDC hdc, RECT _rc)
@@ -80,7 +85,6 @@ inline void RectangleLine(HDC hdc, RECT _rc)
 	LineTo(hdc, _rc.right, _rc.top);
 	LineTo(hdc, _rc.left, _rc.top);
 }
-
 
 //GetInt
 inline int getInt(int num) { return rand() % num; }

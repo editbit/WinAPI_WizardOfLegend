@@ -32,6 +32,8 @@ HRESULT GameNode::init(bool managerInit)
 		EFFECTMANAGER->init();
 		UIMANAGER->init();
 		ASTAR->init();
+
+		BULLETMANAGER->init();
 	}
 
 	return S_OK;
@@ -90,6 +92,9 @@ void GameNode::release()
 
 		ASTAR->release();
 		ASTAR->releaseSingleton();
+
+		BULLETMANAGER->release();
+		BULLETMANAGER->releaseSingleton();
 	}
 
 	//DC «ÿ¡¶

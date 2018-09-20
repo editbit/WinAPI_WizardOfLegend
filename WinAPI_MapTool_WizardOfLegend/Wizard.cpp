@@ -163,9 +163,11 @@ void Wizard::inputProcess()
 			_attackIndex = (_attackIndex + 1) % 3;
 		}
 		else
+		{
+			changeState(WIZARD::ATTACK);
 			attack();
+		}
 
-		changeState(WIZARD::ATTACK);
 	}
 
 	if (_state == WIZARD::ATTACK)

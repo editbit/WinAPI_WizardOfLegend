@@ -53,6 +53,8 @@ HRESULT GamePlayScene::init()
 	stuffIndex = count = 0;
 
 
+	BULLETMANAGER->setLinkEnemyManaer(_enemyManager);
+	BULLETMANAGER->setLinkPlayer(_wizard);
 	Bomb::setLinkTileMap(_tileMap->getTiles());
 	return S_OK;
 }
@@ -107,6 +109,9 @@ void GamePlayScene::update()
 			CAM->setRoomSize(RectMake(0, 0, TILESIZEX, TILESIZEY));
 		}
 	}
+
+	BULLETMANAGER->update();
+
 	stuffFrameSetting();
 	CAM->videoShooting(_wizard->getX(), _wizard->getY());
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "bullet.h"
 
 #define MAGICIAN_MAX_STATE 10
 
@@ -10,6 +11,10 @@ class Magician :
 	int _delay[MAGICIAN_MAX_STATE];
 
 	int _delayCount;
+
+	float _shootingAngle;
+
+	Bullet *tempBullet;
 public:
 
 	void frameSetting();

@@ -25,8 +25,10 @@ bool Bomb::collide(Actor * a, vector<Enemy*>& em)
 {
 	EFFECTMANAGER->play("Æø¹ß", _x, _y);
 
-	a->damaged(this);
 	RECT temp;
+	if(IntersectRect(&temp, &a->getHitBox(), &_attackBox))
+		a->damaged(this);
+
 	for (int i = 0; i < em.size(); ++i)
 	{
 		if (IntersectRect(&temp, &_attackBox, &em[i]->getHitBox()))

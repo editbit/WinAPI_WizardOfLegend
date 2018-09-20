@@ -2,10 +2,6 @@
 #include "Dash.h"
 
 
-void Dash::executeDash(float x, float y)
-{
-}
-
 HRESULT Dash::init()
 {
 	return S_OK;
@@ -20,5 +16,9 @@ void Dash::update()
 }
 
 void Dash::render()
+{
+}
+
+void Dash::executeDash(float x, float y)
 {
 }

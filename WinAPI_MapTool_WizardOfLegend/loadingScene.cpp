@@ -152,10 +152,13 @@ void LoadingScene::loadingImage()
 
 
 	_loading->loadFrameImage("player_dummy", "Texture/Player/playerDummy_3x4_396x512.bmp", 396, 512, 3, 4);
-	// Effect
+	// Effect & skill
 	_loading->loadFrameImage("ice_skill", "Texture/Effect/iceSkill_1312x220_8x1.bmp", 1312, 220, 8, 1);
 	_loading->loadFrameImage("wind_skill", "Texture/Effect/windSkill_380x80_5x1.bmp", 380, 80, 5, 1);
 	_loading->loadFrameImage("explode", "Texture/Effect/explode_4200x340_10x1.bmp", 4200, 340, 10, 1);
+
+	_loading->loadImage("stoneBullet", "Texture/Effect/stoneBullet_80x78.bmp", 80, 78, true, RGB(255, 0, 255));
+
 
 
 	//_loading->loadFrameImage("blue_portal", "Texture/Object/portal2_945x171_9x1.bmp", 945, 171, 9, 1);

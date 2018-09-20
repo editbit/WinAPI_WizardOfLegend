@@ -26,9 +26,6 @@
     <Filter Include="GameFramework2D\애드온">
       <UniqueIdentifier>{3cda2323-bee5-498c-bfe6-dfac759959ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameFramework2D\애드온\총알">
-      <UniqueIdentifier>{bf483cdc-0061-43a7-b258-9a4fa4e2fc54}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameFramework2D\데이터 입출력">
       <UniqueIdentifier>{a80d3547-a461-4a54-a784-a91080ecb022}</UniqueIdentifier>
     </Filter>
@@ -99,14 +96,20 @@
     <Filter Include="MainGame\씬\게임씬\플레이어%28나중에 추가%29">
       <UniqueIdentifier>{76ce5d82-10f3-4c71-b2ab-8ceeee70a1c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Stuff">
+    <Filter Include="MyEnemy">
+      <UniqueIdentifier>{5811e7f9-ee22-4bd0-b14a-85b2518a186b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyStuff">
       <UniqueIdentifier>{d655e312-0f47-4cfc-acb0-9e415a162a49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Skill">
+    <Filter Include="MySkill">
       <UniqueIdentifier>{06c449f5-05d5-4f4a-acb9-2de58d4f3d88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemy">
-      <UniqueIdentifier>{5811e7f9-ee22-4bd0-b14a-85b2518a186b}</UniqueIdentifier>
+    <Filter Include="MySkill\Dash">
+      <UniqueIdentifier>{cf248667-debe-43a0-97b0-183ca44b5ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MySkill\Bullet">
+      <UniqueIdentifier>{bf483cdc-0061-43a7-b258-9a4fa4e2fc54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +129,7 @@
       <Filter>GameFramework2D\매니져</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>GameFramework2D\애드온\총알</Filter>
+      <Filter>MySkill\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="saveData.h">
       <Filter>GameFramework2D\데이터 입출력\싱글톤데이터</Filter>
@@ -183,7 +186,7 @@
       <Filter>GameFramework2D\매니져</Filter>
     </ClInclude>
     <ClInclude Include="bulletManager.h">
-      <Filter>GameFramework2D\애드온\총알</Filter>
+      <Filter>MySkill\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="mainGame.h">
       <Filter>MainGame</Filter>
@@ -258,40 +261,43 @@
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClInclude>
     <ClInclude Include="Stuff.h">
-      <Filter>Stuff</Filter>
+      <Filter>MyStuff</Filter>
     </ClInclude>
     <ClInclude Include="AwlTrap.h">
-      <Filter>Stuff</Filter>
+      <Filter>MyStuff</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h">
-      <Filter>Stuff</Filter>
+      <Filter>MyStuff</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Magician.h">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Rogue.h">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClInclude>
     <ClInclude Include="ShadowEnemy.h">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Dash.h">
-      <Filter>Skill</Filter>
+      <Filter>MySkill\Dash</Filter>
     </ClInclude>
     <ClInclude Include="IceDash.h">
-      <Filter>Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Dummy.h">
-      <Filter>Enemy</Filter>
+      <Filter>MySkill\Dash</Filter>
     </ClInclude>
     <ClInclude Include="FireDash.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MySkill\Dash</Filter>
+    </ClInclude>
+    <ClInclude Include="FirePillar.h">
+      <Filter>MySkill</Filter>
+    </ClInclude>
+    <ClInclude Include="Dummy.h">
+      <Filter>MySkill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,7 +323,7 @@
       <Filter>GameFramework2D\유틸</Filter>
     </ClCompile>
     <ClCompile Include="bullet.cpp">
-      <Filter>GameFramework2D\애드온\총알</Filter>
+      <Filter>MySkill\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="saveData.cpp">
       <Filter>GameFramework2D\데이터 입출력\싱글톤데이터</Filter>
@@ -368,7 +374,7 @@
       <Filter>GameFramework2D\매니져</Filter>
     </ClCompile>
     <ClCompile Include="bulletManager.cpp">
-      <Filter>GameFramework2D\애드온\총알</Filter>
+      <Filter>MySkill\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>GameFramework2D\매니져</Filter>
@@ -434,40 +440,43 @@
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClCompile>
     <ClCompile Include="AwlTrap.cpp">
-      <Filter>Stuff</Filter>
+      <Filter>MyStuff</Filter>
     </ClCompile>
     <ClCompile Include="Stuff.cpp">
-      <Filter>Stuff</Filter>
+      <Filter>MyStuff</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
-      <Filter>Stuff</Filter>
+      <Filter>MyStuff</Filter>
     </ClCompile>
     <ClCompile Include="ShadowEnemy.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Rogue.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Magician.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>MyEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Dash.cpp">
-      <Filter>Skill</Filter>
+      <Filter>MySkill\Dash</Filter>
     </ClCompile>
     <ClCompile Include="IceDash.cpp">
-      <Filter>Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Dummy.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>MySkill\Dash</Filter>
     </ClCompile>
     <ClCompile Include="FireDash.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MySkill\Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="FirePillar.cpp">
+      <Filter>MySkill</Filter>
+    </ClCompile>
+    <ClCompile Include="Dummy.cpp">
+      <Filter>MySkill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

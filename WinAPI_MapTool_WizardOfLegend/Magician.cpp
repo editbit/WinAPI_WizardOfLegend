@@ -30,11 +30,17 @@ HRESULT Magician::init()
 
 	_delayCount = 0;
 
+	tempBullet = new Bullet;
+	tempBullet->init(20, 5, 5, 500, "stoneBullet");
+	_shootingAngle = 0;
+
 	return S_OK;
 }
 
 void Magician::release()
 {
+	tempBullet->release();
+	SAFE_DELETE(tempBullet);
 }
 
 void Magician::update()
@@ -52,13 +58,19 @@ void Magician::update()
 	if (getDistance(_x, _y, (*_player)->getX(), (*_player)->getY()) < TILESIZE * 5)
 	{
 		changeState(ENEMY::ATTACK);
+		_shootingAngle = getAnglef(_x, _y, (*_player)->getX(), (*_player)->getY());
 	}
-
-	if (_state != ENEMY::ATTACK)
+	else if (_state != ENEMY::ATTACK)
 	{
 		moveToPlayer();
 		if (_state == ENEMY::WALK)
 			move();
+	}
+	
+	if(_state == ENEMY::ATTACK)
+	{
+		if(_index == _img[_state]->getMaxFrameX() - 1)
+			attack();
 	}
 
 
@@ -78,6 +90,11 @@ void Magician::render()
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
 		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY(), _index, _dir);
 
+	if (_state == ENEMY::ATTACK && _index >= 3 && _index < _img[_state]->getMaxFrameX() - 1)
+	{
+		//Ellipse(getMemDC(), RectMakeCenter(_x, _moveBox.bottom - _img[_state]->getFrameHeight()/2, 20, 20), CAM->getX(), CAM->getY());
+		tempBullet->getImage()->render(getMemDC(), _x - tempBullet->getImage()->getWidth()/2 - CAM->getX(), _moveBox.bottom - _img[_state]->getFrameHeight() / 2 - tempBullet->getImage()->getHeight()/2 - CAM->getY());
+	}
 }
 
 
@@ -106,6 +123,20 @@ void Magician::frameSetting()
 
 void Magician::attack()
 {
+	if (tempBullet->getIsActive())
+		return;
+
+	tempBullet->fire(_pixelMap, _x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2, _shootingAngle);
+
+	vector<Bullet *>& enemyBullet = BULLETMANAGER->getEnemyBullets();
+	for (int i = 0; i < enemyBullet.size(); ++i)
+	{
+		if (enemyBullet[i] == NULL)
+		{
+			enemyBullet[i] = tempBullet;
+			break;
+		}
+	}
 }
 
 void Magician::damaged(Actor * e)
