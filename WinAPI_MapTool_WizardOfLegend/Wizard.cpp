@@ -43,7 +43,13 @@ HRESULT Wizard::init()
 	_iceDash->init();
 	_iceDash->setLinkPlayer(this);
 
-	_currentDash = _iceDash;
+	_fireDash = new FireDash;
+	_fireDash->init();
+	_fireDash->setLinkPlayer(this);
+	_fireDash->setLinkPixelMap(_pixelMap);
+
+	//_currentDash = _iceDash;
+	_currentDash = _fireDash;
 	return S_OK;
 }
 
@@ -99,8 +105,11 @@ void Wizard::update()
 	_moveBox = RectMakeCenter(_x, _y, WIZARD::MOVEBOX_WIDTH, WIZARD::MOVEBOX_HEIGHT);
 	_hitBox = RectMakeCenter(_x, _y - WIZARD::MOVEBOX_HEIGHT / 2, WIZARD::HITBOX_WIDTH, WIZARD::HITBOX_HEIGHT);
 
-
-	_currentDash->update();
+	if (_currentDash->getIsActive())
+	{
+		_currentDash->setPosition(_x, _y);
+		_currentDash->update();
+	}
 
 	collide();
 	frameSetting();

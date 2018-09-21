@@ -29,7 +29,8 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
-
+	
+	void setPosition(float x, float y) { _x = x; _y = y; }
 	void setX(float x) { _x = x; }
 	void setY(float y) { _y = y; }
 

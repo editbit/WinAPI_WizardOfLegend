@@ -80,9 +80,11 @@ void BulletManager::update()
 		if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&
 			_tiles[y*TILEX + x].objType != OBJECT_BLOCK1)
 		{
-			_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys());
-			_tiles[y*TILEX + x].objType = OBJECT_NONE;
-			_playerBullets[i]->setIsActive(false);
+			if (_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys()))
+			{
+				_tiles[y*TILEX + x].objType = OBJECT_NONE;
+				_playerBullets[i]->setIsActive(false);
+			}
 		}
 
 		if (!_playerBullets[i]->getIsActive())
@@ -101,9 +103,11 @@ void BulletManager::update()
 		if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&
 			_tiles[y*TILEX + x].objType != OBJECT_BLOCK1)
 		{
-			_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys());
-			_tiles[y*TILEX + x].objType = OBJECT_NONE;
-			_enemyBullets[i]->setIsActive(false);
+			if (_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys()))
+			{
+				_tiles[y*TILEX + x].objType = OBJECT_NONE;
+				_enemyBullets[i]->setIsActive(false);
+			}
 		}
 
 		if (!_enemyBullets[i]->getIsActive())

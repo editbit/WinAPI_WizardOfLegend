@@ -4,6 +4,7 @@
 #include "Dummy.h"
 #include "progressBar.h"
 #include "IceDash.h"
+#include "FireDash.h"
 
 #define PLAYER_STATE_MAX 10
 
@@ -26,6 +27,7 @@ class Wizard :
 	fPOINT _returnPoint;
 
 	IceDash *_iceDash;
+	FireDash *_fireDash;
 
 	Dash * _currentDash;
 	EnemyManager *_enemyManager;
@@ -47,6 +49,7 @@ public:
 	void setLinkEnemyManager(EnemyManager *enemys) { 
 		_enemyManager = enemys;
 		_iceDash->setLinkEnemyManager(_enemyManager);
+		_fireDash->setLinkEnemyManager(_enemyManager);
 	}
 
 	virtual void damaged(Actor *e);

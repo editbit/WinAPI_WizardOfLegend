@@ -164,6 +164,7 @@
     <ClInclude Include="FirePillar.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="IceDash.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Magician.h" />
     <ClInclude Include="ObjectCard.h" />
     <ClInclude Include="Player.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="FirePillar.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="IceDash.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Magician.cpp" />
     <ClCompile Include="ObjectCard.cpp" />
     <ClCompile Include="Player.cpp" />
