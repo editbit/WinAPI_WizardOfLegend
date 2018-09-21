@@ -38,6 +38,7 @@ void BulletManager::release()
 	_enemyBullets.clear();
 }
 
+
 bool BulletManager::collidePlayer(Bullet* b)
 {
 	return b->collide(_player);

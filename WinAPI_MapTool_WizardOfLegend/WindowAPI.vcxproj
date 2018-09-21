@@ -170,6 +170,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rogue.h" />
     <ClInclude Include="ShadowEnemy.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="Stuff.h" />
     <ClInclude Include="TerrainCard.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rogue.cpp" />
     <ClCompile Include="ShadowEnemy.cpp" />
+    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="Stuff.cpp" />
     <ClCompile Include="TerrainCard.cpp" />

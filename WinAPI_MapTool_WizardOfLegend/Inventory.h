@@ -1,15 +1,63 @@
 #pragma once
-#include "gameNode.h"
-#include "Dash.h"
+#include "Skill.h"
+#include "IceDash.h"
+#include "FireDash.h"
+
+#define EQUIP_MAX 6
 
 class Inventory :
 	public GameNode
 {
+	float _x, _y;
+
 	Image *_img;
 
-	vector<Dash*> _dashList;
+	int _selectIndex;
 
+	Skill *_currentSkill[EQUIP_MAX];
+	POINT _currentSkillPos[EQUIP_MAX];
+	POINT _equipkillPos[EQUIP_MAX];
+
+	vector<Skill*> _skillList;
+	vector<POINT> _iconPos;
+
+	Dash * _currentDash;
+
+	bool _isActive;
+
+	IceDash *_iceDash;
+	FireDash *_fireDash;
+	
+	Actor *_player;
+	EnemyManager *_enemyManager;
+
+	Image * _pixelMap;
+
+	Image * _iconBoxImg[2];
+	
 public:
+	virtual HRESULT init();	
+	virtual void release();
+	virtual void update();
+	virtual void render();
+	void renderEquipSkill();
+
+	void initSkillRECT();
+
+	bool getIsActive() { return _isActive; }
+	void setIsActive(bool isActive) { _isActive = isActive; }
+
+	void changeSkill();
+	void selectSkill();
+
+	void setLinkPixelMap(Image * pixelMap) { _pixelMap = pixelMap; }
+	void setLinkPlayer(Actor * player) { _player = player; }
+	void setLinkEnemyManager(EnemyManager *enemys) {
+		_enemyManager = enemys;
+		_iceDash->setLinkEnemyManager(_enemyManager);
+		_fireDash->setLinkEnemyManager(_enemyManager);
+	}
+
 	Inventory() {}
 	~Inventory() {}
 };

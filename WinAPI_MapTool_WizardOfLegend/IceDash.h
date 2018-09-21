@@ -1,10 +1,8 @@
 #pragma once
 #include "Dash.h"
 #include "Dummy.h"
-class IceDash :
-	public Dash
+class IceDash : public Dash
 {
-
 	Dummy * _dummy;
 
 public:

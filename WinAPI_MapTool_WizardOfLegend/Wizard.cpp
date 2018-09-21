@@ -39,6 +39,12 @@ HRESULT Wizard::init()
 
 	_attackAngle = 0;
 
+	_inven = new Inventory;
+	_inven->init();
+	_inven->setLinkEnemyManager(_enemyManager);
+	_inven->setLinkPixelMap(_pixelMap);
+	_inven->setLinkPlayer(this);
+
 	_iceDash = new IceDash;
 	_iceDash->init();
 	_iceDash->setLinkPlayer(this);
@@ -55,9 +61,13 @@ HRESULT Wizard::init()
 
 void Wizard::release()
 {
+	_fireDash->release();
+	SAFE_DELETE(_fireDash);
 	_iceDash->release();
-
 	SAFE_DELETE(_iceDash);
+
+	_inven->release();
+	SAFE_DELETE(_inven);
 }
 
 void Wizard::update()
@@ -76,7 +86,11 @@ void Wizard::update()
 		{
 			if (!(_state == WIZARD::ATTACK || _state == WIZARD::DASH))
 			{
-				inputProcess();
+
+				if (_inven->getIsActive())
+					_inven->update();
+				else
+					inputProcess();
 			}
 		}
 		else
@@ -130,10 +144,22 @@ void Wizard::render()
 	{
 		Rectangle(getMemDC(), _moveBox, CAM->getX(), CAM->getY());
 	}
+
+	_inven->renderEquipSkill();
+
+	if (_inven->getIsActive())
+		_inven->render();
 }
 
 void Wizard::inputProcess()
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
+	{
+		changeState(WIZARD::IDLE);
+		_inven->setIsActive(!_inven->getIsActive());
+		return;
+	}
+
 	_axisX = NONE; _axisY = NONE;
 	if (KEYMANAGER->isStayKeyDown('W'))
 	{

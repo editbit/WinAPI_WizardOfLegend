@@ -166,6 +166,19 @@ void LoadingScene::loadingImage()
 	_loading->loadFrameImage("blue_portal_edge", "Texture/Object/portal4_630x171_6x1.bmp", 630, 171, 6, 1);
 
 	loadingObjectImage();
+
+	// ICON - skill
+	_loading->loadImage("fireDash1Icon", "Texture/Icon/fireDash1Icon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("fireDash2Icon", "Texture/Icon/fireDash2Icon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("iceDashIcon", "Texture/Icon/iceDashIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("iceWaveIcon", "Texture/Icon/iceWaveIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("stoneAttackIcon", "Texture/Icon/stoneAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+
+	// UI
+	_loading->loadImage("inventory", "Texture/UI/inventory_432x630.bmp", 432, 630, true, RGB(255, 0, 255));
+	_loading->loadImage("iconBox", "Texture/Icon/iconBox_44x44.bmp", 44, 44, true, RGB(255, 0, 255));
+	_loading->loadImage("selectedIconBox", "Texture/Icon/selectedIconBox_50x50.bmp", 50, 50, true, RGB(255, 0, 255));
+
 	
 	_loading->loadImage("card", "Texture/Tile/card_board_416x637.bmp", 416, 637, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("cardEffect", "Texture/Tile/card_board_effect_2496x637_6x1.bmp", 2496, 637, 6, 1);

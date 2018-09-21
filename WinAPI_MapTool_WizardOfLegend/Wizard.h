@@ -1,6 +1,7 @@
 #pragma once
 #include "actor.h"
 #include "EnemyManager.h"
+#include "Inventory.h"
 #include "Dummy.h"
 #include "progressBar.h"
 #include "IceDash.h"
@@ -26,10 +27,14 @@ class Wizard :
 
 	fPOINT _returnPoint;
 
+
+	Inventory *_inven;
+
 	IceDash *_iceDash;
 	FireDash *_fireDash;
 
 	Dash * _currentDash;
+
 	EnemyManager *_enemyManager;
 public:
 	virtual HRESULT init();

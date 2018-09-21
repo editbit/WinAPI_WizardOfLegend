@@ -1,10 +1,10 @@
 #pragma once
-#include "actor.h"
+#include "Skill.h"
 
 class EnemyManager;
 
 class Dash
-	: public GameNode
+	: public Skill
 {
 protected:
 	float _x, _y;
@@ -34,7 +34,7 @@ public:
 	void setX(float x) { _x = x; }
 	void setY(float y) { _y = y; }
 
-	Dash() {}
+	Dash() { init(); }
 	Dash(Actor *p, EnemyManager* em) : _player(p), _enemyManager(em), _isActive(true) { init(); }
 	~Dash() {}
 };

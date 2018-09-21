@@ -17,6 +17,8 @@ HRESULT FireDash::init()
 	}
 
 	_isActive = false;
+
+	_iconImg = IMAGEMANAGER->findImage("fireDash1Icon");
 	return S_OK;
 }
 

@@ -32,7 +32,7 @@ void FirePillar::update()
 	
 
 	if (_isActive)
-		RENDERMANAGER->addRender(_y + WIZARD::HITBOX_HEIGHT, this);
+		RENDERMANAGER->addRender(_y + WIZARD::MOVEBOX_HEIGHT/2, this);
 }
 
 void FirePillar::render()

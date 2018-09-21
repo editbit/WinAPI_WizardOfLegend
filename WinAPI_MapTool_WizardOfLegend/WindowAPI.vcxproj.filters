@@ -111,6 +111,12 @@
     <Filter Include="MySkill\Bullet">
       <UniqueIdentifier>{bf483cdc-0061-43a7-b258-9a4fa4e2fc54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MySkill\Dash\FireDash">
+      <UniqueIdentifier>{75da26cd-ca21-42bc-b986-100c9d7ad3ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MySkill\Dash\IceDash">
+      <UniqueIdentifier>{bbc201c5-27e4-4863-967c-c073d198b061}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -287,20 +293,23 @@
     <ClInclude Include="Dash.h">
       <Filter>MySkill\Dash</Filter>
     </ClInclude>
-    <ClInclude Include="IceDash.h">
-      <Filter>MySkill\Dash</Filter>
-    </ClInclude>
-    <ClInclude Include="FireDash.h">
-      <Filter>MySkill\Dash</Filter>
-    </ClInclude>
-    <ClInclude Include="FirePillar.h">
-      <Filter>MySkill</Filter>
-    </ClInclude>
-    <ClInclude Include="Dummy.h">
-      <Filter>MySkill</Filter>
-    </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>MySkill</Filter>
+    </ClInclude>
+    <ClInclude Include="FireDash.h">
+      <Filter>MySkill\Dash\FireDash</Filter>
+    </ClInclude>
+    <ClInclude Include="FirePillar.h">
+      <Filter>MySkill\Dash\FireDash</Filter>
+    </ClInclude>
+    <ClInclude Include="IceDash.h">
+      <Filter>MySkill\Dash\IceDash</Filter>
+    </ClInclude>
+    <ClInclude Include="Dummy.h">
+      <Filter>MySkill\Dash\IceDash</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -469,20 +478,23 @@
     <ClCompile Include="Dash.cpp">
       <Filter>MySkill\Dash</Filter>
     </ClCompile>
-    <ClCompile Include="IceDash.cpp">
-      <Filter>MySkill\Dash</Filter>
-    </ClCompile>
-    <ClCompile Include="FireDash.cpp">
-      <Filter>MySkill\Dash</Filter>
-    </ClCompile>
-    <ClCompile Include="FirePillar.cpp">
-      <Filter>MySkill</Filter>
-    </ClCompile>
-    <ClCompile Include="Dummy.cpp">
-      <Filter>MySkill</Filter>
-    </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>MySkill</Filter>
+    </ClCompile>
+    <ClCompile Include="FireDash.cpp">
+      <Filter>MySkill\Dash\FireDash</Filter>
+    </ClCompile>
+    <ClCompile Include="FirePillar.cpp">
+      <Filter>MySkill\Dash\FireDash</Filter>
+    </ClCompile>
+    <ClCompile Include="IceDash.cpp">
+      <Filter>MySkill\Dash\IceDash</Filter>
+    </ClCompile>
+    <ClCompile Include="Dummy.cpp">
+      <Filter>MySkill\Dash\IceDash</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,6 +7,9 @@ HRESULT IceDash::init()
 	_dummy = new Dummy;
 	_dummy->init();
 
+
+	_iconImg = IMAGEMANAGER->findImage("iceDashIcon");
+
 	return S_OK;
 }
 

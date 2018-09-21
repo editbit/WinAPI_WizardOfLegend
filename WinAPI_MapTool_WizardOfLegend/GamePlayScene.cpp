@@ -53,6 +53,7 @@ HRESULT GamePlayScene::init()
 	stuffIndex = count = 0;
 
 
+	BULLETMANAGER->init();
 	BULLETMANAGER->setLinkEnemyManaer(_enemyManager);
 	BULLETMANAGER->setLinkPlayer(_wizard);
 	BULLETMANAGER->setLinkTileMap(_tileMap->getTiles());
@@ -126,11 +127,6 @@ void GamePlayScene::render()
 	if (KEYMANAGER->isToggleKey('9'))
 	{
 		IMAGEMANAGER->findImage("tileMapPixel")->render(getMemDC(), CAM->getSX(), CAM->getSY(), CAM->getSourX(), CAM->getSourY(), CAM->getCamWidth(), CAM->getCamHeight());
-
-		for (int i = 0; i < _roomList.rc.size(); ++i)
-		{
-			Rectangle(getMemDC(), _roomList.rc[i], CAM->getX(), CAM->getY());
-		}
 	}
 	RENDERMANAGER->render(getMemDC());
 

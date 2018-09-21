@@ -4,6 +4,7 @@
 
 HRESULT Dash::init()
 {
+	_skillType = DASH_SKILL;
 	_timer = 0;
 	_count = 0;
 	return S_OK;
