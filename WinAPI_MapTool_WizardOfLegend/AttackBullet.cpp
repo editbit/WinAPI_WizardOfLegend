@@ -16,7 +16,7 @@ HRESULT AttackBullet::init()
 
 void AttackBullet::update()
 {
-	_count = (_count + 1) % 5;
+	_count = (_count + 1) % 20;
 	if (_count == 0)
 	{
 		_index = (_index + 1);
@@ -31,7 +31,7 @@ void AttackBullet::update()
 
 void AttackBullet::render()
 {
-	_image->render(getMemDC(), _x - _image->getWidth()/2, _y - _image->getHeight()/2);
+	_image->render(getMemDC(), _x - _image->getWidth()/2 - CAM->getX(), _y - _image->getHeight()/2 - CAM->getY());
 }
 
 void AttackBullet::release()
@@ -47,8 +47,8 @@ void AttackBullet::fire(Image * pixelMap, float x, float y, float angle)
 
 bool AttackBullet::collide(Actor * a)
 {
-	if (_index != 0)
-		return false;
+	//if (_index != 0)
+	//	return false;
 
 	RECT temp;
 	if (IntersectRect(&temp, &a->getHitBox(), &_hitBox))

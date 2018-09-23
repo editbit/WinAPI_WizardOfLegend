@@ -43,7 +43,7 @@ Image* StoneAttack::attack(float x, float y, float angle)
 
 		for (int j = 0; j < playerBullet.size(); ++j)
 		{
-			if (playerBullet[j] == NULL)
+			if (playerBullet[j] != NULL)
 				continue;
 
 			_bullet[i]->fire(_pixelMap, x, y, angle);

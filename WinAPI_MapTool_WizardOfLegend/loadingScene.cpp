@@ -48,7 +48,7 @@ void LoadingScene::render(void)
 
 	for (int i = _index, count = 0; i >= 0; --i, count++ )
 	{
-		sprintf_s(str, "%s %d", _str[_index].c_str(), _count);
-		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 300 - count * 50, str, strlen(str));
+		sprintf_s(str, "%s", _str[_index - count].c_str());
+		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 200 - count * 50, str, strlen(str));
 	}
 }
