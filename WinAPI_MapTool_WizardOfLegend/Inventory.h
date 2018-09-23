@@ -2,6 +2,7 @@
 #include "Skill.h"
 #include "IceDash.h"
 #include "FireDash.h"
+#include "StoneAttack.h"
 
 #define EQUIP_MAX 6
 
@@ -27,16 +28,17 @@ class Inventory :
 
 	IceDash *_iceDash;
 	FireDash *_fireDash;
-	
+
+	StoneAttack *_stoneAttack;
+
 	Actor *_player;
 	EnemyManager *_enemyManager;
 
 	Image * _pixelMap;
-
 	Image * _iconBoxImg[2];
-	
+
 public:
-	virtual HRESULT init();	
+	virtual HRESULT init();
 	virtual void release();
 	virtual void update();
 	virtual void render();
@@ -47,16 +49,15 @@ public:
 	bool getIsActive() { return _isActive; }
 	void setIsActive(bool isActive) { _isActive = isActive; }
 
+	Skill* getCurrentDash() { return _currentSkill[1]; }
+	Skill* getBasicAttack() { return _currentSkill[0]; }
+
 	void changeSkill();
 	void selectSkill();
 
 	void setLinkPixelMap(Image * pixelMap) { _pixelMap = pixelMap; }
 	void setLinkPlayer(Actor * player) { _player = player; }
-	void setLinkEnemyManager(EnemyManager *enemys) {
-		_enemyManager = enemys;
-		_iceDash->setLinkEnemyManager(_enemyManager);
-		_fireDash->setLinkEnemyManager(_enemyManager);
-	}
+	void setLinkEnemyManager(EnemyManager *enemys) { _enemyManager = enemys;	}
 
 	Inventory() {}
 	~Inventory() {}

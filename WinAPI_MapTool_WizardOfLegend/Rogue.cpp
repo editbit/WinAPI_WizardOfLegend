@@ -18,7 +18,7 @@ HRESULT Rogue::init()
 
 	_delay[ENEMY::IDLE] = 100;
 	_delay[ENEMY::WALK] = 5;
-	_delay[ENEMY::ATTACK] = 25;
+	_delay[ENEMY::ATTACK] = 10;
 	_delay[ENEMY::HIT] = 5;
 	_delay[ENEMY::FALL] = 100;
 	_delay[ENEMY::DEAD] = 5;

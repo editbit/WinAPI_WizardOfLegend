@@ -75,7 +75,6 @@ void BulletManager::update()
 		collideEnemy(_playerBullets[i]);
 		
 
-
 		x = _playerBullets[i]->getX() / TILESIZE, y = _playerBullets[i]->getY() / TILESIZE;
 
 		if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&

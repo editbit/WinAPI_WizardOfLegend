@@ -117,6 +117,9 @@
     <Filter Include="MySkill\Dash\IceDash">
       <UniqueIdentifier>{bbc201c5-27e4-4863-967c-c073d198b061}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MySkill\Attack">
+      <UniqueIdentifier>{ea045516-e96b-4737-b99a-c48825a661b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -160,9 +163,6 @@
     </ClInclude>
     <ClInclude Include="loading.h">
       <Filter>GameFramework2D\로딩</Filter>
-    </ClInclude>
-    <ClInclude Include="loadingScene.h">
-      <Filter>MainGame\씬\LoadingScene</Filter>
     </ClInclude>
     <ClInclude Include="gameNode.h">
       <Filter>GameFramework2D\WinMain</Filter>
@@ -245,9 +245,6 @@
     <ClInclude Include="TerrainCard.h">
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayScene.h">
-      <Filter>MainGame\씬\게임씬</Filter>
-    </ClInclude>
     <ClInclude Include="TankEnemy.h">
       <Filter>MainGame\씬\타일맵\팩맨</Filter>
     </ClInclude>
@@ -259,9 +256,6 @@
     </ClInclude>
     <ClInclude Include="tileNode.h">
       <Filter>GameFramework2D\타일</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="EnemyCard.h">
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
@@ -311,6 +305,21 @@
     <ClInclude Include="Dummy.h">
       <Filter>MySkill\Dash\IceDash</Filter>
     </ClInclude>
+    <ClInclude Include="StartLoadingScene.h">
+      <Filter>MainGame\씬\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>MainGame\씬\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayScene.h">
+      <Filter>MainGame\씬\게임씬</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneAttack.h">
+      <Filter>MySkill\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBullet.h">
+      <Filter>MySkill\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -354,9 +363,6 @@
     </ClCompile>
     <ClCompile Include="loading.cpp">
       <Filter>GameFramework2D\로딩</Filter>
-    </ClCompile>
-    <ClCompile Include="loadingScene.cpp">
-      <Filter>MainGame\씬\LoadingScene</Filter>
     </ClCompile>
     <ClCompile Include="gameNode.cpp">
       <Filter>GameFramework2D\WinMain</Filter>
@@ -445,9 +451,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>MainGame\씬\게임씬\플레이어%28나중에 추가%29</Filter>
     </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyCard.cpp">
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClCompile>
@@ -495,6 +498,18 @@
     </ClCompile>
     <ClCompile Include="Dummy.cpp">
       <Filter>MySkill\Dash\IceDash</Filter>
+    </ClCompile>
+    <ClCompile Include="StartLoadingScene.cpp">
+      <Filter>MainGame\씬\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>MainGame\씬\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneAttack.cpp">
+      <Filter>MySkill\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBullet.cpp">
+      <Filter>MySkill\Attack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

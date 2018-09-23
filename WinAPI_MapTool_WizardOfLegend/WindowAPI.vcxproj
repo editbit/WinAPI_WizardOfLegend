@@ -151,7 +151,7 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="AStarTest.h" />
     <ClInclude Include="AStarTile.h" />
-    <ClInclude Include="Attack.h" />
+    <ClInclude Include="AttackBullet.h" />
     <ClInclude Include="AwlTrap.h" />
     <ClInclude Include="backgroundActor.h" />
     <ClInclude Include="Bomb.h" />
@@ -165,6 +165,7 @@
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="IceDash.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="Magician.h" />
     <ClInclude Include="ObjectCard.h" />
     <ClInclude Include="Player.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="ShadowEnemy.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="StartScene.h" />
+    <ClInclude Include="StoneAttack.h" />
     <ClInclude Include="Stuff.h" />
     <ClInclude Include="TerrainCard.h" />
     <ClInclude Include="cloud.h" />
@@ -195,7 +197,7 @@
     <ClInclude Include="iniData.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
-    <ClInclude Include="loadingScene.h" />
+    <ClInclude Include="StartLoadingScene.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFuntion.h" />
@@ -217,7 +219,7 @@
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="AStarTest.cpp" />
     <ClCompile Include="AStarTile.cpp" />
-    <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="AttackBullet.cpp" />
     <ClCompile Include="AwlTrap.cpp" />
     <ClCompile Include="backgroundActor.cpp" />
     <ClCompile Include="Bomb.cpp" />
@@ -231,6 +233,7 @@
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="IceDash.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Magician.cpp" />
     <ClCompile Include="ObjectCard.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -238,6 +241,7 @@
     <ClCompile Include="ShadowEnemy.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="StartScene.cpp" />
+    <ClCompile Include="StoneAttack.cpp" />
     <ClCompile Include="Stuff.cpp" />
     <ClCompile Include="TerrainCard.cpp" />
     <ClCompile Include="cloud.cpp" />
@@ -260,7 +264,7 @@
     <ClCompile Include="iniData.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="loading.cpp" />
-    <ClCompile Include="loadingScene.cpp" />
+    <ClCompile Include="StartLoadingScene.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="RenderManager.cpp" />

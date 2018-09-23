@@ -47,7 +47,8 @@ void StartScene::update()
 		_curButton = START;
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			SCENEMANAGER->loadScene("GameScene");
+			//SCENEMANAGER->loadScene("GameScene");
+			SCENEMANAGER->loadScene("LoadingScene");
 		}
 	}
 	else if (PtInRect(&_button[EXIT], _ptMouse))

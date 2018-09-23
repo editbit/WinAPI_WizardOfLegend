@@ -7,8 +7,9 @@ HRESULT GamePlayScene::init()
 	_mapImg = IMAGEMANAGER->findImage("tileMapImage");
 	_pixelMapImg = IMAGEMANAGER->findImage("tileMapPixel");
 
-	_tileMap = new tileMap;
-	_tileMap->init();
+	_tileMap = SAVEDATA->getTileMap();
+	//_tileMap = new tileMap;
+	//_tileMap->init();
 	tiles = _tileMap->getTiles();
 	attribute = _tileMap->getAttribute();
 	
@@ -16,19 +17,19 @@ HRESULT GamePlayScene::init()
 	_enemyList = _tileMap->getEnemyList();
 
 	_wizard = new Wizard;
-	_wizard->init();
 	_wizard->setLinkTileMap(_tileMap);
 	_wizard->setPixelMap(_pixelMapImg);
 
 	_enemyManager = new EnemyManager;
-	_enemyManager->init();
 	_enemyManager->setLinkPlayer(_wizard);
 	_enemyManager->setLinkTileMap(_tileMap);
 	_enemyManager->setPixelMap(_pixelMapImg);
+	_enemyManager->init();
 
 
 	//_wizard->setLinkTileMap(_tileMap);
 	_wizard->setLinkEnemyManager(_enemyManager);
+	_wizard->init();
 
 	CAM->setDrawRange(WINSIZEX, WINSIZEY);
 	CAM->setMaxRange(TILESIZEX, TILESIZEY);
@@ -63,8 +64,8 @@ HRESULT GamePlayScene::init()
 
 void GamePlayScene::release()
 {
-	_tileMap->release();
-	SAFE_DELETE(_tileMap);
+	//_tileMap->release();
+	//SAFE_DELETE(_tileMap);
 
 	_wizard->release();
 	SAFE_DELETE(_wizard);

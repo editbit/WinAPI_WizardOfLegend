@@ -15,17 +15,23 @@ HRESULT mainGame::init()
 	//글자배경모드
 	SetBkMode(getMemDC(), TRANSPARENT);
 
+	_tileMap = new tileMap;
+	//_tileMap->init();
+	SAVEDATA->setTileMap(_tileMap);
+	SAVEDATA->setMapName("tiles.map");
+
 	_soundVolume = INIDATA->loadDataFloat("Data/setting", "Sound", "master");
 	_effectVolume = INIDATA->loadDataFloat("Data/setting", "Sound", "effect");
 
 	//이곳에서 초기화를 한다
 	SCENEMANAGER->addScene("타일맵", new maptoolScene);
 	SCENEMANAGER->addScene("탱크", new tankGameScene);
-	SCENEMANAGER->addScene("LoadingScene", new LoadingScene);
+	SCENEMANAGER->addScene("StartLoadingScene", new StartLoadingScene);
 	SCENEMANAGER->addScene("StartScene", new StartScene);
 	SCENEMANAGER->addScene("GameScene", new GamePlayScene);
+	SCENEMANAGER->addScene("LoadingScene", new LoadingScene);
 
-	SCENEMANAGER->loadScene("LoadingScene");
+	SCENEMANAGER->loadScene("StartLoadingScene");
 
 	//cursor = IMAGEMANAGER->addImage("CURSOR", "Texture/UI/cursor_30x42.bmp", 30, 42, true, RGB(255, 0, 255));
 
@@ -40,6 +46,8 @@ void mainGame::release()
 {
 	GameNode::release();
 
+	_tileMap->release();
+	SAFE_DELETE(_tileMap);
 
 	INIDATA->addData("Sound", "master", to_string(_soundVolume).c_str());
 	INIDATA->addData("Sound", "effect", to_string(_effectVolume).c_str());

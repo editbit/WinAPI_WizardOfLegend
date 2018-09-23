@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Skill.h"
+#include "actor.h"
+#include "EnemyManager.h"
 
 HRESULT Skill::init()
 {

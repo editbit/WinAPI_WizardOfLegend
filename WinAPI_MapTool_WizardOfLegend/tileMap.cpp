@@ -78,6 +78,127 @@ void tileMap::render(void)
 	//}
 }
 
+bool tileMap::prepareLoading(const char* fileName)
+{
+	_objectCard.init(0, 0);
+
+	file = CreateFile(fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL, NULL);
+
+
+	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+
+	RECT temp;
+	_roomList.rc.clear();
+
+	ReadFile(file, &_roomList.numOfRoom, sizeof(int), &read, NULL);
+	for (int i = 0; i < _roomList.numOfRoom; ++i)
+	{
+		ReadFile(file, &temp, sizeof(temp), &read, NULL);
+		_roomList.rc.push_back(temp);
+	}
+
+
+	int numOfEnemy;
+	_enemyList.clear();
+
+	ReadFile(file, &numOfEnemy, sizeof(int), &read, NULL);
+
+	EnemyInfo temp1;
+	for (int i = 0; i < numOfEnemy; ++i)
+	{
+		ReadFile(file, &temp1, sizeof(temp1), &read, NULL);
+
+		_enemyList.push_back(temp1);
+	}
+
+
+	CloseHandle(file);
+
+	memset(_attribute, 0, sizeof(DWORD)* TILEX * TILEY);
+
+	i = 0;
+
+	return false;
+}
+
+bool tileMap::loadingDone()
+{
+	if (i >= TILEX * TILEY)
+		return true;
+
+	//¸Ê ¼Ó¼º Á¤ÀÇ
+	Image * tileMap = IMAGEMANAGER->findImage("tilemap");
+	Image * pixelTile = IMAGEMANAGER->findImage("pixel_tile");
+	Image * tankGameMap = IMAGEMANAGER->findImage("tileMapImage");
+	Image * tankGamePixel = IMAGEMANAGER->findImage("tileMapPixel");
+
+	for(int j = 0 ;i < TILEX * TILEY && j< 200;++j, i++)
+	{
+		if (_tiles[i].terrain == TR_WALL ||
+			_tiles[i].terrain == TR_CLIFF)
+			_attribute[i] |= ATTR_UNMOVAL;
+
+		pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+
+
+		if (_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1)
+			_tiles[i].obj = NULL;
+
+		if (_tiles[i].objType == OBJECT_WALL ||
+			_tiles[i].objType == OBJECT_BLOCK1)
+		{
+			_attribute[i] |= ATTR_UNMOVAL;
+			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, 0, 0);
+		}
+		if (_tiles[i].objType == OBJECT_BREAKABLE || _tiles[i].objType == OBJECT_TRAP)
+			_attribute[i] |= ATTR_UNMOVAL;
+
+		tileMap->frameRender(tankGameMap->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+
+		/*if (_tiles[i].objType == OBJECT_BLOCK1) _attribute[i] |= ATTR_UNMOVAL;
+		if (_tiles[i].objType == OBJECT_BLOCK3) _attribute[i] |= ATTR_UNMOVAL;
+		if (_tiles[i].objType == OBJECT_BLOCKS) _attribute[i] |= ATTR_UNMOVAL;*/
+
+
+		if (!(_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1))
+		{
+
+			if (_tiles[i].objType == OBJECT_TRAP)
+			{
+				if (_tiles[i].objIndex == AWL_TRAP)
+				{
+					_tiles[i].obj = new AwlTrap(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
+						{ _tiles[i].rc.left,
+						_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
+				}
+				else if (_tiles[i].objIndex == BOMB_TRAP)
+				{
+					_tiles[i].obj = new Bomb(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
+						{ _tiles[i].rc.left,
+						_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
+				}
+
+			}
+			else
+			{
+				_tiles[i].obj = new Stuff(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
+					{ _tiles[i].rc.left,
+					_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
+			}
+		}
+	}
+
+	return false;
+}
+
+bool tileMap::endLoading()
+{
+	CloseHandle(file);
+
+	return false;
+}
+
 void tileMap::load(const char * fileName)
 {
 	HANDLE file;

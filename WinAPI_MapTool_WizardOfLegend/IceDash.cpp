@@ -5,8 +5,9 @@
 HRESULT IceDash::init()
 {
 	_dummy = new Dummy;
+	_dummy->setLinkPlayer(_player);
+	_dummy->setLinkEnemyManager(_enemyManager);
 	_dummy->init();
-
 
 	_iconImg = IMAGEMANAGER->findImage("iceDashIcon");
 

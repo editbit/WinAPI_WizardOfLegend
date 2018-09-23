@@ -6,6 +6,7 @@
 #include "progressBar.h"
 #include "IceDash.h"
 #include "FireDash.h"
+#include "StoneAttack.h"
 
 #define PLAYER_STATE_MAX 10
 
@@ -34,6 +35,7 @@ class Wizard :
 	FireDash *_fireDash;
 
 	Dash * _currentDash;
+	Skill *_attack;
 
 	EnemyManager *_enemyManager;
 public:
@@ -51,11 +53,7 @@ public:
 	void collideTileObject();
 	void collidePixelMap();
 	
-	void setLinkEnemyManager(EnemyManager *enemys) { 
-		_enemyManager = enemys;
-		_iceDash->setLinkEnemyManager(_enemyManager);
-		_fireDash->setLinkEnemyManager(_enemyManager);
-	}
+	void setLinkEnemyManager(EnemyManager *enemys) { _enemyManager = enemys; }
 
 	virtual void damaged(Actor *e);
 	void attackStuff();

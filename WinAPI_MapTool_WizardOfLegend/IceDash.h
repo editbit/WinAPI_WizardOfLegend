@@ -9,8 +9,8 @@ public:
 
 	virtual void executeDash(float x, float y);
 
-	virtual void setLinkEnemyManager(EnemyManager *em) { _enemyManager = em; _dummy->setLinkEnemyManager(em); }
-	virtual void setLinkPlayer(Actor* player) { _player = player; _dummy->setLinkPlayer(player); }
+	virtual void setLinkEnemyManager(EnemyManager *em) { _enemyManager = em;}
+	virtual void setLinkPlayer(Actor* player) { _player = player; }
 
 	virtual bool getIsActive() { return _dummy->getIsActive(); }
 

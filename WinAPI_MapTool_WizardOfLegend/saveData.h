@@ -2,11 +2,14 @@
 #include "singletonBase.h"
 //씬 전환등에 사용하도록 하자
 
+class tileMap;
+
 class SaveData : public SingletonBase <SaveData>
 {
 private:
-	HANDLE _saveHandle;
-	DWORD _result;
+	string _mapName;
+	tileMap *_tileMap;
+
 	int _hp;
 	char _data[128];
 
@@ -17,7 +20,13 @@ public:
 	int getHp() { return _hp; }
 	void setHp(int hp) { _hp = hp; }
 
-	SaveData() {}
+	void setTileMap(tileMap *tiles) { _tileMap = tiles; }
+	tileMap* getTileMap() { return _tileMap; }
+
+	void setMapName(string mapName) { _mapName = mapName; }
+	string getMapName() { return _mapName; }
+
+	SaveData() : _tileMap(NULL) {}
 	~SaveData() {}
 };
 

@@ -60,8 +60,6 @@ void FirePillar::render()
 void FirePillar::fire(Image * pixelMap, float x, float y, float angle)
 {
 	Bullet::fire(pixelMap, x, y, angle);
-	
-	_hitBox = RectMakeCenter(_x, _y, TILESIZE, TILESIZE);
 
 	_activeCount = FIRE_COUNT_MAX;
 }

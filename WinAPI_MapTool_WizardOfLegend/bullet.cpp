@@ -68,6 +68,8 @@ void Bullet::fire(Image * pixelMap, float x, float y, float angle)
 	_fireX = _x = x; _fireY = _y = y;
 	_angle = angle;
 
+	_hitBox = RectMakeCenter(_x, _y, TILESIZE, TILESIZE);
+
 	_isActive = true;
 }
 

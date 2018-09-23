@@ -40,32 +40,27 @@ HRESULT Wizard::init()
 	_attackAngle = 0;
 
 	_inven = new Inventory;
-	_inven->init();
 	_inven->setLinkEnemyManager(_enemyManager);
 	_inven->setLinkPixelMap(_pixelMap);
 	_inven->setLinkPlayer(this);
-
+	_inven->init();
+/*
 	_iceDash = new IceDash;
 	_iceDash->init();
-	_iceDash->setLinkPlayer(this);
 
 	_fireDash = new FireDash;
 	_fireDash->init();
 	_fireDash->setLinkPlayer(this);
-	_fireDash->setLinkPixelMap(_pixelMap);
+	_fireDash->setLinkPixelMap(_pixelMap);*/
 
 	//_currentDash = _iceDash;
-	_currentDash = _fireDash;
+	_currentDash = (Dash*)_inven->getCurrentDash();
+	_attack = _inven->getBasicAttack();
 	return S_OK;
 }
 
 void Wizard::release()
 {
-	_fireDash->release();
-	SAFE_DELETE(_fireDash);
-	_iceDash->release();
-	SAFE_DELETE(_iceDash);
-
 	_inven->release();
 	SAFE_DELETE(_inven);
 }
@@ -88,7 +83,14 @@ void Wizard::update()
 			{
 
 				if (_inven->getIsActive())
+				{
 					_inven->update();
+					if (!_inven->getIsActive())
+					{
+						_currentDash = (Dash*)_inven->getCurrentDash();
+						_attack = _inven->getBasicAttack();
+					}
+				}
 				else
 					inputProcess();
 			}
@@ -200,7 +202,9 @@ void Wizard::inputProcess()
 		else
 		{
 			changeState(WIZARD::ATTACK);
-			attack();
+			//attack();
+			//
+			_attack->attack(_x + cos(_attackAngle) * 100, _y - sin(_attackAngle) * 100, _attackAngle);
 		}
 
 	}
@@ -270,24 +274,24 @@ void Wizard::attackStuff()
 void Wizard::attack()
 {
 	vector<Enemy *>& enemys = _enemyManager->getEnemys();
-
+	
 	if (enemys.size() <= 0) return;
-
+	
 	_attackBox = RectMakeCenter(_x + cos(_attackAngle) * 100, _y - sin(_attackAngle) * 100, 100, 100);
-
+	
 	RECT hitbox, temp;
 	for (int i = 0; i < enemys.size(); ++i)
 	{
 		if (!enemys[i]->getIsActive()) continue;
-
+	
 		hitbox = enemys[i]->getHitBox();
-
+	
 		if (IntersectRect(&temp, &_attackBox, &hitbox))
 		{
 			enemys[i]->damaged(this);
 		}
 	}
-
+	
 	attackStuff();
 }
 

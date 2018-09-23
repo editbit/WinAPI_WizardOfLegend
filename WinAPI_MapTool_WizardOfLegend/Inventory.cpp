@@ -18,20 +18,33 @@ HRESULT Inventory::init()
 	_isActive = false;
 
 	_iceDash = new IceDash;
-	_iceDash->init();
 	_iceDash->setLinkPlayer(_player);
+	_iceDash->setLinkEnemyManager(_enemyManager);
+	_iceDash->init();
 
 	_fireDash = new FireDash;
-	_fireDash->init();
 	_fireDash->setLinkPlayer(_player);
 	_fireDash->setLinkPixelMap(_pixelMap);
+	_fireDash->setLinkEnemyManager(_enemyManager);
+	_fireDash->init();
+
+	_stoneAttack = new StoneAttack;
+	_stoneAttack->setLinkPlayer(_player);
+	_stoneAttack->setLinkPixelMap(_pixelMap);
+	_stoneAttack->setLinkEnemyManager(_enemyManager);
+	_stoneAttack->init();
 
 	_skillList.push_back(_fireDash);
 	_skillList.push_back(_iceDash);
+	_skillList.push_back(_stoneAttack);
 
 	initSkillRECT();
 
 	_selectIndex = -1;
+
+
+	_currentSkill[1] = _fireDash;
+	_currentSkill[0] = _stoneAttack;
 
 	return S_OK;
 }

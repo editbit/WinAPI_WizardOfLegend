@@ -13,6 +13,10 @@ private:
 	RoomList _roomList;
 	vector<EnemyInfo> _enemyList;
 
+	int i;
+
+	HANDLE file;
+	DWORD read;
 public:
 	HRESULT init(const char * fileName);
 	HRESULT init();
@@ -22,6 +26,10 @@ public:
 
 	RoomList& getRoomList() { return _roomList; }
 	vector<EnemyInfo>& getEnemyList() { return _enemyList; }
+
+	bool prepareLoading(const char* fileName);
+	bool loadingDone();
+	bool endLoading();
 
 	//≈∏¿œ∏  ∑ŒµÂ
 	void load(const char * fileName);
