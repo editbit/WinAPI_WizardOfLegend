@@ -7,6 +7,8 @@ HRESULT GamePlayScene::init()
 	_mapImg = IMAGEMANAGER->findImage("tileMapImage");
 	_pixelMapImg = IMAGEMANAGER->findImage("tileMapPixel");
 
+	_aimImg = IMAGEMANAGER->findImage("aim");
+
 	_tileMap = SAVEDATA->getTileMap();
 	//_tileMap = new tileMap;
 	//_tileMap->init();
@@ -129,6 +131,10 @@ void GamePlayScene::render()
 	{
 		IMAGEMANAGER->findImage("tileMapPixel")->render(getMemDC(), CAM->getSX(), CAM->getSY(), CAM->getSourX(), CAM->getSourY(), CAM->getCamWidth(), CAM->getCamHeight());
 	}
+
+
+	if (_wizard->getState() != WIZARD::FALL)
+		_aimImg->rotateRender(getMemDC(), _wizard->getX() - CAM->getX(), _wizard->getY() - CAM->getY(), _wizard->getAttackAngle());
 	RENDERMANAGER->render(getMemDC());
 
 }

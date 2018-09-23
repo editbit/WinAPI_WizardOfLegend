@@ -120,6 +120,12 @@
     <Filter Include="MySkill\Attack">
       <UniqueIdentifier>{ea045516-e96b-4737-b99a-c48825a661b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MySkill\Attack\StoneAttack">
+      <UniqueIdentifier>{d3cae41b-0ad8-42cc-9ede-004cce6d6ba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MySkill\Attack\StoneThrowAttack">
+      <UniqueIdentifier>{11bfa63f-a7d3-4d2b-ab8b-ebfc3d308528}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -315,10 +321,16 @@
       <Filter>MainGame\씬\게임씬</Filter>
     </ClInclude>
     <ClInclude Include="StoneAttack.h">
-      <Filter>MySkill\Attack</Filter>
+      <Filter>MySkill\Attack\StoneAttack</Filter>
     </ClInclude>
     <ClInclude Include="AttackBullet.h">
-      <Filter>MySkill\Attack</Filter>
+      <Filter>MySkill\Attack\StoneAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterThrowAttack.h">
+      <Filter>MySkill\Attack\StoneThrowAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterThrowBullet.h">
+      <Filter>MySkill\Attack\StoneThrowAttack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,10 +518,16 @@
       <Filter>MainGame\씬\LoadingScene</Filter>
     </ClCompile>
     <ClCompile Include="StoneAttack.cpp">
-      <Filter>MySkill\Attack</Filter>
+      <Filter>MySkill\Attack\StoneAttack</Filter>
     </ClCompile>
     <ClCompile Include="AttackBullet.cpp">
-      <Filter>MySkill\Attack</Filter>
+      <Filter>MySkill\Attack\StoneAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterThrowAttack.cpp">
+      <Filter>MySkill\Attack\StoneThrowAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterThrowBullet.cpp">
+      <Filter>MySkill\Attack\StoneThrowAttack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

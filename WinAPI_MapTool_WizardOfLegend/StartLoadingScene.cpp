@@ -153,6 +153,7 @@ void StartLoadingScene::loadingImage()
 
 	_loading->loadFrameImage("player_dummy", "Texture/Player/playerDummy_3x4_396x512.bmp", 396, 512, 3, 4);
 	// Effect & skill
+	_loading->loadFrameImage("water_skill", "Texture/Effect/waterBullet_464x112_4x1.bmp", 464, 112, 4, 1);
 	_loading->loadFrameImage("ice_skill", "Texture/Effect/iceSkill_1312x220_8x1.bmp", 1312, 220, 8, 1);
 	_loading->loadFrameImage("wind_skill", "Texture/Effect/windSkill_380x80_5x1.bmp", 380, 80, 5, 1);
 	_loading->loadFrameImage("explode", "Texture/Effect/explode_4200x340_10x1.bmp", 4200, 340, 10, 1);
@@ -173,6 +174,9 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("iceDashIcon", "Texture/Icon/iceDashIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("iceWaveIcon", "Texture/Icon/iceWaveIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("stoneAttackIcon", "Texture/Icon/stoneAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("waterThrowIcon", "Texture/Icon/WaterThrowIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+
+	
 
 	// UI
 	_loading->loadImage("inventory", "Texture/UI/inventory_432x630.bmp", 432, 630, true, RGB(255, 0, 255));

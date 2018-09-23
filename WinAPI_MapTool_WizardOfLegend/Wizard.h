@@ -22,7 +22,6 @@ class Wizard :
 	int _attackIndex;
 
 	int _formerInput;
-	Image * _aimImg;
 	Image * _img[PLAYER_STATE_MAX];
 	int _delay[PLAYER_STATE_MAX];
 
@@ -62,6 +61,7 @@ public:
 	virtual void collide();
 	virtual void drawUI() {}
 
+	float getAttackAngle() { return _attackAngle; }
 
 	Wizard() : _enemyManager(NULL), _iceDash(NULL) {}
 	~Wizard() {}

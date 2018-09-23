@@ -64,6 +64,7 @@ void Bullet::render()
 }
 void Bullet::fire(Image * pixelMap, float x, float y, float angle)
 {
+	_index = _count = 0;
 	_pixelMap = pixelMap;
 	_fireX = _x = x; _fireY = _y = y;
 	_angle = angle;

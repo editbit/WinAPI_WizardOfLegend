@@ -16,7 +16,7 @@ HRESULT AttackBullet::init()
 
 void AttackBullet::update()
 {
-	_count = (_count + 1) % 20;
+	_count = (_count + 1) % 10;
 	if (_count == 0)
 	{
 		_index = (_index + 1);
@@ -26,7 +26,7 @@ void AttackBullet::update()
 	}
 
 	if (_isActive)
-		RENDERMANAGER->addRender(_y + WIZARD::HITBOX_HEIGHT, this);
+		RENDERMANAGER->addRender(_y + WIZARD::MOVEBOX_HEIGHT, this);
 }
 
 void AttackBullet::render()

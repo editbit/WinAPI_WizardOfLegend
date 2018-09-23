@@ -18,13 +18,8 @@ HRESULT Wizard::init()
 	_img[WIZARD::RUN] = _img[WIZARD::WALK];
 	_img[WIZARD::DASH] = IMAGEMANAGER->findImage("player_dash");
 	_img[WIZARD::ATTACK] = IMAGEMANAGER->findImage("player_attack1");
-	_img[WIZARD::ATTACK + 1] = IMAGEMANAGER->findImage("player_attack2");
-	_img[WIZARD::ATTACK + 2] = IMAGEMANAGER->findImage("player_attack3");
 	_img[WIZARD::FALL] = IMAGEMANAGER->findImage("player_fall");
 	_img[WIZARD::HIT] = IMAGEMANAGER->findImage("player_hit");
-
-	_aimImg = IMAGEMANAGER->findImage("aim");
-
 
 	_delay[WIZARD::IDLE] = 5;
 	_delay[WIZARD::WALK] = 5;
@@ -79,7 +74,7 @@ void Wizard::update()
 
 		if (_state != WIZARD::FALL)
 		{
-			if (!(_state == WIZARD::ATTACK || _state == WIZARD::DASH))
+			if (_state != WIZARD::DASH && (_state != WIZARD::ATTACK || _index >= _attack->getChangableIndex() ) )
 			{
 
 				if (_inven->getIsActive())
@@ -133,10 +128,6 @@ void Wizard::update()
 
 void Wizard::render()
 {
-	if(_state != WIZARD::FALL)
-		_aimImg->rotateRender(getMemDC(), _x - CAM->getX(), _y - CAM->getY(), _attackAngle);
-
-
 	_img[_state]->frameRender(getMemDC(), 
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
 		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY() + _z,
@@ -193,20 +184,20 @@ void Wizard::inputProcess()
 		//_dir = WIZARD::RIGHT;
 	}
 
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
-		if (_state == WIZARD::ATTACK)
+		if (_state != WIZARD::ATTACK)
 		{
-			_attackIndex = (_attackIndex + 1) % 3;
+			changeState(WIZARD::ATTACK);
+			_img[WIZARD::ATTACK] = _attack->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight()/2, _attackAngle);
+			_delay[WIZARD::ATTACK] = _attack->getFrameCount();
 		}
 		else
 		{
-			changeState(WIZARD::ATTACK);
-			//attack();
-			//
-			_attack->attack(_x + cos(_attackAngle) * 100, _y - sin(_attackAngle) * 100, _attackAngle);
+			_img[WIZARD::ATTACK] = _attack->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight() / 2, _attackAngle);
+			_delay[WIZARD::ATTACK] = _attack->getFrameCount();
+			_count = _index = 0;
 		}
-
 	}
 
 	if (_state == WIZARD::ATTACK)

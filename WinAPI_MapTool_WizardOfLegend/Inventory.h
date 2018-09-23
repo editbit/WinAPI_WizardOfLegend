@@ -3,6 +3,7 @@
 #include "IceDash.h"
 #include "FireDash.h"
 #include "StoneAttack.h"
+#include "WaterThrowAttack.h"
 
 #define EQUIP_MAX 6
 
@@ -30,6 +31,7 @@ class Inventory :
 	FireDash *_fireDash;
 
 	StoneAttack *_stoneAttack;
+	WaterThrowAttack *_waterThrowAttack;
 
 	Actor *_player;
 	EnemyManager *_enemyManager;

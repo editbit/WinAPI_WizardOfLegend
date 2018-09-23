@@ -1,18 +1,19 @@
 #pragma once
 #include "Skill.h"
-#include "AttackBullet.h"
+#include "WaterThrowBullet.h"
 
-#define ATTACK_BULLET 3
+#define STONE_THROW_MAX 4
 
-class StoneAttack :
+class WaterThrowAttack :
 	public Skill
 {
+
 	Image *_motion[2];
 	int _index, _count;
-	
+
 	int _attackCount;
 
-	AttackBullet *_bullet[ATTACK_BULLET];
+	WaterThrowBullet *_bullet[STONE_THROW_MAX];
 
 
 public:
@@ -29,7 +30,7 @@ public:
 
 	virtual void setMotion(int index, Image * img) { if (index >= 2) return; _motion[index] = img; }
 
-	StoneAttack() {}
-	~StoneAttack() {}
+	WaterThrowAttack() {}
+	~WaterThrowAttack() {}
 };
 

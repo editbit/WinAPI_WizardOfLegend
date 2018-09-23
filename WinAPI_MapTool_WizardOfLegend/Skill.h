@@ -31,6 +31,9 @@ public:
 	virtual Image * getImage() { return NULL; }
 
 	virtual Image* attack(float x, float y, float angle) { return NULL; }
+	virtual int getChangableIndex() { return 100; }
+	virtual bool getIsActive() { return _isActive; }
+	virtual int getFrameCount() { return 5; }
 
 	virtual void setLinkEnemyManager(EnemyManager *em) { _enemyManager = em; }
 	virtual void setLinkPlayer(Actor* player) { _player = player; }
@@ -40,7 +43,6 @@ public:
 
 	int getSkillType() { return _skillType; }
 
-	virtual bool getIsActive() { return _isActive; }
 
 	void setMotion(int index, Image * img) { return; }
 	

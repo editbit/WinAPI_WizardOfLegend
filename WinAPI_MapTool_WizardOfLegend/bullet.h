@@ -11,6 +11,8 @@ protected:
 
 	float _fireX, _fireY;
 
+	int _index, _count;
+
 public:
 	virtual HRESULT init(float radius, float speed, float power, float range, const char* imageName = "");
 	virtual HRESULT init();
