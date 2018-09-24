@@ -188,7 +188,7 @@ void GamePlayScene::loadEnemy()
 
 		if (temp == NULL) continue;
 
-		temp->init();
+		//temp->init();
 		temp->setX(_enemyList[i].pos.x);
 		temp->setY(_enemyList[i].pos.y);
 

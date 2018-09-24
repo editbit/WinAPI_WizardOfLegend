@@ -40,7 +40,7 @@ public:		// ¸â¹ö ÇÔ¼ö
 	virtual void throwed(float speed, float angle);
 	virtual void drawUI() {}
 
-	void changeState(int state);
+	virtual void changeState(int state);
 	virtual bool checkMovable(COLORREF color);
 	void setLinkTileMap(tileMap *tile);
 	void setPixelMap(Image * pixelMap) { _pixelMap = pixelMap; }

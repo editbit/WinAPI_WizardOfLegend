@@ -13,7 +13,7 @@ private:
 	RoomList _roomList;
 	vector<EnemyInfo> _enemyList;
 
-	int i;
+	int _loadingIndex;
 
 	HANDLE file;
 	DWORD read;
@@ -30,6 +30,8 @@ public:
 	bool prepareLoading(const char* fileName);
 	bool loadingDone();
 	bool endLoading();
+
+	int getLoadingIndex() { return _loadingIndex; }
 
 	//≈∏¿œ∏  ∑ŒµÂ
 	void load(const char * fileName);

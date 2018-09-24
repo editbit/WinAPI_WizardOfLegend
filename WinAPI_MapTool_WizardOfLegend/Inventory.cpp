@@ -23,12 +23,14 @@ HRESULT Inventory::init()
 	_iceDash->init();
 
 	_fireDash = new FireDash;
+	_fireDash->setLinkBulletList(BULLETMANAGER->getPlayerBullets());
 	_fireDash->setLinkPlayer(_player);
 	_fireDash->setLinkPixelMap(_pixelMap);
-	_fireDash->setLinkEnemyManager(_enemyManager);
+//	_fireDash->setLinkEnemyManager(_enemyManager);
 	_fireDash->init();
 
 	_stoneAttack = new StoneAttack;
+	_stoneAttack->setLinkBulletList(BULLETMANAGER->getPlayerBullets());
 	_stoneAttack->setLinkPlayer(_player);
 	_stoneAttack->setLinkPixelMap(_pixelMap);
 	_stoneAttack->setLinkEnemyManager(_enemyManager);
@@ -37,6 +39,7 @@ HRESULT Inventory::init()
 	_stoneAttack->init();
 
 	_waterThrowAttack = new WaterThrowAttack;
+	_waterThrowAttack->setLinkBulletList(BULLETMANAGER->getPlayerBullets());
 	_waterThrowAttack->setLinkPlayer(_player);
 	_waterThrowAttack->setLinkPixelMap(_pixelMap);
 	_waterThrowAttack->setLinkEnemyManager(_enemyManager);
@@ -44,10 +47,19 @@ HRESULT Inventory::init()
 	_waterThrowAttack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
 	_waterThrowAttack->init();
 
+	_stoneThrowAttack = new StoneThrowAttack;
+	_stoneThrowAttack->setLinkBulletList(BULLETMANAGER->getPlayerBullets());
+	_stoneThrowAttack->setLinkPlayer(_player);
+	_stoneThrowAttack->setLinkPixelMap(_pixelMap);
+	_stoneThrowAttack->setLinkEnemyManager(_enemyManager);
+	_stoneThrowAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack3"));
+	_stoneThrowAttack->init();
+
 	_skillList.push_back(_fireDash);
 	_skillList.push_back(_iceDash);
 	_skillList.push_back(_stoneAttack);
 	_skillList.push_back(_waterThrowAttack);
+	_skillList.push_back(_stoneThrowAttack);
 
 	initSkillRECT();
 

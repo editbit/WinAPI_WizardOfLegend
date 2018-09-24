@@ -6,7 +6,7 @@ class Enemy :
 	public Actor
 {
 protected:
-
+	int _hitCount;
 	int _routingIndex;
 	vector<POINT> _routing;
 
@@ -26,6 +26,8 @@ public:
 	void moveToPlayer();
 	void setLinkPlayer(Actor ** player) { _player = player; }
 	void setRouting(vector<POINT> routing) { _routing = routing; _routingIndex = _routing.size() - 1; }
+
+	virtual void changeState(int state);
 
 	Enemy() : _routingIndex(0), _player(NULL) {}
 	~Enemy() {}

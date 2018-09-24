@@ -14,7 +14,6 @@ class StoneAttack :
 
 	AttackBullet *_bullet[ATTACK_BULLET];
 
-
 public:
 	virtual HRESULT init();
 	virtual void release();

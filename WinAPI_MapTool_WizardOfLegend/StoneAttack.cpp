@@ -37,20 +37,19 @@ Image* StoneAttack::attack(float x, float y, float angle)
 {
 	x = x + cos(angle) * 70;  y = y - sin(angle) * 70;
 
-	vector<Bullet *>& playerBullet = BULLETMANAGER->getPlayerBullets();
 	for (int i = 0; i < ATTACK_BULLET; ++i)
 	{
 		if (_bullet[i]->getIsActive())
 			continue;
 
-		for (int j = 0; j < playerBullet.size(); ++j)
+		for (int j = 0; j < _bulletList->size(); ++j)
 		{
-			if (playerBullet[j] != NULL)
+			if (_bulletList->at(j) != NULL)
 				continue;
 
 			_bullet[i]->fire(_pixelMap, x, y, angle);
 			
-			playerBullet[j] = _bullet[i];
+			_bulletList->at(j) = _bullet[i];
 
 			break;
 		}

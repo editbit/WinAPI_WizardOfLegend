@@ -9,10 +9,16 @@ HRESULT LoadingScene::init(void)
 
 	_tileMap->prepareLoading(_fileName.c_str());
 
-	_str[0] = "맵을 읽는 중...";
-	_str[1] = "적 배치 중...";
-	_str[2] = "오브젝트 배치 중...";
-	_str[3] = "완료";
+	_str.push_back("성을 재생성하는 중");
+	_str.push_back("레이아웃을 조정하는 중");
+	_str.push_back("어둠을 걷어내는 중");
+	_str.push_back("즐겨찾기를 선택하는 중");
+	_str.push_back("인테리어를 꾸미는 중");
+	_str.push_back("적을 소환하는 중");
+	_str.push_back("방을 만드는 중");
+	_str.push_back("패턴을 마무리하는 중");
+	_str.push_back("준비하세요...");
+
 
 	_count = _index = 0;
 
@@ -32,13 +38,13 @@ void LoadingScene::update(void)
 		return;
 	}
 
-	_count++;
-	if (_count % 80 == 0)
+	_count += 200;
+	if (_count % (int)(TILEX * TILEY /_str.size()) < 200)
 	{
 		_count = 0;
 		_index++;
-		if (_index >= 4)
-			_index = 3;
+		if (_index >= _str.size())
+			_index = _str.size() - 1;
 	}
 }
 
@@ -49,6 +55,6 @@ void LoadingScene::render(void)
 	for (int i = _index, count = 0; i >= 0; --i, count++ )
 	{
 		sprintf_s(str, "%s", _str[_index - count].c_str());
-		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 200 - count * 50, str, strlen(str));
+		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 200 - count * 25, str, strlen(str));
 	}
 }

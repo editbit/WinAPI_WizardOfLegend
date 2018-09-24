@@ -18,6 +18,7 @@ protected:
 
 	bool _isActive;
 
+	vector<Bullet *>* _bulletList;
 
 	Actor *_player;
 	EnemyManager *_enemyManager;
@@ -27,6 +28,8 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
+	void setLinkBulletList(vector<Bullet *>* bulletList) { _bulletList = bulletList; }
 
 	virtual Image * getImage() { return NULL; }
 

@@ -49,7 +49,6 @@ void FireDash::update()
 	if (_count % 5 == 1)
 	{
 
-		vector<Bullet *>& playerBullet = BULLETMANAGER->getPlayerBullets();
 		for (int i = 0; i < FIRE_DASH_PILLAR_MAX; ++i)
 		{
 			if (_firePillar[i]->getIsActive())
@@ -57,11 +56,11 @@ void FireDash::update()
 
 			_firePillar[i]->fire(_pixelMap, _x, _y, 0);
 
-			for (int j = 0; j < playerBullet.size(); ++j)
+			for (int j = 0; j < _bulletList->size(); ++j)
 			{
-				if (playerBullet[j] == NULL)
+				if (_bulletList->at(j) == NULL)
 				{
-					playerBullet[j] = _firePillar[i];
+					_bulletList->at(j) = _firePillar[i];
 					break;
 				}
 			}

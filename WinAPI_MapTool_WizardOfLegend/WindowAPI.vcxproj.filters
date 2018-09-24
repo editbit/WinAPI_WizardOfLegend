@@ -123,8 +123,11 @@
     <Filter Include="MySkill\Attack\StoneAttack">
       <UniqueIdentifier>{d3cae41b-0ad8-42cc-9ede-004cce6d6ba8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MySkill\Attack\StoneThrowAttack">
+    <Filter Include="MySkill\Attack\WaterThrowAttack">
       <UniqueIdentifier>{11bfa63f-a7d3-4d2b-ab8b-ebfc3d308528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MySkill\Attack\StoneThrowAttack">
+      <UniqueIdentifier>{f730c30d-2f7e-42f0-9e2d-4c43c3e94fbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -327,9 +330,12 @@
       <Filter>MySkill\Attack\StoneAttack</Filter>
     </ClInclude>
     <ClInclude Include="WaterThrowAttack.h">
-      <Filter>MySkill\Attack\StoneThrowAttack</Filter>
+      <Filter>MySkill\Attack\WaterThrowAttack</Filter>
     </ClInclude>
     <ClInclude Include="WaterThrowBullet.h">
+      <Filter>MySkill\Attack\WaterThrowAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneThrowAttack.h">
       <Filter>MySkill\Attack\StoneThrowAttack</Filter>
     </ClInclude>
   </ItemGroup>
@@ -524,9 +530,12 @@
       <Filter>MySkill\Attack\StoneAttack</Filter>
     </ClCompile>
     <ClCompile Include="WaterThrowAttack.cpp">
-      <Filter>MySkill\Attack\StoneThrowAttack</Filter>
+      <Filter>MySkill\Attack\WaterThrowAttack</Filter>
     </ClCompile>
     <ClCompile Include="WaterThrowBullet.cpp">
+      <Filter>MySkill\Attack\WaterThrowAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneThrowAttack.cpp">
       <Filter>MySkill\Attack\StoneThrowAttack</Filter>
     </ClCompile>
   </ItemGroup>

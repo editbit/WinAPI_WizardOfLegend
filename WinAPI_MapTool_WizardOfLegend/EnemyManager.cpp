@@ -93,6 +93,8 @@ void EnemyManager::addEnemy(Enemy * enemy, int room)
 	enemy->setLinkPlayer(&_player);
 	enemy->setLinkTileMap(_tileMap);
 	enemy->setPixelMap(_pixelMap);
+
+	enemy->init();
 	_enemys[room].push_back(enemy);
 }
 

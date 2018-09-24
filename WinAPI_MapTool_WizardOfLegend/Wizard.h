@@ -48,7 +48,7 @@ public:
 	void settingAngle();
 	void inputProcess();
 	void frameSetting();
-	void changeState(int state);
+	virtual void changeState(int state);
 	void collideTileObject();
 	void collidePixelMap();
 	

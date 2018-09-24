@@ -1,6 +1,8 @@
 #pragma once
 #include "Enemy.h"
 #include "bullet.h"
+#include "WaterThrowAttack.h"
+#include "StoneThrowAttack.h"
 
 #define MAGICIAN_MAX_STATE 10
 
@@ -13,6 +15,8 @@ class Magician :
 	int _delayCount;
 
 	float _shootingAngle;
+
+	Skill * _attack;
 
 	Bullet *tempBullet;
 public:

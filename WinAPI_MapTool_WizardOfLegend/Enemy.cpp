@@ -6,6 +6,7 @@ HRESULT Enemy::init()
 {
 	_routingIndex = 0;
 	_hp = 100;
+	_hitCount = 0;
 	return S_OK;
 }
 
@@ -94,11 +95,11 @@ void Enemy::moveToPlayer()
 	int x = _x / TILESIZE, y = _y / TILESIZE;
 	if(_routing.size() > 0)
 	{
-		_state = ENEMY::WALK;
+		changeState(ENEMY::WALK);
 		
 		if (_routingIndex < 0)
 		{
-			_state = ENEMY::IDLE;
+			changeState(ENEMY::IDLE);
 			return;
 		}
 
@@ -155,6 +156,35 @@ void Enemy::moveToPlayer()
 	else
 	{
 		//if (_routing[_routingIndex].x == x && _routing[_routingIndex].y == y)
-		_state = ENEMY::IDLE;
+		changeState(ENEMY::IDLE);
+	}
+}
+
+void Enemy::changeState(int state)
+{
+	if (_state == state)
+		return;
+
+	_state = state;
+	_count = 0;
+	_index = 0;
+
+	switch (_state)
+	{
+	case ENEMY::WALK:
+		_speed = ENEMY::WALK_SPEED;
+		break;
+	case ENEMY::ATTACK:
+		_speed = ENEMY::ATTACK_SPEED;
+		break;
+	case ENEMY::DASH:
+		_speed = ENEMY::DASH_SPEED;
+		break;
+	case ENEMY::HIT:
+		_speed = ENEMY::HIT_SPEED;
+		break;
+	default:
+		_speed = 0;
+		break;
 	}
 }

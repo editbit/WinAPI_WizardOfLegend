@@ -5,7 +5,7 @@
 class LoadingScene :
 	public GameNode
 {
-	string _str[6];
+	vector<string> _str;
 	int _count, _index;
 
 	string _fileName;

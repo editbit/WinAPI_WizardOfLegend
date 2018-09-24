@@ -31,8 +31,8 @@ public:
 	bool collideEnemy(Bullet* b);
 	bool collidePlayer(Bullet* b);
 
-	vector<Bullet*>& getPlayerBullets() { return _playerBullets; }
-	vector<Bullet*>& getEnemyBullets() { return _enemyBullets; }
+	vector<Bullet*>* getPlayerBullets() { return &_playerBullets; }
+	vector<Bullet*>* getEnemyBullets() { return &_enemyBullets; }
 
 	void setLinkTileMap(tagTile* tiles) { _tiles = tiles; }
 	void setLinkPlayer(Actor * p) { _player = p; }

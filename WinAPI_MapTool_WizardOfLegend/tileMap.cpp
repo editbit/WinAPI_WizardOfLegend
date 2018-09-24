@@ -117,14 +117,14 @@ bool tileMap::prepareLoading(const char* fileName)
 
 	memset(_attribute, 0, sizeof(DWORD)* TILEX * TILEY);
 
-	i = 0;
+	_loadingIndex = 0;
 
 	return false;
 }
 
 bool tileMap::loadingDone()
 {
-	if (i >= TILEX * TILEY)
+	if (_loadingIndex >= TILEX * TILEY)
 		return true;
 
 	//¸Ê ¼Ó¼º Á¤ÀÇ
@@ -133,58 +133,58 @@ bool tileMap::loadingDone()
 	Image * tankGameMap = IMAGEMANAGER->findImage("tileMapImage");
 	Image * tankGamePixel = IMAGEMANAGER->findImage("tileMapPixel");
 
-	for(int j = 0 ;i < TILEX * TILEY && j< 200;++j, i++)
+	for(int j = 0 ; _loadingIndex < TILEX * TILEY && j< 200;++j, _loadingIndex++)
 	{
-		if (_tiles[i].terrain == TR_WALL ||
-			_tiles[i].terrain == TR_CLIFF)
-			_attribute[i] |= ATTR_UNMOVAL;
+		if (_tiles[_loadingIndex].terrain == TR_WALL ||
+			_tiles[_loadingIndex].terrain == TR_CLIFF)
+			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
 
-		pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+		pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
 
 
-		if (_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1)
-			_tiles[i].obj = NULL;
+		if (_tiles[_loadingIndex].objType == OBJECT_NONE || _tiles[_loadingIndex].objType == OBJECT_BLOCK1)
+			_tiles[_loadingIndex].obj = NULL;
 
-		if (_tiles[i].objType == OBJECT_WALL ||
-			_tiles[i].objType == OBJECT_BLOCK1)
+		if (_tiles[_loadingIndex].objType == OBJECT_WALL ||
+			_tiles[_loadingIndex].objType == OBJECT_BLOCK1)
 		{
-			_attribute[i] |= ATTR_UNMOVAL;
-			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, 0, 0);
+			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
+			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, 0, 0);
 		}
-		if (_tiles[i].objType == OBJECT_BREAKABLE || _tiles[i].objType == OBJECT_TRAP)
-			_attribute[i] |= ATTR_UNMOVAL;
+		if (_tiles[_loadingIndex].objType == OBJECT_BREAKABLE || _tiles[_loadingIndex].objType == OBJECT_TRAP)
+			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
 
-		tileMap->frameRender(tankGameMap->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+		tileMap->frameRender(tankGameMap->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
 
 		/*if (_tiles[i].objType == OBJECT_BLOCK1) _attribute[i] |= ATTR_UNMOVAL;
 		if (_tiles[i].objType == OBJECT_BLOCK3) _attribute[i] |= ATTR_UNMOVAL;
 		if (_tiles[i].objType == OBJECT_BLOCKS) _attribute[i] |= ATTR_UNMOVAL;*/
 
 
-		if (!(_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1))
+		if (!(_tiles[_loadingIndex].objType == OBJECT_NONE || _tiles[_loadingIndex].objType == OBJECT_BLOCK1))
 		{
 
-			if (_tiles[i].objType == OBJECT_TRAP)
+			if (_tiles[_loadingIndex].objType == OBJECT_TRAP)
 			{
-				if (_tiles[i].objIndex == AWL_TRAP)
+				if (_tiles[_loadingIndex].objIndex == AWL_TRAP)
 				{
-					_tiles[i].obj = new AwlTrap(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
-						{ _tiles[i].rc.left,
-						_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
+					_tiles[_loadingIndex].obj = new AwlTrap(_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg,
+						{ _tiles[_loadingIndex].rc.left,
+						_tiles[_loadingIndex].rc.bottom - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getHeight() });
 				}
-				else if (_tiles[i].objIndex == BOMB_TRAP)
+				else if (_tiles[_loadingIndex].objIndex == BOMB_TRAP)
 				{
-					_tiles[i].obj = new Bomb(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
-						{ _tiles[i].rc.left,
-						_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
+					_tiles[_loadingIndex].obj = new Bomb(_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg,
+						{ _tiles[_loadingIndex].rc.left,
+						_tiles[_loadingIndex].rc.bottom - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getHeight() });
 				}
 
 			}
 			else
 			{
-				_tiles[i].obj = new Stuff(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
-					{ _tiles[i].rc.left,
-					_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
+				_tiles[_loadingIndex].obj = new Stuff(_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg,
+					{ _tiles[_loadingIndex].rc.left,
+					_tiles[_loadingIndex].rc.bottom - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getHeight() });
 			}
 		}
 	}
