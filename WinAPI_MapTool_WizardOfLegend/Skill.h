@@ -22,6 +22,8 @@ protected:
 
 	vector<Bullet *>* _bulletList;
 
+	string _description;
+
 	Actor *_player;
 	EnemyManager *_enemyManager;
 	Image *_pixelMap;
@@ -48,11 +50,12 @@ public:
 
 	int getSkillType() { return _skillType; }
 
+	string getDescription() const { return _description; } 
 
 	void setMotion(int index, Image * img) { return; }
 	
-	Skill() :_player(NULL), _enemyManager(NULL), _isActive(false), _power(10) {}
-	Skill(Actor *p, EnemyManager *em) :_player(p), _enemyManager(em), _isActive(false), _power(10) {}
+	Skill() :_player(NULL), _enemyManager(NULL), _isActive(false), _power(10), _description("") {}
+	Skill(Actor *p, EnemyManager *em) :_player(p), _enemyManager(em), _isActive(false), _power(10), _description("") {}
 	~Skill() {}
 };
 

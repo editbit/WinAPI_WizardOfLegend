@@ -7,7 +7,7 @@
 class Bullet;
 class Actor;
 class EnemyManager;
-class tagTile;
+struct tagTile;
 
 class BulletManager : public SingletonBase<BulletManager>
 {
@@ -17,7 +17,7 @@ class BulletManager : public SingletonBase<BulletManager>
 	vector<Bullet*>::iterator _viBullet;
 
 
-	tagTile *_tiles;
+	struct tagTile *_tiles;
 	EnemyManager *_enemyManager;
 	Actor *_player;
 

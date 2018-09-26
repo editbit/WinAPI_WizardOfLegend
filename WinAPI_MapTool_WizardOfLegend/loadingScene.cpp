@@ -6,6 +6,7 @@ HRESULT LoadingScene::init(void)
 	_fileName = SAVEDATA->getMapName();
 	_tileMap = SAVEDATA->getTileMap();
 
+	_loadingCircle = IMAGEMANAGER->findImage("loadingCircle");
 
 	_tileMap->prepareLoading(_fileName.c_str());
 
@@ -21,7 +22,7 @@ HRESULT LoadingScene::init(void)
 	_str.push_back("준비하세요...");
 
 
-	_count = _index = 0;
+	_loadingImgIndex = _count = _index = 0;
 
 
 	_miniMap = IMAGEMANAGER->findImage("miniMapImage");
@@ -55,18 +56,31 @@ void LoadingScene::update(void)
 		if (_index >= _str.size())
 			_index = _str.size() - 1;
 	}
+	if (_count % (int)(TILEX * TILEY / _loadingCircle->getMaxFrameX()) < 200)
+	{
+		_loadingImgIndex++;
+		if (_loadingImgIndex >= _loadingCircle->getMaxFrameX())
+			_loadingImgIndex = _loadingCircle->getMaxFrameX() - 1;
+	}
 }
 
 void LoadingScene::render(void)
 {
 	char str[256];
 
+	string temp = "";
+
 	for (int i = _index, count = 0; i >= 0; --i, count++ )
 	{
-		sprintf_s(str, "%s", _str[_index - count].c_str());
+		temp = _str[_index - count].c_str();
+		if (count == 0)
+			temp += "...";
+		sprintf_s(str, "%s", temp.c_str());
 		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 200 - count * 25, str, strlen(str));
 
 		if (count >= 5)
 			break;
 	}
+
+	_loadingCircle->frameRender(getMemDC(), WINSIZEX - _loadingCircle->getFrameWidth() - 50, WINSIZEY - _loadingCircle->getFrameHeight() - 50, _loadingImgIndex, 0);
 }

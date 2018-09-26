@@ -88,6 +88,8 @@ void Inventory::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
 	{
 		_isActive = false;
+		_selectIndex = -1;
+		return;
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -112,6 +114,7 @@ void Inventory::render()
 		_currentSkill[i]->renderIcon(_currentSkillPos[i].x, _currentSkillPos[i].y);
 	}
 
+
 	for (int i = 0; i < _skillList.size(); ++i)
 	{
 		if(i == _selectIndex)
@@ -119,9 +122,19 @@ void Inventory::render()
 		else
 			_iconBoxImg[0]->render(UIMANAGER->getUIDC(), _iconPos[i].x - _iconBoxImg[0]->getWidth()/2, _iconPos[i].y - _iconBoxImg[0]->getHeight()/2);
 
-
 		_skillList[i]->renderIcon(_iconPos[i].x, _iconPos[i].y);
 	}
+
+	if (_selectIndex >= 0)
+	{
+		SetTextColor(UIMANAGER->getUIDC(), RGB(255, 255, 255));
+		SetTextAlign(UIMANAGER->getUIDC(), TA_LEFT);
+		char str[500];
+		sprintf_s(str, "%s", _skillList[_selectIndex]->getDescription().c_str());
+		TextOut(UIMANAGER->getUIDC(), 150, 500, str, strlen(str));
+		SetTextAlign(UIMANAGER->getUIDC(), TA_CENTER); //텍스트 중앙정렬
+	}
+
 
 	if (KEYMANAGER->isToggleKey('9'))
 	{
@@ -129,6 +142,9 @@ void Inventory::render()
 		sprintf_s(str, "%d %d", _ptMouse.x, _ptMouse.y);
 		TextOut(UIMANAGER->getUIDC(), _ptMouse.x, _ptMouse.y, str, strlen(str));
 	}
+
+
+
 }
 
 void Inventory::renderEquipSkill()
@@ -147,7 +163,7 @@ void Inventory::initSkillRECT()
 {
 	for (int i = 0; i < EQUIP_MAX; ++i)
 	{
-		_currentSkillPos[i] = { (int)_x + 58 + 16 + i * 57, (int)_y + 80 + 16 };
+		_currentSkillPos[i] = { (int)_x + 58 + 16 + i * 57, (int)_y + 85 + 16 };
 		_equipkillPos[i] = {100 + i * 55, WINSIZEY - 100};
 	}
 

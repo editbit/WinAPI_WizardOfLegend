@@ -15,6 +15,8 @@ HRESULT StoneAttack::init()
 		_bullet[i]->init(TILESIZE / 2, 0, _power, 500, "stoneBullet");
 	}
 
+	_description = "근접 스킬";
+
 	return S_OK;
 }
 

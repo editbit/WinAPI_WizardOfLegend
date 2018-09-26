@@ -12,9 +12,11 @@ private:
 	ProgressBar* _loadingBar;
 	Image* _numbers;
 
-	int _count, _index;
+	int _count, _index, _loadingImgIndex;
 	float _height;
 
+	string _loadingStr[4];
+	Image *_loadingCircle;
 public:
 	HRESULT init();
 	void release();

@@ -6,7 +6,7 @@
 #include "WaterThrowAttack.h"
 #include "StoneThrowAttack.h"
 
-#define EQUIP_MAX 6
+#define EQUIP_MAX 3
 
 class Inventory :
 	public GameNode
@@ -62,6 +62,9 @@ public:
 	void setLinkPixelMap(Image * pixelMap) { _pixelMap = pixelMap; }
 	void setLinkPlayer(Actor * player) { _player = player; }
 	void setLinkEnemyManager(EnemyManager *enemys) { _enemyManager = enemys;	}
+
+
+	void openInven() { _isActive = true; _selectIndex = -1; }
 
 	Inventory() {}
 	~Inventory() {}

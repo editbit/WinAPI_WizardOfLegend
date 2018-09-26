@@ -30,7 +30,7 @@ void Enemy::render()
 			Rectangle(getMemDC(), RectMake(_routing[i].x * TILESIZE, _routing[i].y * TILESIZE, TILESIZE, TILESIZE), CAM->getX(), CAM->getY());
 		}
 	}
-	Rectangle(getMemDC(), _moveBox, CAM->getX(), CAM->getY());
+	//Rectangle(getMemDC(), _moveBox, CAM->getX(), CAM->getY());
 }
 
 void Enemy::damaged(Actor * e)

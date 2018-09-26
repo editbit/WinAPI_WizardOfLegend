@@ -19,6 +19,8 @@ HRESULT UIManager::init(void)
 	_sceneChanging = _startingScene = false;
 
 
+	SetBkMode(_uiDC->getMemDC(), TRANSPARENT);
+
 	return S_OK;
 }
 

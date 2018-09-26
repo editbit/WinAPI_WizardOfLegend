@@ -6,12 +6,12 @@ class LoadingScene :
 	public GameNode
 {
 	vector<string> _str;
-	int _count, _index;
+	int _count, _index, _loadingImgIndex;
 
 	string _fileName;
 	tileMap *_tileMap;
 
-	Image *_miniMap;
+	Image *_miniMap, *_loadingCircle;
 
 	HBRUSH brush;
 	HBRUSH oBrush;

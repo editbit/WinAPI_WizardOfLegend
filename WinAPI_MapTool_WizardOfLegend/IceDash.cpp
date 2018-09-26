@@ -10,6 +10,7 @@ HRESULT IceDash::init()
 	_dummy->init();
 
 	_iconImg = IMAGEMANAGER->findImage("iceDashIcon");
+	_description = "적을 유인하는 분신을 생성하는 대시 스킬";
 
 	return S_OK;
 }

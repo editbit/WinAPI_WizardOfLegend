@@ -19,6 +19,7 @@ HRESULT FireDash::init()
 	_isActive = false;
 
 	_iconImg = IMAGEMANAGER->findImage("fireDash1Icon");
+	_description = "얼음 기둥을 생성하는 대시 스킬";
 	return S_OK;
 }
 

@@ -12,6 +12,8 @@ HRESULT WaterThrowAttack::init()
 		_bullet[i] = new WaterThrowBullet;
 		_bullet[i]->init(TILESIZE / 2, 5, 5, 500, "water_skill");
 	}
+
+	_description = "적을 뚫고 지나가는 물을 던지는 스킬";
 	return S_OK;
 }
 

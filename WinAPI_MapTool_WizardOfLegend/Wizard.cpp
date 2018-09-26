@@ -149,7 +149,7 @@ void Wizard::inputProcess()
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
 	{
 		changeState(WIZARD::IDLE);
-		_inven->setIsActive(!_inven->getIsActive());
+		_inven->openInven();
 		return;
 	}
 

@@ -10,6 +10,8 @@ HRESULT StoneThrowAttack::init()
 		_bullet[i] = new Bullet;
 		_bullet[i]->init(TILESIZE / 2, 5, 5, 500, "stoneBullet");
 	}
+
+	_description = "돌을 던지는 스킬";
 	return S_OK;
 }
 

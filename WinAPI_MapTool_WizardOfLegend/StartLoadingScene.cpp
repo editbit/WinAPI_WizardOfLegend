@@ -4,8 +4,15 @@
 HRESULT StartLoadingScene::init(void)
 {
 	_background = IMAGEMANAGER->addImage("bgLoadingScene", "Texture/Loading/loadingBackground_1000x1000.bmp", WINSIZEX, WINSIZEY);
+	_loadingCircle = IMAGEMANAGER->addFrameImage("loadingCircle", "Texture/Loading/loadingCircle_26x1_3328x128.bmp", 3328, 128, 26, 1);
 
 	_numbers = IMAGEMANAGER->addFrameImage("loadingNumber", "Texture/Loading/loadingNumber.bmp", 400, 60, 10, 1);
+
+	_loadingImgIndex = _index = _count = 0;
+	_loadingStr[0] = "불러오는 중";
+	_loadingStr[1] = "불러오는 중.";
+	_loadingStr[2] = "불러오는 중..";
+	_loadingStr[3] = "불러오는 중...";
 
 	//IMAGEMANAGER->addImage("initLoadingFront", "Texture/Loading/loadingBarFront.bmp", 600, 20, true, RGB(255, 0, 255));
 	//IMAGEMANAGER->addImage("initLoadingBack", "Texture/Loading/loadingBarBack.bmp", 600, 20, true, RGB(255, 0, 255));
@@ -22,6 +29,8 @@ HRESULT StartLoadingScene::init(void)
 	//이미지 및 사운드 로딩
 	this->loadingImage();
 	this->loadingSound();
+
+	//SetTextAlign(getMemDC(), TA_CENTER); //텍스트 중앙정렬
 
 	return S_OK;
 }
@@ -52,14 +61,12 @@ void StartLoadingScene::render(void)
 	//로딩클래스 렌더
 	//_loading->render();
 
-
+	/*
 	//백그라운드 렌더
 	_background->render(getMemDC());
-	//로딩바 클래스 렌더
 	
+	//로딩바 클래스 렌더
 	_loadingBar->render();
-
-
 
 	if (_loading->getCurrnetGauge() < _loading->getLoadItem().size())
 	{
@@ -77,6 +84,33 @@ void StartLoadingScene::render(void)
 	_numbers->frameRender(getMemDC(), _loadingBar->getRect().right - 200, _loadingBar->getRect().top - 100, (int)per % 10, 0);
 
 	_loadingBar->setGauge(per, 100);
+	*/
+
+	_count += 1;
+	if (_count % 20 == 0)
+	{
+		_count = 0;
+		_index = (_index + 1) % 4;
+	}
+
+	HFONT font;
+	HFONT oldFont;
+	font = CreateFont(20, 0, 0, 0, 1000, false, false, false, HANGEUL_CHARSET, 0, 0, 0, 0, TEXT("돋움"));
+	oldFont = (HFONT)SelectObject(getMemDC(), font);
+
+	char str[128];
+	sprintf_s(str, "%s", _loadingStr[_index].c_str());
+	TextOut(getMemDC(), WINSIZEX / 2 - 100, WINSIZEY / 2, str, strlen(str));
+
+	SelectObject(getMemDC(), oldFont);
+	DeleteObject(font);
+
+	float num = (float)_loading->getLoadItem().size();
+	float cur = (float)_loading->getCurrnetGauge();
+	float per = cur / num * 100;
+
+	_loadingImgIndex = (_loadingCircle->getMaxFrameX() - 1) * (cur/num);
+	_loadingCircle->frameRender(getMemDC(), WINSIZEX - _loadingCircle->getFrameWidth() - 50, WINSIZEY - _loadingCircle->getFrameHeight() - 50, _loadingImgIndex, 0);
 }
 
 //로딩이미지 함수(이곳에 이미지를 전부 넣어라)
@@ -184,6 +218,7 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("inventory", "Texture/UI/inventory_432x630.bmp", 432, 630, true, RGB(255, 0, 255));
 	_loading->loadImage("iconBox", "Texture/Icon/iconBox_44x44.bmp", 44, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("selectedIconBox", "Texture/Icon/selectedIconBox_50x50.bmp", 50, 50, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("loadingCircle", "Texture/Loading/loadingCircle_26x1_3328x128.bmp", 3328, 128, 26, 1);
 
 	
 	_loading->loadImage("card", "Texture/Tile/card_board_416x637.bmp", 416, 637, true, RGB(255, 0, 255));

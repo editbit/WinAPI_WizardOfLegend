@@ -4,7 +4,12 @@ class WaterCircleBullet :
 	public Bullet
 {
 public:
-	WaterCircleBullet();
-	~WaterCircleBullet();
+	virtual void update();
+	virtual void render();
+
+	virtual bool collide(Actor * a);
+	WaterCircleBullet() {}
+	~WaterCircleBullet() {}
+
 };
 
