@@ -1,5 +1,7 @@
 #pragma once
 
+#define MINIMAP_RATE 8
+
 #define CARDBOARD_NUM 3
 
 #define TILE_RENDER_RANGE 30

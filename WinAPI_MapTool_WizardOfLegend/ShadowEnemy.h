@@ -9,13 +9,11 @@ class ShadowEnemy :
 	Image *_img[SHADOW_MAX_STATE];
 	int _delay[SHADOW_MAX_STATE];
 
-	int _delayCount;
 public:
 
 	void frameSetting();
 
 	virtual void attack();
-	virtual void damaged(Actor *e);
 	virtual void move();
 
 	virtual HRESULT init();

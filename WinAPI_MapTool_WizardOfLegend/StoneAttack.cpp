@@ -7,10 +7,12 @@ HRESULT StoneAttack::init()
 	_skillType = ATTACK_SKILL;
 	_attackCount = 0;
 
+	_power = 40;
+
 	for (int i = 0; i < ATTACK_BULLET; ++i)
 	{
 		_bullet[i] = new AttackBullet;
-		_bullet[i]->init(TILESIZE / 2, 0, 5, 500, "stoneBullet");
+		_bullet[i]->init(TILESIZE / 2, 0, _power, 500, "stoneBullet");
 	}
 
 	return S_OK;
@@ -35,7 +37,7 @@ void StoneAttack::render()
 
 Image* StoneAttack::attack(float x, float y, float angle)
 {
-	x = x + cos(angle) * 70;  y = y - sin(angle) * 70;
+	x = x + cos(angle) * 80;  y = y - sin(angle) * 80;
 
 	for (int i = 0; i < ATTACK_BULLET; ++i)
 	{

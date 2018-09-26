@@ -49,6 +49,7 @@ public:
 	void inputProcess();
 	void frameSetting();
 	virtual void changeState(int state);
+	virtual bool checkMovable(COLORREF color);
 	void collideTileObject();
 	void collidePixelMap();
 	

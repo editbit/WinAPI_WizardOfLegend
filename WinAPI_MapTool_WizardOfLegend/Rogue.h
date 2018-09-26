@@ -9,12 +9,10 @@ class Rogue :
 	Image *_img[ROGUE_MAX_STATE];
 	int _delay[ROGUE_MAX_STATE];
 
-	int _delayCount;
 public:
 	void frameSetting();
 
 	virtual void attack();
-	virtual void damaged(Actor *e);
 	virtual void move();
 
 	virtual HRESULT init();

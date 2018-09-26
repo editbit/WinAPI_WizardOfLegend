@@ -107,7 +107,7 @@ void Wizard::update()
 	}
 	else
 	{
-		_speed -= 1;
+		_speed -= 0.5f;
 		if (_speed <= 0) _speed = 0;
 	}
 
@@ -229,7 +229,8 @@ void Wizard::inputProcess()
 void Wizard::damaged(Actor * e)
 {
 	if (_state == WIZARD::HIT ||
-		_state == WIZARD::FALL)
+		_state == WIZARD::FALL ||
+		_state == WIZARD::DEAD)
 		return;
 
 
@@ -483,6 +484,23 @@ void Wizard::changeState(int state)
 		_speed = 0;
 		break;
 	}
+}
+
+bool Wizard::checkMovable(COLORREF color)
+{
+	if (color == RGB(255, 0, 0))
+		return false;
+
+	if (color == RGB(0, 0, 255))
+	{
+		if (_state == WIZARD::DASH ||
+			_state == WIZARD::HIT)
+			return true;
+
+		return false;
+	}
+
+	return true;
 }
 
 

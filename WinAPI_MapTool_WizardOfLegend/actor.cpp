@@ -29,15 +29,6 @@ bool Actor::checkMovable(COLORREF color)
 	if (color == RGB(255, 0, 0))
 		return false;
 
-	if (color == RGB(0, 0, 255))
-	{
-		if (_state == WIZARD::DASH ||
-			_state == WIZARD::HIT)
-			return true;
-
-		return false;
-	}
-
 	return true;
 }
 

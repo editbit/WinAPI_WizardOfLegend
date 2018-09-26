@@ -20,7 +20,7 @@ class GamePlayScene :
 	RoomList _roomList;
 	vector<EnemyInfo> _enemyList;
 
-	Image *_mapImg, *_pixelMapImg;
+	Image *_mapImg, *_pixelMapImg, *_miniMap, *_playerIcon;
 	tileMap * _tileMap;
 	tagTile *tiles;		//타일
 	DWORD *attribute;	//속성

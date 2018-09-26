@@ -12,8 +12,6 @@ class Magician :
 	Image *_img[MAGICIAN_MAX_STATE];
 	int _delay[MAGICIAN_MAX_STATE];
 
-	int _delayCount;
-
 	float _shootingAngle;
 
 	Skill * _attack;
@@ -24,7 +22,6 @@ public:
 	void frameSetting();
 
 	virtual void attack();
-	virtual void damaged(Actor *e);
 	virtual void move();
 
 	virtual HRESULT init();

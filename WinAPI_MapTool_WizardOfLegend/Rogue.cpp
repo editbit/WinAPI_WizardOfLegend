@@ -5,6 +5,8 @@
 
 HRESULT Rogue::init()
 {
+	Enemy::init();
+
 	_img[ENEMY::IDLE] = IMAGEMANAGER->findImage("rogue_idle");
 	_img[ENEMY::WALK] = IMAGEMANAGER->findImage("rogue_walk");
 	_img[ENEMY::ATTACK] = IMAGEMANAGER->findImage("rogue_attack");
@@ -26,7 +28,7 @@ HRESULT Rogue::init()
 	_state = ENEMY::IDLE;
 	_index = _dir = _count = 0;
 
-	_speed = ENEMY::WALK_SPEED;
+	_speed = 0;
 
 	_delayCount = 0;
 	return S_OK;
@@ -38,35 +40,46 @@ void Rogue::release()
 
 void Rogue::update()
 {
+	if (_state == ENEMY::FALL)
+	{
+		_z += 7;
+		if (_count > FALL_COUNT)
+		{
+			_isActive = false;
+		}
+		return;
+	}
 
 	if (_state == ENEMY::DEAD)
 		return;
-	
-	if (_delayCount > 0)
+
+	if (_delayCount <= 0)
+	{
+		if (getDistance(_x, _y, (*_player)->getX(), (*_player)->getY()) < TILESIZE + 10)
+		{
+			changeState(ENEMY::ATTACK);
+		}
+
+		if (_state != ENEMY::ATTACK)
+		{
+			moveToPlayer();
+		}
+
+		if (_state == ENEMY::ATTACK)
+		{
+			if (_index > 0)
+				attack();
+		}
+	}
+	else
 	{
 		_delayCount -= 1;
-		return;
+		_speed -= 0.5f;
+		if (_speed < 0)
+			_speed = 0;
 	}
 
-	if (getDistance(_x, _y, (*_player)->getX(), (*_player)->getY()) < TILESIZE + 10)
-	{
-		changeState(ENEMY::ATTACK);
-	}
-
-	if (_state != ENEMY::ATTACK)
-	{
-		moveToPlayer();
-		if (_state == ENEMY::WALK)
-			move();
-	}
-
-	if (_state == ENEMY::ATTACK)
-	{
-		if (_index > 0)
-			attack();
-	}
-
-
+	move();
 	collide();
 	_moveBox = RectMakeCenter(_x, _y, ENEMY::MOVEBOX_WIDTH, ENEMY::MOVEBOX_HEIGHT);
 	_hitBox = RectMakeCenter(_x, _y, ENEMY::HITBOX_WIDTH, ENEMY::HITBOX_HEIGHT);
@@ -77,6 +90,7 @@ void Rogue::render()
 	frameSetting();
 	if (!_isActive) return;
 
+	Enemy::render();
 	_img[_state]->frameRender(getMemDC(),
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
 		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY(), _index, _dir);
@@ -116,10 +130,6 @@ void Rogue::attack()
 	}
 }
 
-void Rogue::damaged(Actor * e)
-{
-	changeState(ENEMY::DEAD);
-}
 
 void Rogue::move()
 {

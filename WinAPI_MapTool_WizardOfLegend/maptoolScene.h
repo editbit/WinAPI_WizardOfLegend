@@ -38,7 +38,7 @@ private:
 	POINT _cardPos;
 
 									//버튼 5개(세이브, 로드, 지형, 오브젝트, 지우개)
-	RECT _rcSave, _rcLoad, _rcTerrain, _rcObject, _rcEraser, _rcEnemy;
+	RECT _rcSave, _rcLoad, _rcEraser;
 	CTRL _ctrlSelect;
 	POINT _camPos, _clickPos, _mouseFromCard;
 
@@ -102,6 +102,7 @@ public:
 	void moveCard();
 	void cameraMove();
 	void settingControl();
+	void settingDrawTypeKey();
 
 	//지형, 오브젝트 셋터
 	TERRAIN getTerrainType(int frameX, int frameY);

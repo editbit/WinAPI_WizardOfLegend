@@ -119,13 +119,33 @@ bool tileMap::prepareLoading(const char* fileName)
 
 	_loadingIndex = 0;
 
+
+	Image* _miniMap = IMAGEMANAGER->findImage("miniMapImage");
+
+	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH oBrush = (HBRUSH)SelectObject(_miniMap->getMemDC(), brush);
+
+	Rectangle(_miniMap->getMemDC(), RectMake(0, 0, _miniMap->getWidth(), _miniMap->getHeight()));
+
+	SelectObject(_miniMap->getMemDC(), oBrush);
+	DeleteObject(brush);
+
+
+
 	return false;
 }
 
 bool tileMap::loadingDone()
 {
+	Image* _miniMap = IMAGEMANAGER->findImage("miniMapImage");
 	if (_loadingIndex >= TILEX * TILEY)
 		return true;
+
+	HBRUSH brush = CreateSolidBrush(RGB(255, 255, 255));
+	HBRUSH oBrush = (HBRUSH)SelectObject(_miniMap->getMemDC(), brush);
+	
+	HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	HPEN oPen = (HPEN)SelectObject(_miniMap->getMemDC(), pen);
 
 	//¸Ê ¼Ó¼º Á¤ÀÇ
 	Image * tileMap = IMAGEMANAGER->findImage("tilemap");
@@ -135,6 +155,32 @@ bool tileMap::loadingDone()
 
 	for(int j = 0 ; _loadingIndex < TILEX * TILEY && j< 200;++j, _loadingIndex++)
 	{
+		if (_tiles[_loadingIndex].terrain == TR_GROUND)
+		{
+
+			//Rectangle(_miniMap->getMemDC(),
+			//	RectMake(_tiles[_loadingIndex].rc.left / 16, _tiles[_loadingIndex].rc.top / 16, TILESIZE / 16, TILESIZE / 16));
+			Rectangle(_miniMap->getMemDC(),
+				RectMake(_tiles[_loadingIndex].rc.left / MINIMAP_RATE, _tiles[_loadingIndex].rc.top / MINIMAP_RATE, TILESIZE / MINIMAP_RATE, TILESIZE / MINIMAP_RATE));
+
+		}
+		else if (_tiles[_loadingIndex].terrain == TR_CLIFF)
+		{
+
+			brush = CreateSolidBrush(RGB(40, 40, 40));
+			oBrush = (HBRUSH)SelectObject(_miniMap->getMemDC(), brush);
+			pen = CreatePen(PS_SOLID, 1, RGB(40, 40, 40));
+			oPen = (HPEN)SelectObject(_miniMap->getMemDC(), pen);
+
+			Rectangle(_miniMap->getMemDC(),
+				RectMake(_tiles[_loadingIndex].rc.left / MINIMAP_RATE, _tiles[_loadingIndex].rc.top / MINIMAP_RATE, TILESIZE / MINIMAP_RATE, TILESIZE / MINIMAP_RATE));
+
+			SelectObject(_miniMap->getMemDC(), oPen);
+			DeleteObject(pen);
+			SelectObject(_miniMap->getMemDC(), oBrush);
+			DeleteObject(brush);
+		}
+
 		if (_tiles[_loadingIndex].terrain == TR_WALL ||
 			_tiles[_loadingIndex].terrain == TR_CLIFF)
 			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
@@ -188,6 +234,11 @@ bool tileMap::loadingDone()
 			}
 		}
 	}
+
+	SelectObject(_miniMap->getMemDC(), oPen);
+	DeleteObject(pen);
+	SelectObject(_miniMap->getMemDC(), oBrush);
+	DeleteObject(brush);
 
 	return false;
 }

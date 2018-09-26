@@ -5,6 +5,7 @@
 
 HRESULT Skill::init()
 {
+	_power = 10;
 	return S_OK;
 }
 

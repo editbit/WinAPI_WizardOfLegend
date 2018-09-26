@@ -14,11 +14,15 @@ protected:
 
 	Actor **_player;
 
+	int _delayCount;
+
 public:
 	virtual HRESULT init();
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
+	virtual void damaged(Actor *e);
 
 	virtual void collide();
 	void collisionPixel();

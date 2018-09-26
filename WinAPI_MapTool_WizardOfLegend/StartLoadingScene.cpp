@@ -102,7 +102,7 @@ void StartLoadingScene::loadingImage()
 	//_loading->loadImage("tile4", "Texture/tree1_100x100.bmp", 100, 100, true, RGB(255, 0, 255));
 
 
-
+	_loading->loadImage("miniMapImage", TILESIZEX / MINIMAP_RATE, TILESIZEY / MINIMAP_RATE, true, RGB(0, 0, 0));
 	_loading->loadImage("tileMapImage", TILESIZEX, TILESIZEY);
 	_loading->loadImage("tileMapPixel", TILESIZEX, TILESIZEY);
 	_loading->loadImage("titleBackground", "Texture/UI/titleBackground_1920x1080.bmp", WINSIZEX, WINSIZEY);
@@ -177,6 +177,8 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("waterThrowIcon", "Texture/Icon/WaterThrowIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("stoneThrowIcon", "Texture/Icon/stoneThrowAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 
+
+	_loading->loadImage("playerIcon", "Texture/Icon/playerIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 
 	// UI
 	_loading->loadImage("inventory", "Texture/UI/inventory_432x630.bmp", 432, 630, true, RGB(255, 0, 255));

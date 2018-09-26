@@ -7,6 +7,9 @@ HRESULT Enemy::init()
 	_routingIndex = 0;
 	_hp = 100;
 	_hitCount = 0;
+	_delayCount = 0;
+
+	_z = 0;
 	return S_OK;
 }
 
@@ -20,6 +23,36 @@ void Enemy::update()
 
 void Enemy::render()
 {
+	if (KEYMANAGER->isToggleKey(VK_F6))
+	{
+		for (int i = 0; i < _routing.size(); ++i)
+		{
+			Rectangle(getMemDC(), RectMake(_routing[i].x * TILESIZE, _routing[i].y * TILESIZE, TILESIZE, TILESIZE), CAM->getX(), CAM->getY());
+		}
+	}
+	Rectangle(getMemDC(), _moveBox, CAM->getX(), CAM->getY());
+}
+
+void Enemy::damaged(Actor * e)
+{
+	if (_state == ENEMY::DEAD || _state == ENEMY::HIT || _state == ENEMY::FALL)
+		return;
+
+	_angle = getAnglef(e->getX(), e->getY(), _x, _y);
+	//_angle = _angle + PI;
+	if (e->getX() > _x)
+		_dir = ENEMY::RIGHT;
+	else
+		_dir = ENEMY::LEFT;
+
+	_hp -= e->getPower();
+	if (_hp <= 0)
+		changeState(ENEMY::DEAD);
+	else
+	{
+		changeState(ENEMY::HIT);
+		_delayCount = 50;
+	}
 }
 
 void Enemy::collide()

@@ -6,6 +6,8 @@
 
 HRESULT Magician::init()
 {
+	Enemy::init();
+
 	_img[ENEMY::IDLE] = IMAGEMANAGER->findImage("mage_idle");
 	_img[ENEMY::WALK] = IMAGEMANAGER->findImage("mage_walk");
 	_img[ENEMY::ATTACK] = IMAGEMANAGER->findImage("mage_attack1");
@@ -26,9 +28,8 @@ HRESULT Magician::init()
 	_state = ENEMY::IDLE;
 	_index = _dir = _count = 0;
 
-	_speed = ENEMY::WALK_SPEED;
+	_speed = 0;
 
-	_delayCount = 0;
 
 	tempBullet = new Bullet;
 	tempBullet->init(20, 5, 5, 500, "stoneBullet");
@@ -68,6 +69,15 @@ void Magician::release()
 
 void Magician::update()
 {
+	if (_state == ENEMY::FALL)
+	{
+		_z += 7;
+		if (_count > FALL_COUNT)
+		{
+			_isActive = false;
+		}
+		return;
+	}
 
 	if (_state == ENEMY::DEAD)
 		return;
@@ -87,14 +97,20 @@ void Magician::update()
 		}
 		if (_state == ENEMY::ATTACK)
 		{
-			if (_index == _img[_state]->getMaxFrameX() - 1)
+			if (_index == _img[_state]->getMaxFrameX() - 1 && _count % _delay[_state] == 0)
 			{
 				attack();
 			}
 		}
 	}
 	else
+	{
 		_delayCount -= 1;
+		_speed -= 0.5f;
+		if (_speed < 0)
+			_speed = 0;
+	}
+
 
 	//if(_state != ENEMY::IDLE && _state != ENEMY::FALL && _state != ENEMY::ATTACK)
 	move();
@@ -110,10 +126,11 @@ void Magician::render()
 
 	if (!_isActive) return;
 
+	Enemy::render();
 
 	_img[_state]->frameRender(getMemDC(),
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
-		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY(), _index, _dir);
+		_moveBox.bottom - _img[_state]->getFrameHeight() + _z - CAM->getY(), _index, _dir);
 
 	//if (_state == ENEMY::ATTACK && _index >= 3 && _index < _img[_state]->getMaxFrameX() - 1)
 	//{
@@ -173,18 +190,6 @@ void Magician::attack()
 			enemyBullet->at(i) = tempBullet;
 			break;
 		}
-	}
-}
-
-void Magician::damaged(Actor * e)
-{
-	_hp -= e->getPower();
-	if (_hp <= 0)
-		changeState(ENEMY::DEAD);
-	else
-	{
-		changeState(ENEMY::HIT);
-		_delayCount = 50;
 	}
 }
 

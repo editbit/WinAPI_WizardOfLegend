@@ -10,6 +10,11 @@ class LoadingScene :
 
 	string _fileName;
 	tileMap *_tileMap;
+
+	Image *_miniMap;
+
+	HBRUSH brush;
+	HBRUSH oBrush;
 public:
 	HRESULT init(void);
 	void release(void);

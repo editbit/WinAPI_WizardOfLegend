@@ -16,6 +16,8 @@ protected:
 	Image * _iconImg;
 	int _skillType;
 
+	float _power;
+
 	bool _isActive;
 
 	vector<Bullet *>* _bulletList;
@@ -49,8 +51,8 @@ public:
 
 	void setMotion(int index, Image * img) { return; }
 	
-	Skill() :_player(NULL), _enemyManager(NULL), _isActive(false) {}
-	Skill(Actor *p, EnemyManager *em) :_player(p), _enemyManager(em), _isActive(false) {}
+	Skill() :_player(NULL), _enemyManager(NULL), _isActive(false), _power(10) {}
+	Skill(Actor *p, EnemyManager *em) :_player(p), _enemyManager(em), _isActive(false), _power(10) {}
 	~Skill() {}
 };
 

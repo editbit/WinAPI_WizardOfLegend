@@ -9,6 +9,7 @@ HRESULT LoadingScene::init(void)
 
 	_tileMap->prepareLoading(_fileName.c_str());
 
+	_str.clear();
 	_str.push_back("성을 재생성하는 중");
 	_str.push_back("레이아웃을 조정하는 중");
 	_str.push_back("어둠을 걷어내는 중");
@@ -22,11 +23,19 @@ HRESULT LoadingScene::init(void)
 
 	_count = _index = 0;
 
+
+	_miniMap = IMAGEMANAGER->findImage("miniMapImage");
+
+	brush = CreateSolidBrush(RGB(255, 255, 255));
+	oBrush = (HBRUSH)SelectObject(_miniMap->getMemDC(), brush);
+
 	return S_OK;
 }
 
 void LoadingScene::release(void)
 {
+	SelectObject(_miniMap->getMemDC(), oBrush);
+	DeleteObject(brush);
 }
 
 void LoadingScene::update(void)
@@ -56,5 +65,8 @@ void LoadingScene::render(void)
 	{
 		sprintf_s(str, "%s", _str[_index - count].c_str());
 		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 200 - count * 25, str, strlen(str));
+
+		if (count >= 5)
+			break;
 	}
 }

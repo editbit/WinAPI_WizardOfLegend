@@ -4,8 +4,10 @@
 
 HRESULT GamePlayScene::init()
 {
+	_miniMap = IMAGEMANAGER->findImage("miniMapImage");	
 	_mapImg = IMAGEMANAGER->findImage("tileMapImage");
 	_pixelMapImg = IMAGEMANAGER->findImage("tileMapPixel");
+	_playerIcon = IMAGEMANAGER->findImage("playerIcon");
 
 	_aimImg = IMAGEMANAGER->findImage("aim");
 
@@ -79,40 +81,31 @@ void GamePlayScene::release()
 
 void GamePlayScene::update()
 {
-	if (KEYMANAGER->isToggleKey(VK_F6))
-	{
-		if (!KEYMANAGER->isOnceKeyDown('P'))
-			return;
-	}
-
-
 	_tileMap->update();
 
 	_wizard->update();
 	_enemyManager->update();
 
+	RECT temp, roomCollisionBox;
+	int i;
+	for (i = 0; i < _roomList.rc.size(); ++i)
 	{
-		RECT temp, roomCollisionBox;
-		int i;
-		for (i = 0; i < _roomList.rc.size(); ++i)
+		if (IntersectRect(&temp, &_wizard->getMoveBox(), &_roomList.rc[i]))
 		{
-			if (IntersectRect(&temp, &_wizard->getMoveBox(), &_roomList.rc[i]))
+			roomCollisionBox = { _roomList.rc[i].left + TILESIZE * 2, _roomList.rc[i].top + TILESIZE * 2, _roomList.rc[i].right - TILESIZE * 2, _roomList.rc[i].bottom - TILESIZE * 2 };
+			//if(temp.right - temp.left >= WIZARD::MOVEBOX_WIDTH && temp.bottom - temp.top >= WIZARD::MOVEBOX_HEIGHT)
+			if (IntersectRect(&temp, &_wizard->getMoveBox(), &roomCollisionBox))
 			{
-				roomCollisionBox = { _roomList.rc[i].left + TILESIZE * 2, _roomList.rc[i].top + TILESIZE * 2, _roomList.rc[i].right - TILESIZE * 2, _roomList.rc[i].bottom - TILESIZE * 2 };
-				//if(temp.right - temp.left >= WIZARD::MOVEBOX_WIDTH && temp.bottom - temp.top >= WIZARD::MOVEBOX_HEIGHT)
-				if (IntersectRect(&temp, &_wizard->getMoveBox(), &roomCollisionBox))
-				{
-					CAM->setRoomSize(_roomList.rc[i]);
-					_enemyManager->setCurrentRoom(i + 1);
-				}
-				break;
+				CAM->setRoomSize(_roomList.rc[i]);
+				_enemyManager->setCurrentRoom(i + 1);
 			}
+			break;
 		}
-		if (i == _roomList.rc.size())
-		{
-			_enemyManager->setCurrentRoom(0);
-			CAM->setRoomSize(RectMake(0, 0, TILESIZEX, TILESIZEY));
-		}
+	}
+	if (i == _roomList.rc.size())
+	{
+		_enemyManager->setCurrentRoom(0);
+		CAM->setRoomSize(RectMake(0, 0, TILESIZEX, TILESIZEY));
 	}
 
 	BULLETMANAGER->update();
@@ -137,6 +130,13 @@ void GamePlayScene::render()
 		_aimImg->rotateRender(getMemDC(), _wizard->getX() - CAM->getX(), _wizard->getY() - CAM->getY(), _wizard->getAttackAngle());
 	RENDERMANAGER->render(getMemDC());
 
+	if (KEYMANAGER->isToggleKey('M'))
+	{
+		//_miniMap->render(getMemDC(), (WINSIZEX - _miniMap->getWidth())*0.5f, (WINSIZEY - _miniMap->getHeight()) *0.5f);
+		_miniMap->alphaRender(getMemDC(),
+			(WINSIZEX)*0.5f - (_wizard->getX() / MINIMAP_RATE - 15), (WINSIZEY) *0.5f - (_wizard->getY() / MINIMAP_RATE - 15), 200);
+		_playerIcon->render(getMemDC(), (WINSIZEX)*0.5f, (WINSIZEY) *0.5f);
+	}
 }
 
 void GamePlayScene::exit()
@@ -157,15 +157,6 @@ void GamePlayScene::stuffFrameSetting()
 void GamePlayScene::loadEnemy()
 {
 	Enemy * temp;
-	//for (int i = 0; i < 5; ++i)
-	//{
-	//	temp = new ShadowEnemy;
-	//	temp->init();
-	//	temp->setX(_wizard->getX() + RND->getInt(100));
-	//	temp->setY(_wizard->getY() + RND->getInt(100));
-	//	_enemyManager->addEnemy(temp);
-	//}
-
 	
 	for (int i = 0; i < _roomList.rc.size(); ++i)
 		_enemyManager->addArea();

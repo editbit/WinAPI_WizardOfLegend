@@ -9,10 +9,6 @@ HRESULT SaveData::init()
 
 void SaveData::release()
 {
-	//if (_tileMap != NULL)
-	//{
-	//	_tileMap->release();
-	//	SAFE_DELETE(_tileMap);
-	//}
+	
 }
 

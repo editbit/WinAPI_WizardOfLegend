@@ -65,14 +65,6 @@ void mainGame::update()
 
 	EFFECTMANAGER->update();
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		SCENEMANAGER->loadScene("≈∏¿œ∏ ");
-	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
-	{
-		SCENEMANAGER->loadScene("≈ ≈©");
-	}
 }
 
 //=============================================================

@@ -66,6 +66,8 @@ HRESULT maptoolScene::init(void)
 
 void maptoolScene::release(void)
 {
+	SelectObject(getMemDC(), oBrush);
+	DeleteObject(brush);
 }
 
 void maptoolScene::update(void)
@@ -132,7 +134,6 @@ void maptoolScene::update(void)
 			else
 			{
 				settingControl();
-
 				if (_ctrlSelect == CTRL_ENEMYDRAW)
 				{
 					locateEnemy();
@@ -232,6 +233,8 @@ void maptoolScene::update(void)
 		_currentCard->update();
 	}
 
+	settingDrawTypeKey();
+
 	cameraMove();
 	if(!_drawMiniMap)
 		CAM->videoShooting(_camPos.x, _camPos.y);
@@ -287,12 +290,11 @@ void maptoolScene::render(void)
 			if (PtInRect(&_tiles[i*TILEX + j].rc, ptMouseCam))
 				selectIdx = i * TILEX + j;
 
-
-
 			if (KEYMANAGER->isToggleKey('9'))
 			{
 				char str[20];
-				sprintf_s(str, "%3d  %3d", j, i);
+				//sprintf_s(str, "%3d  %3d", j, i);
+				sprintf_s(str, "%3d", _tiles[i * TILEX + j].terrain);
 				TextOut(getMemDC(), _tiles[i * TILEX + j].rc.left - CAM->getX(), _tiles[i * TILEX + j].rc.top + 10 - CAM->getY(), str, strlen(str));
 			}
 		}
@@ -333,7 +335,8 @@ void maptoolScene::render(void)
 		{
 			_enemyCard._sampleEnemy[_currentTile.x].img->frameRender(getMemDC(),
 				(_tiles[selectIdx].rc.left + _tiles[selectIdx].rc.right - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameWidth()) * 0.5f - CAM->getX(),
-				_tiles[selectIdx].rc.bottom - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight() - CAM->getY(),
+				//_tiles[selectIdx].rc.bottom - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight(),
+				(_tiles[selectIdx].rc.bottom + _tiles[selectIdx].rc.top) *0.5f + ENEMY::MOVEBOX_HEIGHT / 2 - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight() - CAM->getY(),
 				0, 0);
 		}
 	}
@@ -356,20 +359,19 @@ void maptoolScene::render(void)
 	//버튼렉트 렌더
 	Rectangle(getMemDC(), _rcSave);
 	Rectangle(getMemDC(), _rcLoad);
-	Rectangle(getMemDC(), _rcTerrain);
-	Rectangle(getMemDC(), _rcObject);
 	Rectangle(getMemDC(), _rcEraser);
-	Rectangle(getMemDC(), _rcEnemy);
+	//Rectangle(getMemDC(), _rcEnemy);
+	//Rectangle(getMemDC(), _rcTerrain);
+	//Rectangle(getMemDC(), _rcObject);
 
 	//버튼렉트 글씨
 	SetBkMode(getMemDC(), TRANSPARENT);
 	TextOut(getMemDC(), _rcSave.left + 30, _rcSave.top + 20, "SAVE", strlen("SAVE"));
 	TextOut(getMemDC(), _rcLoad.left + 30, _rcLoad.top + 20, "LOAD", strlen("LOAD"));
-	TextOut(getMemDC(), _rcTerrain.left + 30, _rcTerrain.top + 20, "TERRAIN", strlen("TERRAIN"));
-	TextOut(getMemDC(), _rcObject.left + 30, _rcObject.top + 20, "OBJECT", strlen("OBJECT"));
 	TextOut(getMemDC(), _rcEraser.left + 30, _rcEraser.top + 20, "ERASER", strlen("ERASER"));
-	TextOut(getMemDC(), _rcEnemy.left + 30, _rcEnemy.top + 20, "ENEMY", strlen("ENEMY"));
-
+	//TextOut(getMemDC(), _rcTerrain.left + 30, _rcTerrain.top + 20, "TERRAIN", strlen("TERRAIN"));
+	//TextOut(getMemDC(), _rcObject.left + 30, _rcObject.top + 20, "OBJECT", strlen("OBJECT"));
+	//TextOut(getMemDC(), _rcEnemy.left + 30, _rcEnemy.top + 20, "ENEMY", strlen("ENEMY"));
 
 	_cardDeck->render(getMemDC(), _cardDeckRect.left, _cardDeckRect.top);
 
@@ -397,14 +399,13 @@ void maptoolScene::exit()
 void maptoolScene::maptoolSetup(void)
 {
 	//렉트위치 초기화
-	_rcSave   = RectMake(1000 + 170, 200 + 200, 100, 50);
-	_rcLoad   = RectMake(1000 + 170, 200 + 300, 100, 50);
+	_rcSave   = RectMake(1050 + 170, 200 + 200, 100, 50);
+	_rcLoad   = RectMake(1050 + 170, 200 + 300, 100, 50);
+	_rcEraser = RectMake(1050 + 170, 200 + 400, 100, 50);
 
-	_rcEnemy = RectMake(1000 + 170, 200 + 400, 100, 50);
-
-	_rcTerrain= RectMake(1100 + 170, 200 + 200, 100, 50);
-	_rcObject = RectMake(1100 + 170, 200 + 300, 100, 50);
-	_rcEraser = RectMake(1100 + 170, 200 + 400, 100, 50);
+	//_rcEnemy = RectMake(1000 + 170, 200 + 400, 100, 50);
+	//_rcTerrain= RectMake(1100 + 170, 200 + 200, 100, 50);
+	//_rcObject = RectMake(1100 + 170, 200 + 300, 100, 50);
 
 	_cardDeckRect = RectMake(1100 + 120, 100, _cardDeck->getWidth(), _cardDeck->getHeight());
 
@@ -547,21 +548,19 @@ void maptoolScene::drawTile()
 					//_tiles[i*TILEX + j].objFrameY = 0;
 					_tiles[i*TILEX + j].objType = OBJECT_NONE;
 
+					if (_enemyList[i* TILEX + j].type != ENEMY_NONE)
+					{
+						_enemyList[i * TILEX + j].type = ENEMY_NONE;
+						_enemyCount--;
+					}
+
 					//miniMapRender
 					//if (_tiles[i*TILEX + j].terrain == TR_GROUND)
 					//	_tileImg->frameRender(_miniMap->getMemDC(), _tiles[i*TILEX + j].rc.left, _tiles[i*TILEX + j].rc.top, 7, (_tiles[i*TILEX + j].terrainFrameY) / _currentDrawNum * _currentDrawNum + 1);
 					//else
 					_tileImg->frameRender(_totalMap->getMemDC(), _tiles[i*TILEX + j].rc.left, _tiles[i*TILEX + j].rc.top, _tiles[i*TILEX + j].terrainFrameX, _tiles[i*TILEX + j].terrainFrameY);
 				}
-				else if (_ctrlSelect != CTRL_ENEMYDRAW)
-				{
-					if (_enemyList[i* TILEX + j].type != ENEMY_NONE)
-					{
-						_enemyList[i * TILEX + j].type = ENEMY_NONE;
-						_enemyCount--;
-					}
-					_tileImg->frameRender(_totalMap->getMemDC(), _tiles[i*TILEX + j].rc.left, _tiles[i*TILEX + j].rc.top, _tiles[i*TILEX + j].terrainFrameX, _tiles[i*TILEX + j].terrainFrameY);
-				}
+				
 				return;
 			}
 		}
@@ -823,13 +822,15 @@ void maptoolScene::locateEnemy()
 
 				_enemyCount++;
 
-				POINT pos = { (_tiles[i*TILEX + j].rc.left + _tiles[i*TILEX + j].rc.right - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameWidth()) * 0.5f,
-				_tiles[i*TILEX + j].rc.bottom - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight() };
+				POINT pos = { (_tiles[i*TILEX + j].rc.left + _tiles[i*TILEX + j].rc.right) * 0.5f,
+					(_tiles[i*TILEX + j].rc.bottom + _tiles[i*TILEX + j].rc.top) * 0.5f };
 
 				_enemyList[i * TILEX + j] = { _currentTile.x, pos };
 
 				_enemyCard._sampleEnemy[_currentTile.x].img->frameRender(_totalMap->getMemDC(),
-					pos.x, pos.y,
+					pos.x - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameWidth() / 2,
+					//_tiles[i*TILEX + j].rc.bottom - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight(),
+					pos.y + ENEMY::MOVEBOX_HEIGHT / 2 - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight(),
 					0, 0);
 
 				return;
@@ -977,7 +978,10 @@ void maptoolScene::load(void)
 		if (_enemyList[i].type != ENEMY_NONE)
 		{
 			cout <<_enemyList[i].type;
-			_enemyCard._sampleEnemy[_enemyList[i].type].img->frameRender(_totalMap->getMemDC(), _enemyList[i].pos.x, _enemyList[i].pos.y, 0, 0);
+			_enemyCard._sampleEnemy[_enemyList[i].type].img->frameRender(_totalMap->getMemDC(), 
+				_enemyList[i].pos.x - _enemyCard._sampleEnemy[_enemyList[i].type].img->getFrameWidth()/2,
+				_enemyList[i].pos.y + ENEMY::MOVEBOX_HEIGHT / 2 - _enemyCard._sampleEnemy[_enemyList[i].type].img->getFrameHeight(),
+				0, 0);
 		}
 	}
 
@@ -1109,10 +1113,8 @@ void maptoolScene::cameraMove()
 		}
 	}
 }
-
 void maptoolScene::settingControl()
 {
-	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		if (PtInRect(&_rcSave, _ptMouse))
 		{
@@ -1124,33 +1126,55 @@ void maptoolScene::settingControl()
 			//_ctrlSelect = CTRL_LOAD;
 			this->load();
 		}
-		if (PtInRect(&_rcTerrain, _ptMouse))
-		{
-			_ctrlSelect = CTRL_TERRAINDRAW;
-			_currentCard = &_terrainCard;
-			_currentCard->changeCard();
-			_currentDrawNum = _currentCard->getDrawNum();
-		}
-		if (PtInRect(&_rcObject, _ptMouse))
-		{
-			_ctrlSelect = CTRL_OBJDRAW;
-			_currentCard = &_objectCard;
-			_currentCard->changeCard();
-			_currentDrawNum = _currentCard->getDrawNum();
-			_currentTile.x = 10;
-		}
 		if (PtInRect(&_rcEraser, _ptMouse))
 		{
 			_ctrlSelect = CTRL_ERASER;
 		}
-		if (PtInRect(&_rcEnemy, _ptMouse))
-		{
-			_ctrlSelect = CTRL_ENEMYDRAW;
-			_currentCard = &_enemyCard;
-			_currentCard->changeCard();
-			_currentDrawNum = _currentCard->getDrawNum();
-			_currentTile.x = 0;
-		}
+	}
+}
+
+void maptoolScene::settingDrawTypeKey()
+{
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_ctrlSelect = CTRL_TERRAINDRAW;
+		_cardPos = { _cardDeckRect.left, _cardDeckRect.bottom };
+		_currentCard->x = _cardPos.x;
+		_currentCard->y = _cardPos.y;
+		_currentCard->isActive = false;
+
+		_currentCard = &_terrainCard;
+		_currentCard->changeCard();
+		_currentDrawNum = _currentCard->getDrawNum();
+		_currentCard->isActive = true;
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_ctrlSelect = CTRL_OBJDRAW;
+		_cardPos = { _cardDeckRect.left, _cardDeckRect.bottom };
+		_currentCard->x = _cardPos.x;
+		_currentCard->y = _cardPos.y;
+		_currentCard->isActive = false;
+
+		_currentCard = &_objectCard;
+		_currentCard->changeCard();
+		_currentDrawNum = _currentCard->getDrawNum();
+		_currentTile.x = 10;
+		_currentCard->isActive = true;
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_ctrlSelect = CTRL_ENEMYDRAW;
+		_cardPos = { _cardDeckRect.left, _cardDeckRect.bottom };
+		_currentCard->x = _cardPos.x;
+		_currentCard->y = _cardPos.y;
+		_currentCard->isActive = false;
+
+		_currentCard = &_enemyCard;
+		_currentCard->changeCard();
+		_currentDrawNum = _currentCard->getDrawNum();
+		_currentTile.x = 0;
+		_currentCard->isActive = true;
 	}
 }
 
@@ -1186,4 +1210,6 @@ ENEMY_TYPE maptoolScene::getEnemyType(int frameX)
 
 	return SHADOW;
 }
+
+
 
