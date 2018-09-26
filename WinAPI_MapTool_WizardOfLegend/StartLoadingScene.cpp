@@ -210,8 +210,9 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("stoneAttackIcon", "Texture/Icon/stoneAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("waterThrowIcon", "Texture/Icon/WaterThrowIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("stoneThrowIcon", "Texture/Icon/stoneThrowAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("waterCircleIcon", "Texture/Icon/waterCircleIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 
-
+	
 	_loading->loadImage("playerIcon", "Texture/Icon/playerIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 
 	// UI
