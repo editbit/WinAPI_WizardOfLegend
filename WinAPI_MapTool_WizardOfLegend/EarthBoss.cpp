@@ -89,9 +89,7 @@ void EarthBoss::frameSetting()
 
 void EarthBoss::attack()
 {
-
 	_attack->attack(_x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2, _shootingAngle);
-
 }
 
 void EarthBoss::move()
