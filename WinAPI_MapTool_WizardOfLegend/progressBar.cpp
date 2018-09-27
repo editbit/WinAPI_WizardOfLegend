@@ -20,8 +20,8 @@ HRESULT ProgressBar::init(const char * frontImageKey, const char * backImageKey,
 	ZeroMemory(backImage, sizeof(backImage));
 	//~.bmp로 만들기
 	//키, 파일이름 IMAGEMANAGER->ADDIMAGE("background", "background.bmp",,,,)
-	_stprintf_s(frontImage, "Texture/Loading/%s.bmp", frontImageKey);
-	_stprintf_s(backImage, "Texture/Loading/%s.bmp", backImageKey);
+	_stprintf_s(frontImage, "Texture/PrograssBar/%s.bmp", frontImageKey);
+	_stprintf_s(backImage, "Texture/PrograssBar/%s.bmp", backImageKey);
 
 	//체력바 이미지 초기화
 	_progressBarFront = IMAGEMANAGER->addImage(frontImageKey, frontImage, x, y, width, height, true, RGB(255, 0, 255));

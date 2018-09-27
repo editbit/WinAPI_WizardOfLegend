@@ -15,9 +15,10 @@ class Skill :
 protected:
 	Image * _iconImg;
 	int _skillType;
+	int _attackCount;
 
 	float _power;
-
+	
 	bool _isActive;
 
 	vector<Bullet *>* _bulletList;
@@ -49,6 +50,8 @@ public:
 	void renderIcon(float x, float y);
 
 	int getSkillType() { return _skillType; }
+	int getAttackCount() { return _attackCount; }
+	void setAttackCount(int attackCount) { _attackCount = attackCount; }
 
 	string getDescription() const { return _description; } 
 

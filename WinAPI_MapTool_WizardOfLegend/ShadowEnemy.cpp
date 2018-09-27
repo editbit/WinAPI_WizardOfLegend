@@ -27,6 +27,7 @@ HRESULT ShadowEnemy::init()
 	
 	_speed = 0;
 
+	_power = 5;
 	_delayCount = 0;
 
 	return S_OK;
@@ -34,6 +35,8 @@ HRESULT ShadowEnemy::init()
 
 void ShadowEnemy::release()
 {
+	Enemy::release();
+
 }
 
 void ShadowEnemy::update()
@@ -81,8 +84,7 @@ void ShadowEnemy::update()
 
 	move();
 	collide();
-	_moveBox = RectMakeCenter(_x, _y, ENEMY::MOVEBOX_WIDTH, ENEMY::MOVEBOX_HEIGHT);
-	_hitBox = RectMakeCenter(_x, _y, ENEMY::HITBOX_WIDTH, ENEMY::HITBOX_HEIGHT);
+	Enemy::update();
 
 }
 
@@ -100,6 +102,14 @@ void ShadowEnemy::render()
 
 void ShadowEnemy::frameSetting()
 {
+	if (_state == ENEMY::HIT)
+	{
+		if (_delayCount <= 0)
+			changeState(ENEMY::IDLE);
+		return;
+	}
+
+
 	_count = _count + 1;
 	if (_count % _delay[_state] == 0)
 	{

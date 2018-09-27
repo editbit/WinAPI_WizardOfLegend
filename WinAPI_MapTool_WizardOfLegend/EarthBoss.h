@@ -1,20 +1,19 @@
 #pragma once
 #include "Enemy.h"
-#include "bullet.h"
-#include "WaterThrowAttack.h"
-#include "StoneThrowAttack.h"
+#include "Skill.h"
 
-#define MAGICIAN_MAX_STATE 10
+#define EARTH_BOSS_MAX_STATE 10
 
-class Magician :
+class EarthBoss :
 	public Enemy
 {
-	Image *_img[MAGICIAN_MAX_STATE];
-	int _delay[MAGICIAN_MAX_STATE];
+	Image *_img[EARTH_BOSS_MAX_STATE];
+	int _delay[EARTH_BOSS_MAX_STATE];
 
 	float _shootingAngle;
 
 	Skill * _attack;
+
 public:
 
 	void frameSetting();
@@ -29,7 +28,7 @@ public:
 
 	float getCenterY() { return _moveBox.bottom - _img[_state]->getFrameHeight() / 2; }
 
-	Magician() {}
-	~Magician() {}
+	EarthBoss() {}
+	~EarthBoss() {}
 };
 

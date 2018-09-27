@@ -5,6 +5,7 @@
 #include "StoneAttack.h"
 #include "WaterThrowAttack.h"
 #include "StoneThrowAttack.h"
+#include "WaterCircleAttack.h"
 
 #define EQUIP_MAX 3
 
@@ -34,6 +35,7 @@ class Inventory :
 	StoneAttack *_stoneAttack;
 	WaterThrowAttack *_waterThrowAttack;
 	StoneThrowAttack * _stoneThrowAttack;
+	WaterCircleAttack *_waterCircleAttack;
 
 	Actor *_player;
 	EnemyManager *_enemyManager;
@@ -54,7 +56,7 @@ public:
 	void setIsActive(bool isActive) { _isActive = isActive; }
 
 	Skill* getCurrentDash() { return _currentSkill[1]; }
-	Skill* getBasicAttack() { return _currentSkill[0]; }
+	Skill* getAttackSkill(int index) { if (index == 1) return _currentSkill[0];  return _currentSkill[index]; }
 
 	void changeSkill();
 	void selectSkill();

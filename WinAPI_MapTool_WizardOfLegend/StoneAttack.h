@@ -9,8 +9,6 @@ class StoneAttack :
 {
 	Image *_motion[2];
 	int _index, _count;
-	
-	int _attackCount;
 
 	AttackBullet *_bullet[ATTACK_BULLET];
 

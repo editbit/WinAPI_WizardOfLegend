@@ -55,11 +55,23 @@ HRESULT Inventory::init()
 	_stoneThrowAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack3"));
 	_stoneThrowAttack->init();
 
+	_waterCircleAttack = new WaterCircleAttack;
+	_waterCircleAttack->setLinkBulletList(BULLETMANAGER->getPlayerBullets());
+	_waterCircleAttack->setLinkPlayer(_player);
+	_waterCircleAttack->setLinkPixelMap(_pixelMap);
+	_waterCircleAttack->setLinkEnemyManager(_enemyManager);
+	_waterCircleAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack1"));
+	_waterCircleAttack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
+	_waterCircleAttack->setMotion(2, IMAGEMANAGER->findImage("player_attack3"));
+	_waterCircleAttack->init();
+
+
 	_skillList.push_back(_fireDash);
 	_skillList.push_back(_iceDash);
 	_skillList.push_back(_stoneAttack);
 	_skillList.push_back(_waterThrowAttack);
 	_skillList.push_back(_stoneThrowAttack);
+	_skillList.push_back(_waterCircleAttack);
 
 	initSkillRECT();
 
@@ -68,6 +80,7 @@ HRESULT Inventory::init()
 
 	_currentSkill[1] = _fireDash;
 	_currentSkill[0] = _stoneAttack;
+	_currentSkill[2] = _waterCircleAttack;
 
 	return S_OK;
 }

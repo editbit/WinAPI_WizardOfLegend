@@ -172,6 +172,17 @@ void StartLoadingScene::loadingImage()
 	_loading->loadFrameImage("rogue_dead", "Texture/Enemy/rogueDead_864x304_8x2.bmp", 864, 304, 8, 2);
 	_loading->loadFrameImage("rogue_hide", "Texture/Enemy/rogueHide_276x264_3x2.bmp", 276, 264, 3, 2);
 
+	// enemy - earth boss
+
+
+	_loading->loadFrameImage("earthBoss_idle", "Texture/Enemy/Boss/bossIdle_66x112_1x1.bmp", 66, 112, 1, 1);
+	_loading->loadFrameImage("earthBoss_attack1", "Texture/Enemy/Boss/bossAttack1_400x108_5x1.bmp", 400, 108, 5, 1);
+	_loading->loadFrameImage("earthBoss_attack2", "Texture/Enemy/Boss/bossAttack2_610x480_5x4.bmp", 610, 480, 5, 4);
+	_loading->loadFrameImage("earthBoss_attack3", "Texture/Enemy/Boss/bossAttack3_240x112_3x1.bmp", 240, 112, 3, 1);
+	_loading->loadFrameImage("earthBoss_attackDelay", "Texture/Enemy/Boss/bossAttackDelay_425x104_5x1.bmp", 425, 104, 5, 1);
+	_loading->loadFrameImage("earthBoss_dead", "Texture/Enemy/Boss/bossDead_60x86_1x1.bmp", 60, 86, 1, 1);
+	_loading->loadFrameImage("earthBoss_hit", "Texture/Enemy/Boss/bossHit_330x228_5x2.bmp", 330, 228, 5, 2);
+	_loading->loadFrameImage("earthBoss_jumpAttack", "Texture/Enemy/Boss/bossJumpAttack_720x104_9x1.bmp", 720, 104, 9, 1);
 
 
 	// player
@@ -183,6 +194,7 @@ void StartLoadingScene::loadingImage()
 	_loading->loadFrameImage("player_hit", "Texture/Player/playerHit_1x4_84x496.bmp", 84, 496, 1, 4);
 	_loading->loadFrameImage("player_idle", "Texture/Player/playerIdle_1x4_64x528.bmp", 64, 528, 1, 4);
 	_loading->loadFrameImage("player_walk", "Texture/Player/playerWalk_10x4_1120x496.bmp", 1120, 496, 10, 4);
+	_loading->loadFrameImage("player_dead", "Texture/Player/playerDead_10x1_1040x168.bmp", 1040, 168, 10, 1);
 
 
 	_loading->loadFrameImage("player_dummy", "Texture/Player/playerDummy_3x4_396x512.bmp", 396, 512, 3, 4);
@@ -212,10 +224,18 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("stoneThrowIcon", "Texture/Icon/stoneThrowAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("waterCircleIcon", "Texture/Icon/waterCircleIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 
-	
+	// ICON - player
 	_loading->loadImage("playerIcon", "Texture/Icon/playerIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 
 	// UI
+	_loading->loadImage("playerHpBarBack", "Texture/PrograssBar/hpBarBack_189x30.bmp", 189, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("playerHpBarFront", "Texture/PrograssBar/hpBarFront_189x30.bmp", 189, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("bossHpBarBack", "Texture/PrograssBar/bosshpBarBack_300x41.bmp", 300, 41, true, RGB(255, 0, 255));
+	_loading->loadImage("bossHpBarFront", "Texture/PrograssBar/bosshpBarFront_300x41.bmp", 300, 41, true, RGB(255, 0, 255));
+
+	//_loading->loadImage("hpBarBack", "Texture/PrograssBar/hpBarBack.bmp", 600, 20, true, RGB(255, 0, 255));
+	//_loading->loadImage("hpBarFront", "Texture/PrograssBar/hpBarFront.bmp", 600, 20, true, RGB(255, 0, 255));
+
 	_loading->loadImage("inventory", "Texture/UI/inventory_432x630.bmp", 432, 630, true, RGB(255, 0, 255));
 	_loading->loadImage("iconBox", "Texture/Icon/iconBox_44x44.bmp", 44, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("selectedIconBox", "Texture/Icon/selectedIconBox_50x50.bmp", 50, 50, true, RGB(255, 0, 255));
@@ -225,8 +245,9 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("card", "Texture/Tile/card_board_416x637.bmp", 416, 637, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("cardEffect", "Texture/Tile/card_board_effect_2496x637_6x1.bmp", 2496, 637, 6, 1);
 
-
 	_loading->loadImage("aim", "Texture/UI/aim_115x115.bmp", 115, 115, true, RGB(255, 0, 255));
+
+	_loading->loadImage("playerHpIcon", "Texture/UI/plyaerIcon_57x60.bmp", 57, 60, true, RGB(255, 0, 255));
 }
 
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)

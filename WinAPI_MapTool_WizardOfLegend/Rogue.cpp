@@ -30,12 +30,16 @@ HRESULT Rogue::init()
 
 	_speed = 0;
 
+	_power = 5;
+
 	_delayCount = 0;
 	return S_OK;
 }
 
 void Rogue::release()
 {
+	Enemy::release();
+
 }
 
 void Rogue::update()
@@ -81,8 +85,7 @@ void Rogue::update()
 
 	move();
 	collide();
-	_moveBox = RectMakeCenter(_x, _y, ENEMY::MOVEBOX_WIDTH, ENEMY::MOVEBOX_HEIGHT);
-	_hitBox = RectMakeCenter(_x, _y, ENEMY::HITBOX_WIDTH, ENEMY::HITBOX_HEIGHT);
+	Enemy::update();
 }
 
 void Rogue::render()
@@ -93,12 +96,19 @@ void Rogue::render()
 	Enemy::render();
 	_img[_state]->frameRender(getMemDC(),
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
-		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY(), _index, _dir);
+		_moveBox.bottom - _img[_state]->getFrameHeight() + _z - CAM->getY(), _index, _dir);
 }
 
 
 void Rogue::frameSetting()
 {
+	if (_state == ENEMY::HIT)
+	{
+		if (_delayCount <= 0)
+			changeState(ENEMY::IDLE);
+		return;
+	}
+
 	_count = _count + 1;
 	if (_count % _delay[_state] == 0)
 	{

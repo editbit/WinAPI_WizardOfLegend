@@ -13,6 +13,8 @@ HRESULT Wizard::init()
 	_dir = WIZARD::DOWN;
 	_angle = 3 * PI / 2;
 
+	_iconImg = IMAGEMANAGER->findImage("playerHpIcon");
+
 	_img[WIZARD::IDLE] = IMAGEMANAGER->findImage("player_idle");
 	_img[WIZARD::WALK] = IMAGEMANAGER->findImage("player_walk");
 	_img[WIZARD::RUN] = _img[WIZARD::WALK];
@@ -20,6 +22,7 @@ HRESULT Wizard::init()
 	_img[WIZARD::ATTACK] = IMAGEMANAGER->findImage("player_attack1");
 	_img[WIZARD::FALL] = IMAGEMANAGER->findImage("player_fall");
 	_img[WIZARD::HIT] = IMAGEMANAGER->findImage("player_hit");
+	_img[WIZARD::DEAD] = IMAGEMANAGER->findImage("player_dead");
 
 	_delay[WIZARD::IDLE] = 5;
 	_delay[WIZARD::WALK] = 5;
@@ -28,29 +31,39 @@ HRESULT Wizard::init()
 	_delay[WIZARD::ATTACK] = 3;
 	_delay[WIZARD::FALL] = 5;
 	_delay[WIZARD::HIT] = 10;
+	_delay[WIZARD::DEAD] = 5;
 
 	_moveBox = RectMakeCenter(_x, _y, WIZARD::MOVEBOX_WIDTH, WIZARD::MOVEBOX_HEIGHT);
 	_attackBox = _moveBox;
 
 	_attackAngle = 0;
+	_attackCount = 0;
 
 	_inven = new Inventory;
 	_inven->setLinkEnemyManager(_enemyManager);
 	_inven->setLinkPixelMap(_pixelMap);
 	_inven->setLinkPlayer(this);
 	_inven->init();
-/*
-	_iceDash = new IceDash;
-	_iceDash->init();
 
-	_fireDash = new FireDash;
-	_fireDash->init();
-	_fireDash->setLinkPlayer(this);
-	_fireDash->setLinkPixelMap(_pixelMap);*/
-
-	//_currentDash = _iceDash;
 	_currentDash = (Dash*)_inven->getCurrentDash();
-	_attack = _inven->getBasicAttack();
+	_attack[0] = _inven->getAttackSkill(0);
+	_attack[1] = _inven->getAttackSkill(2);
+
+	_currentAttack = 0;
+
+
+	if (_hpBar == NULL)
+	{
+		_hpBar = new ProgressBar;
+		_hpBar->init("hpBarFront_189x30", "hpBarBack_189x30", 120, 63, 189, 30);
+		_maxHp = 500;	// 맥스HP
+		_hp = 500;	// 현재 에너지(이미지수정때문에29)
+		_hpBar->setGauge(_hp, _maxHp);
+	}
+
+	_iconImg->setX(120 - _iconImg->getWidth());
+	_iconImg->setY(78 - _iconImg->getHeight()/2);
+
 	return S_OK;
 }
 
@@ -58,10 +71,18 @@ void Wizard::release()
 {
 	_inven->release();
 	SAFE_DELETE(_inven);
+
+	_hpBar->release();
+	SAFE_DELETE(_hpBar);
 }
 
 void Wizard::update()
 {
+	if (_state == WIZARD::DEAD)
+	{
+		frameSetting();
+		return;
+	}
 
 	if (_state != WIZARD::HIT)
 	{
@@ -74,7 +95,7 @@ void Wizard::update()
 
 		if (_state != WIZARD::FALL)
 		{
-			if (_state != WIZARD::DASH && (_state != WIZARD::ATTACK || _index >= _attack->getChangableIndex() ) )
+			if (_state != WIZARD::DASH && (_state != WIZARD::ATTACK || _index >= _attack[_currentAttack]->getChangableIndex() ) )
 			{
 
 				if (_inven->getIsActive())
@@ -83,7 +104,8 @@ void Wizard::update()
 					if (!_inven->getIsActive())
 					{
 						_currentDash = (Dash*)_inven->getCurrentDash();
-						_attack = _inven->getBasicAttack();
+						_attack[0] = _inven->getAttackSkill(0);
+						_attack[1] = _inven->getAttackSkill(2);
 					}
 				}
 				else
@@ -99,6 +121,12 @@ void Wizard::update()
 				_y = _returnPoint.y;
 				changeState(WIZARD::IDLE);
 				_z = 0;
+				_hp -= 25;
+				if (_hp < 0)
+				{
+					_hp = 0;
+					changeState(WIZARD::DEAD);
+				}
 
 				EFFECTMANAGER->play("파란포탈", _x, _moveBox.bottom - _img[_state]->getFrameHeight()/2, 50);
 				EFFECTMANAGER->play("파란포탈_가장자리", _x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2);
@@ -122,6 +150,9 @@ void Wizard::update()
 		_currentDash->update();
 	}
 
+	_hpBar->update();
+	_hpBar->setGauge(_hp, _maxHp);
+
 	collide();
 	frameSetting();
 }
@@ -142,6 +173,9 @@ void Wizard::render()
 
 	if (_inven->getIsActive())
 		_inven->render();
+
+	_hpBar->render();
+	_iconImg->render(UIMANAGER->getUIDC(), _iconImg->getX(), _iconImg->getY());
 }
 
 void Wizard::inputProcess()
@@ -189,19 +223,43 @@ void Wizard::inputProcess()
 		if (_state != WIZARD::ATTACK)
 		{
 			changeState(WIZARD::ATTACK);
-			_img[WIZARD::ATTACK] = _attack->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight()/2, _attackAngle);
-			_delay[WIZARD::ATTACK] = _attack->getFrameCount();
+			_img[WIZARD::ATTACK] = _attack[0]->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight()/2, _attackAngle);
+			_delay[WIZARD::ATTACK] = _attack[0]->getFrameCount();
+			_currentAttack = 0;
 		}
 		else
 		{
-			_img[WIZARD::ATTACK] = _attack->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight() / 2, _attackAngle);
-			_delay[WIZARD::ATTACK] = _attack->getFrameCount();
+			_img[WIZARD::ATTACK] = _attack[0]->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight() / 2, _attackAngle);
+			_delay[WIZARD::ATTACK] = _attack[0]->getFrameCount();
+			_currentAttack = 0;
+			_count = _index = 0;
+		}
+	}
+
+
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
+	{
+		if (_state != WIZARD::ATTACK)
+		{
+			changeState(WIZARD::ATTACK);
+			_img[WIZARD::ATTACK] = _attack[1]->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight() / 2, _attackAngle);
+			_delay[WIZARD::ATTACK] = _attack[1]->getFrameCount();
+			_currentAttack = 1;
+		}
+		else
+		{
+			_img[WIZARD::ATTACK] = _attack[1]->attack(_x, _moveBox.bottom - _img[WIZARD::ATTACK]->getFrameHeight() / 2, _attackAngle);
+			_delay[WIZARD::ATTACK] = _attack[1]->getFrameCount();
+			_currentAttack = 1;
 			_count = _index = 0;
 		}
 	}
 
 	if (_state == WIZARD::ATTACK)
-		_angle = _attackAngle;
+	{
+		if(_index == 0)
+			_angle = _attackAngle;
+	}
 	else
 		settingAngle();
 
@@ -213,7 +271,7 @@ void Wizard::inputProcess()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		if (_state != WIZARD::DASH)
+		if (_state != WIZARD::DASH && _state != WIZARD::FALL)
 		{
 			//_returnPoint = { _x, _y };
 			settingReturnPoint();
@@ -233,14 +291,23 @@ void Wizard::damaged(Actor * e)
 		_state == WIZARD::DEAD)
 		return;
 
-
-	changeState(WIZARD::HIT);
+	_hp -= e->getPower();
+	if (_hp <= 0)
+	{
+		_hp = 0;
+		changeState(WIZARD::DEAD);
+	}
+	else
+	{
+		changeState(WIZARD::HIT);
+	}
 	_angle = getAnglef(_x, _y, e->getX(), e->getY());
 	settingDir();
 	_angle = _angle + PI;
 
 	//_returnPoint = { _x, _y };
-	settingReturnPoint();
+	if(_state != WIZARD::DASH)
+		settingReturnPoint();
 }
 
 void Wizard::attackStuff()
@@ -449,6 +516,10 @@ void Wizard::frameSetting()
 			{
 				changeState(WIZARD::IDLE);
 			}
+			else if (_state == WIZARD::DEAD)
+			{
+				//SCENEMANAGER->loadScene("GameScene");
+			}
 		}
 	}
 
@@ -480,6 +551,9 @@ void Wizard::changeState(int state)
 	case WIZARD::HIT:
 		_speed = 10;
 		break;
+	case WIZARD::DEAD:
+		_speed = 0;
+		_dir = 0;
 	default:
 		_speed = 0;
 		break;

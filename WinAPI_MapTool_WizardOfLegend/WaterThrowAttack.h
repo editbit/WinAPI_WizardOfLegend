@@ -11,8 +11,6 @@ class WaterThrowAttack :
 	Image *_motion[2];
 	int _index, _count;
 
-	int _attackCount;
-
 	WaterThrowBullet *_bullet[WATER_THROW_MAX];
 
 

@@ -8,11 +8,12 @@ HRESULT WaterCircleAttack::init()
 	_attackCount = 0;
 
 	_power = 40;
+	_dir = 1;
 
 	for (int i = 0; i < WATER_CIRCLE_BAX; ++i)
 	{
 		_bullet[i] = new WaterCircleBullet;
-		_bullet[i]->init(TILESIZE / 2, 0, _power, 500, "water_skill");
+		_bullet[i]->init(TILESIZE / 2, 100, _power, 500, "water_skill");
 	}
 
 	_description = "근접 스킬";
@@ -39,7 +40,10 @@ void WaterCircleAttack::render()
 
 Image * WaterCircleAttack::attack(float x, float y, float angle)
 {
-	x = x + cos(angle) * 80;  y = y - sin(angle) * 80;
+	//x = x + cos(angle) * 80;  y = y - sin(angle) * 80;
+	int count = 0, countMax = 1;
+	if (_attackCount == 2)
+		countMax = 2;
 
 	for (int i = 0; i < WATER_CIRCLE_BAX; ++i)
 	{
@@ -51,19 +55,23 @@ Image * WaterCircleAttack::attack(float x, float y, float angle)
 			if (_bulletList->at(j) != NULL)
 				continue;
 
-			_bullet[i]->fire(_pixelMap, x, y, angle);
+			_bullet[i]->fire(_pixelMap, x, y, angle, _dir);
+			_dir *= -1;
 
 			_bulletList->at(j) = _bullet[i];
+
+			count += 1;
 
 			break;
 		}
 
-		break;
+		if(count >= countMax)
+			break;
 	}
 
 
 	int t = _attackCount;
 
-	_attackCount = (_attackCount + 1) % 2;
+	_attackCount = (_attackCount + 1) % 3;
 	return _motion[t];
 }

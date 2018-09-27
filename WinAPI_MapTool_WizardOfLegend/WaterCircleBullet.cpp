@@ -2,32 +2,40 @@
 #include "WaterCircleBullet.h"
 
 
+HRESULT WaterCircleBullet::init(float radius, float speed, float power, float range, const char * imageName)
+{
+	_circleAngle = 0;
+	return Bullet::init(radius, speed, power, range, imageName);
+}
+
 void WaterCircleBullet::update()
 {
-	_x += _speed * cosf(_angle);
-	_y += _speed * -sinf(_angle);
-	if (getDistance(_fireX, _fireY, _x, _y) >= _range)
+	x = _x + _speed * cosf(_circleAngle + _angle);
+	y = _y +  _speed * -sinf(_circleAngle + _angle);
+	_circleAngle += 0.09f * _dir;
+
+	if (_circleAngle >= 2 * PI || _circleAngle <= -2 * PI)
 	{
 		_isActive = false;
 	}
-	_hitBox = RectMakeCenter(_x, _y, _radius * 2, _radius * 2);
+	_hitBox = RectMakeCenter(x, y, _radius * 2, _radius * 2);
 
 	if (_image != NULL)
 	{
 		++_count;
-		if (_count % 7 == 0) ++_index;
+		if (_count % 2 == 0) ++_index;
 		if (_index > _image->getMaxFrameX()) _index = 0;
 	}
 
 	//Bullet::collide();
 
 	if (_isActive)
-		RENDERMANAGER->addRender(_y + WIZARD::HITBOX_HEIGHT, this);
+		RENDERMANAGER->addRender(y + WIZARD::HITBOX_HEIGHT, this);
 }
 
 void WaterCircleBullet::render()
 {
-	_image->frameRender(getMemDC(), _x - _image->getFrameWidth() / 2 - CAM->getX(), _y - _image->getFrameHeight() / 2 - CAM->getY(), _index, 0);
+	_image->frameRender(getMemDC(), x - _image->getFrameWidth() / 2 - CAM->getX(), y - _image->getFrameHeight() / 2 - CAM->getY(), _index, 0);
 }
 
 bool WaterCircleBullet::collide(Actor * a)
@@ -41,5 +49,15 @@ bool WaterCircleBullet::collide(Actor * a)
 	}
 
 	return false;
+}
+
+void WaterCircleBullet::fire(Image * pixelMap, float x, float y, float angle, int dir)
+{
+	Bullet::fire(pixelMap, x, y, angle);
+	_circleAngle = 0;
+	this->x = x;
+	this->y - y;
+
+	_dir = dir;
 }
 

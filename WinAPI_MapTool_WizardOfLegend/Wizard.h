@@ -16,13 +16,14 @@ class Wizard :
 {
 	float _attackAngle;
 
+	int _attackCount;
 	int _axisX, _axisY;
 	int tileIndex[4];
 
 	int _attackIndex;
 
 	int _formerInput;
-	Image * _img[PLAYER_STATE_MAX];
+	Image * _img[PLAYER_STATE_MAX], *_iconImg;
 	int _delay[PLAYER_STATE_MAX];
 
 	fPOINT _returnPoint;
@@ -34,9 +35,12 @@ class Wizard :
 	FireDash *_fireDash;
 
 	Dash * _currentDash;
-	Skill *_attack;
+	Skill *_attack[2];
+	int _currentAttack;
 
 	EnemyManager *_enemyManager;
+
+	ProgressBar * _hpBar;
 public:
 	virtual HRESULT init();
 	virtual void release();
@@ -64,7 +68,7 @@ public:
 
 	float getAttackAngle() { return _attackAngle; }
 
-	Wizard() : _enemyManager(NULL), _iceDash(NULL) {}
+	Wizard() : _enemyManager(NULL), _iceDash(NULL), _hpBar(NULL) {}
 	~Wizard() {}
 
 };

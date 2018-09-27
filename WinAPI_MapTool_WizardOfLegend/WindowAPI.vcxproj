@@ -157,6 +157,7 @@
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Dash.h" />
     <ClInclude Include="Dummy.h" />
+    <ClInclude Include="EarthBoss.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCard.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Dash.cpp" />
     <ClCompile Include="Dummy.cpp" />
+    <ClCompile Include="EarthBoss.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCard.cpp" />
     <ClCompile Include="EnemyManager.cpp" />

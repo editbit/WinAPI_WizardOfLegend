@@ -2,7 +2,7 @@
 #include "Skill.h"
 #include "WaterCircleBullet.h"
 
-#define WATER_CIRCLE_BAX 8
+#define WATER_CIRCLE_BAX 10
 
 class WaterCircleAttack :
 	public Skill
@@ -10,7 +10,7 @@ class WaterCircleAttack :
 	Image *_motion[3];
 	int _index, _count;
 
-	int _attackCount;
+	int _dir;
 
 	WaterCircleBullet *_bullet[WATER_CIRCLE_BAX];
 public:
@@ -25,7 +25,7 @@ public:
 
 	virtual Image* attack(float x, float y, float angle);
 
-	virtual void setMotion(int index, Image * img) { if (index >= 2) return; _motion[index] = img; }
+	virtual void setMotion(int index, Image * img) { if (index >= 3) return; _motion[index] = img; }
 
 
 	WaterCircleAttack() {}

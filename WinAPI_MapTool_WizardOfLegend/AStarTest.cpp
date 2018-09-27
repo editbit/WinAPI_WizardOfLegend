@@ -223,7 +223,7 @@ void AStarTest::addOpenList(AStarTile * currentTile)
 					}
 				}
 				// 오른쪽 위
-				else if (node->getIndex().x == currentTile->getIndex().x &&
+				else if (node->getIndex().x == currentTile->getIndex().x + 1 &&
 					node->getIndex().y < currentTile->getIndex().y)
 				{
 					if (map[(i)* _maxWidthIndex + (j - 1)] & ATTR_UNMOVAL ||

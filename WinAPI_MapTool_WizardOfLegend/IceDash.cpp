@@ -24,7 +24,6 @@ void IceDash::update()
 	if (_dummy->getIsActive())
 	{
 		_dummy->update();
-		RENDERMANAGER->addRender(_dummy->getMoveBox().bottom, _dummy);
 	}
 }
 

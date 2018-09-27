@@ -1,6 +1,11 @@
 #pragma once
 #include "actor.h"
 #include "tileMap.h"
+#include "progressBar.h"
+
+#define ENEMY_HPBAR_WIDTH 50
+#define ENEMY_HPBAR_HEIGHT 5
+
 
 class Enemy :
 	public Actor
@@ -16,6 +21,7 @@ protected:
 
 	int _delayCount;
 
+	ProgressBar * _hpBar;
 public:
 	virtual HRESULT init();
 	virtual void release();
@@ -33,7 +39,9 @@ public:
 
 	virtual void changeState(int state);
 
-	Enemy() : _routingIndex(0), _player(NULL) {}
+	virtual void freeze(float x, float y);
+
+	Enemy() : _routingIndex(0), _player(NULL), _hpBar(NULL) {}
 	~Enemy() {}
 };
 

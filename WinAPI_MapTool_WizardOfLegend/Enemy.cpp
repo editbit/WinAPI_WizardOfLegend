@@ -10,15 +10,34 @@ HRESULT Enemy::init()
 	_delayCount = 0;
 
 	_z = 0;
+
+
+	if (_hpBar == NULL)
+	{
+		_hpBar = new ProgressBar;
+		_hpBar->init("hpBarFront", "hpBarBack", 120, 63, ENEMY_HPBAR_WIDTH, ENEMY_HPBAR_HEIGHT);
+		_maxHp = 100;	// 맥스HP
+		_hp = 100;	// 현재 에너지(이미지수정때문에29)
+		_hpBar->setGauge(_hp, _maxHp);
+	}
 	return S_OK;
 }
 
 void Enemy::release()
 {
+	_hpBar->release();
+	SAFE_DELETE(_hpBar);
 }
 
 void Enemy::update()
 {
+	_hpBar->setX(_x - ENEMY_HPBAR_WIDTH / 2 - CAM->getX());
+	_hpBar->setY(_moveBox.bottom - CAM->getY());
+	_hpBar->update();
+	_hpBar->setGauge(_hp, _maxHp);
+
+	_moveBox = RectMakeCenter(_x, _y, ENEMY::MOVEBOX_WIDTH, ENEMY::MOVEBOX_HEIGHT);
+	_hitBox = RectMakeCenter(_x, _moveBox.top, ENEMY::HITBOX_WIDTH, ENEMY::HITBOX_HEIGHT);
 }
 
 void Enemy::render()
@@ -28,7 +47,18 @@ void Enemy::render()
 		for (int i = 0; i < _routing.size(); ++i)
 		{
 			Rectangle(getMemDC(), RectMake(_routing[i].x * TILESIZE, _routing[i].y * TILESIZE, TILESIZE, TILESIZE), CAM->getX(), CAM->getY());
+
 		}
+
+		char str[50];
+		sprintf_s(str, "%d", _state);
+		TextOut(UIMANAGER->getUIDC(), _moveBox.left + 10 - CAM->getX(), _moveBox.top + 10 - CAM->getY(), str, strlen(str));
+		//Rectangle(getMemDC(),_moveBox, CAM->getX(), CAM->getY());
+	}
+
+	if (_delayCount > 0 && _state == ENEMY::HIT)
+	{
+		_hpBar->render();
 	}
 	//Rectangle(getMemDC(), _moveBox, CAM->getX(), CAM->getY());
 }
@@ -220,4 +250,12 @@ void Enemy::changeState(int state)
 		_speed = 0;
 		break;
 	}
+}
+
+void Enemy::freeze(float x, float y)
+{
+	_x = x; _y = y;
+	_state = ENEMY::HIT;
+	_delayCount = 2;
+	_speed = 0;
 }

@@ -31,8 +31,6 @@ HRESULT Magician::init()
 	_speed = 0;
 
 
-	tempBullet = new Bullet;
-	tempBullet->init(20, 5, 5, 500, "stoneBullet");
 	_shootingAngle = 0;
 
 	if (RND->getInt(2) == 0)
@@ -63,12 +61,15 @@ HRESULT Magician::init()
 
 void Magician::release()
 {
-	tempBullet->release();
-	SAFE_DELETE(tempBullet);
+	Enemy::release();
+
+	_attack->release();
+	SAFE_DELETE(_attack);
 }
 
 void Magician::update()
 {
+
 	if (_state == ENEMY::FALL)
 	{
 		_z += 7;
@@ -116,8 +117,7 @@ void Magician::update()
 	move();
 
 	collide();
-	_moveBox = RectMakeCenter(_x, _y, ENEMY::MOVEBOX_WIDTH, ENEMY::MOVEBOX_HEIGHT);
-	_hitBox = RectMakeCenter(_x, _y, ENEMY::HITBOX_WIDTH, ENEMY::HITBOX_HEIGHT);
+	Enemy::update();
 }
 
 void Magician::render()
@@ -175,22 +175,6 @@ void Magician::attack()
 
 	_attack->attack(_x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2, _shootingAngle);
 
-	return;
-
-	if (tempBullet->getIsActive())
-		return;
-
-	tempBullet->fire(_pixelMap, _x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2, _shootingAngle);
-
-	vector<Bullet *>* enemyBullet = BULLETMANAGER->getEnemyBullets();
-	for (int i = 0; i < enemyBullet->size(); ++i)
-	{
-		if (enemyBullet->at(i) == NULL)
-		{
-			enemyBullet->at(i) = tempBullet;
-			break;
-		}
-	}
 }
 
 void Magician::move()

@@ -132,6 +132,21 @@
     <Filter Include="MySkill\Attack\WaterCircleAttack">
       <UniqueIdentifier>{a1ec8c27-20e8-435c-bd3f-22f64924b05d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyEnemy\Magician">
+      <UniqueIdentifier>{acf3d40d-b43a-4a2f-86e1-972f84f4bc38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEnemy\Rogue">
+      <UniqueIdentifier>{c9f2ce1c-c8b9-4825-a2ab-760d696266cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEnemy\ShadowEnemy">
+      <UniqueIdentifier>{c06486da-4a3a-4c46-a858-36b659dd99e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEnemy\Boss">
+      <UniqueIdentifier>{e7a30bdd-c7b9-41a8-a43b-16666f81a655}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEnemy\Boss\EarthBoss">
+      <UniqueIdentifier>{9d1fd87a-4d53-45da-ad21-c001c6761921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -287,15 +302,6 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>MyEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="Magician.h">
-      <Filter>MyEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Rogue.h">
-      <Filter>MyEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadowEnemy.h">
-      <Filter>MyEnemy</Filter>
-    </ClInclude>
     <ClInclude Include="Dash.h">
       <Filter>MySkill\Dash</Filter>
     </ClInclude>
@@ -346,6 +352,18 @@
     </ClInclude>
     <ClInclude Include="WaterCircleBullet.h">
       <Filter>MySkill\Attack\WaterCircleAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Magician.h">
+      <Filter>MyEnemy\Magician</Filter>
+    </ClInclude>
+    <ClInclude Include="Rogue.h">
+      <Filter>MyEnemy\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowEnemy.h">
+      <Filter>MyEnemy\ShadowEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EarthBoss.h">
+      <Filter>MyEnemy\Boss\EarthBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -490,15 +508,6 @@
     <ClCompile Include="Bomb.cpp">
       <Filter>MyStuff</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowEnemy.cpp">
-      <Filter>MyEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Rogue.cpp">
-      <Filter>MyEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Magician.cpp">
-      <Filter>MyEnemy</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>MyEnemy</Filter>
     </ClCompile>
@@ -552,6 +561,18 @@
     </ClCompile>
     <ClCompile Include="WaterCircleBullet.cpp">
       <Filter>MySkill\Attack\WaterCircleAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Magician.cpp">
+      <Filter>MyEnemy\Magician</Filter>
+    </ClCompile>
+    <ClCompile Include="Rogue.cpp">
+      <Filter>MyEnemy\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowEnemy.cpp">
+      <Filter>MyEnemy\ShadowEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EarthBoss.cpp">
+      <Filter>MyEnemy\Boss\EarthBoss</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
