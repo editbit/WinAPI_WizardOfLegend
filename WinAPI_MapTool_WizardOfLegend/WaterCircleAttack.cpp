@@ -18,6 +18,7 @@ HRESULT WaterCircleAttack::init()
 
 	_description = "근접 스킬";
 
+	_frameCount = 5;
 	return S_OK;
 }
 

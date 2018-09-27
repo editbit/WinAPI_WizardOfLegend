@@ -175,6 +175,9 @@ void GamePlayScene::loadEnemy()
 		case ROGUE:
 			temp = new Rogue;
 			break;
+		case EARTH_BOSS:
+			temp = new EarthBoss;
+			break;
 		}
 
 		if (temp == NULL) continue;

@@ -175,14 +175,14 @@ void StartLoadingScene::loadingImage()
 	// enemy - earth boss
 
 
-	_loading->loadFrameImage("earthBoss_idle", "Texture/Enemy/Boss/bossIdle_66x112_1x1.bmp", 66, 112, 1, 1);
-	_loading->loadFrameImage("earthBoss_attack1", "Texture/Enemy/Boss/bossAttack1_400x108_5x1.bmp", 400, 108, 5, 1);
-	_loading->loadFrameImage("earthBoss_attack2", "Texture/Enemy/Boss/bossAttack2_610x480_5x4.bmp", 610, 480, 5, 4);
-	_loading->loadFrameImage("earthBoss_attack3", "Texture/Enemy/Boss/bossAttack3_240x112_3x1.bmp", 240, 112, 3, 1);
-	_loading->loadFrameImage("earthBoss_attackDelay", "Texture/Enemy/Boss/bossAttackDelay_425x104_5x1.bmp", 425, 104, 5, 1);
-	_loading->loadFrameImage("earthBoss_dead", "Texture/Enemy/Boss/bossDead_60x86_1x1.bmp", 60, 86, 1, 1);
-	_loading->loadFrameImage("earthBoss_hit", "Texture/Enemy/Boss/bossHit_330x228_5x2.bmp", 330, 228, 5, 2);
-	_loading->loadFrameImage("earthBoss_jumpAttack", "Texture/Enemy/Boss/bossJumpAttack_720x104_9x1.bmp", 720, 104, 9, 1);
+	_loading->loadFrameImage("earthBoss_idle", "Texture/Enemy/Boss/bossIdle_132x224_1x1.bmp", 132, 224, 1, 1);
+	_loading->loadFrameImage("earthBoss_attack1", "Texture/Enemy/Boss/bossAttack1_800x216_5x1.bmp", 800, 216, 5, 1);
+	_loading->loadFrameImage("earthBoss_attack2", "Texture/Enemy/Boss/bossAttack2_1220x960_5x4.bmp", 1220, 960, 5, 4);
+	_loading->loadFrameImage("earthBoss_attack3", "Texture/Enemy/Boss/bossAttack3_480x224_3x1.bmp", 480, 224, 3, 1);
+	_loading->loadFrameImage("earthBoss_attackDelay", "Texture/Enemy/Boss/bossAttackDelay_850x208_5x1.bmp", 850, 208, 5, 1);
+	_loading->loadFrameImage("earthBoss_dead", "Texture/Enemy/Boss/bossDead_120x172_1x1.bmp", 120, 172, 1, 1);
+	_loading->loadFrameImage("earthBoss_hit", "Texture/Enemy/Boss/bossHit_660x456_5x2.bmp", 660, 456, 5, 2);
+	_loading->loadFrameImage("earthBoss_jumpAttack", "Texture/Enemy/Boss/bossJumpAttack_1440x208_9x1.bmp", 1440, 208, 9, 1);
 
 
 	// player

@@ -6,6 +6,7 @@
 #include "ShadowEnemy.h"
 #include "Magician.h"
 #include "Rogue.h"
+#include "EarthBoss.h"
 #include "EnemyManager.h"
 #include "Bomb.h"
 

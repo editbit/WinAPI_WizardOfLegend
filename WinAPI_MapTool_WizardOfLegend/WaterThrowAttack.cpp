@@ -14,6 +14,8 @@ HRESULT WaterThrowAttack::init()
 	}
 
 	_description = "적을 뚫고 지나가는 물을 던지는 스킬";
+
+	_frameCount = 5;
 	return S_OK;
 }
 

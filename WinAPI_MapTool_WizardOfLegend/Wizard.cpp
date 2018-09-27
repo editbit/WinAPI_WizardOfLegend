@@ -166,7 +166,7 @@ void Wizard::render()
 
 	if (KEYMANAGER->isToggleKey('9'))
 	{
-		Rectangle(getMemDC(), _moveBox, CAM->getX(), CAM->getY());
+		Rectangle(getMemDC(), _hitBox, CAM->getX(), CAM->getY());
 	}
 
 	_inven->renderEquipSkill();

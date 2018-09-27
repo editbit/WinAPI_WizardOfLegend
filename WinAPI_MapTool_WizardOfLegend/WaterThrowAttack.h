@@ -22,7 +22,6 @@ public:
 
 	virtual Image * getImage() { return _motion[_attackCount]; }
 	virtual int getChangableIndex() { return _motion[_attackCount]->getMaxFrameX() * 0.75f; }
-	virtual int getFrameCount() { return 5; }
 
 	virtual Image* attack(float x, float y, float angle);
 

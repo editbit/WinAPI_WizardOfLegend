@@ -81,7 +81,7 @@ enum OBJECT
 
 enum ENEMY_TYPE
 {
-	ENEMY_NONE = -1, SHADOW = 0, MAGE, ROGUE
+	ENEMY_NONE = -1, SHADOW = 0, MAGE, ROGUE, EARTH_BOSS
 };
 
 //À§Ä¡ÁÂÇ¥

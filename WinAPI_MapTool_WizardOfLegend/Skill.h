@@ -16,6 +16,7 @@ protected:
 	Image * _iconImg;
 	int _skillType;
 	int _attackCount;
+	int _frameCount;
 
 	float _power;
 	
@@ -41,7 +42,8 @@ public:
 	virtual Image* attack(float x, float y, float angle) { return NULL; }
 	virtual int getChangableIndex() { return 100; }
 	virtual bool getIsActive() { return _isActive; }
-	virtual int getFrameCount() { return 5; }
+	void setFrameCount(int frameCount) { _frameCount = frameCount; }
+	int getFrameCount() { return _frameCount; }
 
 	virtual void setLinkEnemyManager(EnemyManager *em) { _enemyManager = em; }
 	virtual void setLinkPlayer(Actor* player) { _player = player; }
@@ -55,7 +57,7 @@ public:
 
 	string getDescription() const { return _description; } 
 
-	void setMotion(int index, Image * img) { return; }
+	virtual void setMotion(int index, Image * img) { return; }
 	
 	Skill() :_player(NULL), _enemyManager(NULL), _isActive(false), _power(10), _description("") {}
 	Skill(Actor *p, EnemyManager *em) :_player(p), _enemyManager(em), _isActive(false), _power(10), _description("") {}

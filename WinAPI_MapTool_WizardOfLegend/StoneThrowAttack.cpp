@@ -12,6 +12,8 @@ HRESULT StoneThrowAttack::init()
 	}
 
 	_description = "돌을 던지는 스킬";
+
+	_frameCount = 5;
 	return S_OK;
 }
 

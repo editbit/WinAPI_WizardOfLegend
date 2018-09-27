@@ -1,7 +1,7 @@
 #pragma once
 #include "MaptoolCard.h"
 
-#define SAMPLE_ENEMY_MAX 3
+#define SAMPLE_ENEMY_MAX 4
 #define SAMPLE_ENEMY_RC_SIZE 80
 
 struct SampleEnemy

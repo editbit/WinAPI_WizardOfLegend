@@ -70,6 +70,8 @@ void EnemyCard::settingSample()
 	_sampleEnemy[i++].img = IMAGEMANAGER->findImage("shadow_idle");
 	_sampleEnemy[i++].img = IMAGEMANAGER->findImage("mage_idle");
 	_sampleEnemy[i++].img = IMAGEMANAGER->findImage("rogue_idle");
+	_sampleEnemy[i++].img = IMAGEMANAGER->findImage("earthBoss_idle");
+
 
 	for (int i = 0; i < _sampleEnemy.size(); ++i)
 	{
