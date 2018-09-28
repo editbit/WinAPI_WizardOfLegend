@@ -46,6 +46,7 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+	void rewindRender();
 
 	void settingReturnPoint();
 	void settingDir();
@@ -69,7 +70,7 @@ public:
 	float getAttackAngle() { return _attackAngle; }
 
 	Wizard() : _enemyManager(NULL), _iceDash(NULL), _hpBar(NULL) {}
-	~Wizard() {}
+	virtual ~Wizard() {}
 
 };
 

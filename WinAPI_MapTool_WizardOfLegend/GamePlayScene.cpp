@@ -62,7 +62,10 @@ HRESULT GamePlayScene::init()
 	BULLETMANAGER->setLinkEnemyManaer(_enemyManager);
 	BULLETMANAGER->setLinkPlayer(_wizard);
 	BULLETMANAGER->setLinkTileMap(_tileMap->getTiles());
+
 	Bomb::setLinkTileMap(_tileMap->getTiles());
+
+
 	return S_OK;
 }
 
@@ -112,6 +115,22 @@ void GamePlayScene::update()
 
 	stuffFrameSetting();
 	CAM->videoShooting(_wizard->getX(), _wizard->getY());
+
+
+	
+	if (tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].objType == OBJECT_EXIT)
+	{
+		if (KEYMANAGER->isOnceKeyDown('F'))
+		{
+			SCENEMANAGER->loadScene("LoadingScene");
+			RENDERMANAGER->clear();
+			return;
+		}
+
+		IMAGEMANAGER->findImage("button_f")->render(UIMANAGER->getUIDC(),
+			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.left + 32 - CAM->getX(),
+			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.top - TILESIZE - CAM->getY());
+	}
 }
 
 void GamePlayScene::render()
@@ -129,6 +148,7 @@ void GamePlayScene::render()
 	if (_wizard->getState() != WIZARD::FALL)
 		_aimImg->rotateRender(getMemDC(), _wizard->getX() - CAM->getX(), _wizard->getY() - CAM->getY(), _wizard->getAttackAngle());
 	RENDERMANAGER->render(getMemDC());
+
 
 	if (KEYMANAGER->isToggleKey('M'))
 	{

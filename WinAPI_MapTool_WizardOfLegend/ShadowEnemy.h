@@ -24,6 +24,6 @@ public:
 	float getCenterY() { return _moveBox.bottom - _img[_state]->getFrameHeight() / 2; }
 
 	ShadowEnemy() {}
-	~ShadowEnemy() {}
+	virtual ~ShadowEnemy() {}
 };
 

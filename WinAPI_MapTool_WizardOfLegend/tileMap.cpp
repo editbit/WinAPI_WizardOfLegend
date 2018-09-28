@@ -54,9 +54,11 @@ void tileMap::update(void)
 	{
 		for (int j = startX; j < endX; ++j)
 		{
-			if (_tiles[i * TILEX + j].objType == OBJECT_NONE || _tiles[i * TILEX + j].objType == OBJECT_BLOCK1) continue;
+			//if (_tiles[i * TILEX + j].objType == OBJECT_NONE || _tiles[i * TILEX + j].objType == OBJECT_BLOCK1) continue;
 			//_objectCard._sampleObject[_tiles[i*TILEX +j].objIndex].objImg->render(getMemDC(), _tiles[i * TILEX + j].rc.left - CAM->getX(), _tiles[i * TILEX + j].rc.bottom - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getHeight() - CAM->getY());
 
+			if (_tiles[i * TILEX + j].obj == NULL)
+				continue;
 			_tiles[i*TILEX + j].obj->update();
 			RENDERMANAGER->addRender(_tiles[i*TILEX + j].rc.bottom, _tiles[i*TILEX + j].obj);
 		}
@@ -226,6 +228,29 @@ bool tileMap::loadingDone()
 				}
 
 			}
+			else if (_tiles[_loadingIndex].objType == OBJECT_ENTRANCE || _tiles[_loadingIndex].objType == OBJECT_EXIT || _tiles[_loadingIndex].objType == OBJECT_DECO)
+			{
+				_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->render(tankGameMap->getMemDC(),
+					(_tiles[_loadingIndex].rc.right + _tiles[_loadingIndex].rc.left - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getWidth()) * 0.5f,
+					(_tiles[_loadingIndex].rc.bottom + _tiles[_loadingIndex].rc.top - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getHeight()) * 0.5f);
+
+				_tiles[_loadingIndex].obj = NULL;
+
+				if (_tiles[_loadingIndex].objType == OBJECT_ENTRANCE)
+				{
+					SAVEDATA->setStartPos(
+							(_tiles[_loadingIndex].rc.right + _tiles[_loadingIndex].rc.left) * 0.5f,
+							(_tiles[_loadingIndex].rc.bottom + _tiles[_loadingIndex].rc.top) * 0.5f
+					);
+				}
+				else if (_tiles[_loadingIndex].objType == OBJECT_EXIT)
+				{
+					SAVEDATA->setEndPos(
+						(_tiles[_loadingIndex].rc.right + _tiles[_loadingIndex].rc.left) * 0.5f,
+						(_tiles[_loadingIndex].rc.bottom + _tiles[_loadingIndex].rc.top) * 0.5f
+					);
+				}
+			}
 			else
 			{
 				_tiles[_loadingIndex].obj = new Stuff(_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg,
@@ -233,6 +258,17 @@ bool tileMap::loadingDone()
 					_tiles[_loadingIndex].rc.bottom - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getHeight() });
 			}
 		}
+	}
+
+	if (_loadingIndex >= TILEX * TILEY)
+	{
+		_objectCard._sampleObject[36].objImg->render(tankGameMap->getMemDC(),
+			SAVEDATA->getStartPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
+			SAVEDATA->getStartPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
+
+		_objectCard._sampleObject[35].objImg->render(tankGameMap->getMemDC(),
+			SAVEDATA->getEndPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
+			SAVEDATA->getEndPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
 	}
 
 	SelectObject(_miniMap->getMemDC(), oPen);
@@ -347,6 +383,12 @@ void tileMap::load(const char * fileName)
 					_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
 			}
 
+		}
+		else if (_tiles[i].objType == OBJECT_ENTRANCE || _tiles[i].objType == OBJECT_EXIT || _tiles[i].objType == OBJECT_DECO)
+		{
+			_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(tankGameMap->getMemDC(), 
+				(_tiles[i].rc.right + _tiles[i].rc.left - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getWidth()) * 0.5f,
+				(_tiles[i].rc.bottom + _tiles[i].rc.top - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight()) * 0.5f);
 		}
 		else
 		{

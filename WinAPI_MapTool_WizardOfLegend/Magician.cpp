@@ -93,8 +93,6 @@ void Magician::update()
 		else if (_state != ENEMY::ATTACK)
 		{
 			moveToPlayer();
-			//if (_state == ENEMY::WALK)
-			//	move();
 		}
 		if (_state == ENEMY::ATTACK)
 		{
@@ -132,11 +130,6 @@ void Magician::render()
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
 		_moveBox.bottom - _img[_state]->getFrameHeight() + _z - CAM->getY(), _index, _dir);
 
-	//if (_state == ENEMY::ATTACK && _index >= 3 && _index < _img[_state]->getMaxFrameX() - 1)
-	//{
-	//	//Ellipse(getMemDC(), RectMakeCenter(_x, _moveBox.bottom - _img[_state]->getFrameHeight()/2, 20, 20), CAM->getX(), CAM->getY());
-	//	tempBullet->getImage()->render(getMemDC(), _x - tempBullet->getImage()->getWidth()/2 - CAM->getX(), _moveBox.bottom - _img[_state]->getFrameHeight() / 2 - tempBullet->getImage()->getHeight()/2 - CAM->getY());
-	//}
 }
 
 

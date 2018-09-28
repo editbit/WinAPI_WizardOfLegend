@@ -42,6 +42,6 @@ public:
 	virtual void freeze(float x, float y);
 
 	Enemy() : _routingIndex(0), _player(NULL), _hpBar(NULL) {}
-	~Enemy() {}
+	virtual ~Enemy() {}
 };
 

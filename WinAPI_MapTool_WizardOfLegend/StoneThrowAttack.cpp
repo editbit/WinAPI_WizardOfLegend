@@ -3,6 +3,10 @@
 
 HRESULT StoneThrowAttack::init()
 {
+	Skill::init();
+
+	_coolTime = 180;
+
 	_iconImg = IMAGEMANAGER->findImage("stoneThrowIcon");
 	_skillType = ATTACK_SKILL;
 	for (int i = 0; i < STONE_THROW_BULLET_MAX; ++i)
@@ -28,6 +32,7 @@ void StoneThrowAttack::release()
 
 void StoneThrowAttack::update()
 {
+	Skill::update();
 }
 
 void StoneThrowAttack::render()

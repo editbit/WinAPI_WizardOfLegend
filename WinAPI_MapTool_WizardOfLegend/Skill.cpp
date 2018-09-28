@@ -7,6 +7,8 @@ HRESULT Skill::init()
 {
 	_power = 10;
 
+	_coolTime = 0;
+	_coolTimeCount = 0;
 	return S_OK;
 }
 
@@ -16,6 +18,9 @@ void Skill::release()
 
 void Skill::update()
 {
+	++_coolTimeCount;
+	if (_coolTimeCount >= _coolTime)
+		_coolTimeCount = _coolTime;
 }
 
 void Skill::render()

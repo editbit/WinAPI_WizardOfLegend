@@ -3,6 +3,7 @@
 
 HRESULT WaterCircleAttack::init()
 {
+	Skill::init();
 	_iconImg = IMAGEMANAGER->findImage("waterCircleIcon");
 	_skillType = ATTACK_SKILL;
 	_attackCount = 0;

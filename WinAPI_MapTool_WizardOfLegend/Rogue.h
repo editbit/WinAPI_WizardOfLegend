@@ -23,6 +23,6 @@ public:
 	float getCenterY() { return _moveBox.bottom - _img[_state]->getFrameHeight() / 2; }
 
 	Rogue() {}
-	~Rogue() {}
+	virtual ~Rogue() {}
 };
 

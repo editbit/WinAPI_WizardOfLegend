@@ -2,6 +2,8 @@
 #include "gameNode.h"
 #include "tileMap.h"
 
+#define REWIND_SIZE 120
+
 class Actor : public GameNode
 {
 protected:
@@ -31,6 +33,10 @@ protected:
 	tagTile *tiles;		//타일
 	DWORD *attribute;	//속성
 	Image * _pixelMap;
+
+	Actor *_preState;
+	bool _isRewind;
+	int _rewindIndex, _rewindStartIndex;
 public:		// 멤버 함수
 	virtual void attack() {}
 	virtual void damaged(Actor *e) {}	// 체력 감소, 넉백, 동료 떨어트리기(오투스), 서있을 때 피격시 사라짐(게디, 알폰스)
@@ -39,6 +45,10 @@ public:		// 멤버 함수
 	virtual bool collide(Actor* a);
 	virtual void throwed(float speed, float angle);
 	virtual void drawUI() {}
+
+	void rewindInit();
+	void rewind();
+	void rewindRelease();
 
 	virtual void changeState(int state);
 	virtual bool checkMovable(COLORREF color);
@@ -94,6 +104,6 @@ public:		// 멤버 함수
 	virtual void release();
 public:
 	Actor();
-	virtual ~Actor() {}
+	virtual ~Actor();
 };
 

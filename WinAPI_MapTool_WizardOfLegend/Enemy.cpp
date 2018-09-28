@@ -4,6 +4,8 @@
 
 HRESULT Enemy::init()
 {
+	Actor::init();
+
 	_routingIndex = 0;
 	_hp = 100;
 	_hitCount = 0;

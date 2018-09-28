@@ -20,6 +20,7 @@ public:
 	
 	void setLinkTileMap(tileMap *tiles) { _tileMap = tiles; }
 
+	void clear() { renderList.clear(); }
 	void addRender(float z, Actor *name);
 	//void addActor(float z, Actor *name);
 	void addBackground(float z, BackgroundActor *backActor);

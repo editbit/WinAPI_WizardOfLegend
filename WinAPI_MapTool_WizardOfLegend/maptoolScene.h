@@ -70,8 +70,11 @@ private:
 	RECT _room;
 	int roomX, roomY;
 
-
 	RECT _rightBoard;
+
+	Image _selectBtn[2];
+	RECT _stageSelect[2];
+	string _stageName;
 public:
 	HRESULT init();
 	void release();

@@ -3,6 +3,8 @@
 
 HRESULT StoneAttack::init()
 {
+	Skill::init();
+
 	_iconImg = IMAGEMANAGER->findImage("stoneAttackIcon");
 	_skillType = ATTACK_SKILL;
 	_attackCount = 0;
@@ -33,6 +35,26 @@ void StoneAttack::release()
 
 void StoneAttack::update()
 {
+	Skill::update();
+
+	if (!_isActive)
+		return;
+
+	bool isFire = false;
+	for (int i = 0; i < ATTACK_BULLET; ++i)
+	{
+		if (!_bullet[i]->getIsActive())
+			continue;
+
+		_bullet[i]->setX(_bullet[i]->getX() + cos(_player->getAngle()) * _player->getSpeed());
+		_bullet[i]->setY(_bullet[i]->getY() - sin(_player->getAngle()) * _player->getSpeed());
+		isFire = true;
+	}
+
+	if (!isFire)
+	{
+		_isActive = false;
+	}
 }
 
 void StoneAttack::render()
@@ -41,7 +63,7 @@ void StoneAttack::render()
 
 Image* StoneAttack::attack(float x, float y, float angle)
 {
-	x = x + cos(angle) * 80;  y = y - sin(angle) * 80;
+	x = x + cos(angle) * _attackDistance;  y = y - sin(angle) * _attackDistance;
 
 	for (int i = 0; i < ATTACK_BULLET; ++i)
 	{
@@ -56,6 +78,10 @@ Image* StoneAttack::attack(float x, float y, float angle)
 			_bullet[i]->fire(_pixelMap, x, y, angle);
 			
 			_bulletList->at(j) = _bullet[i];
+
+			_isActive = true;
+
+			_coolTimeCount = 0;
 
 			break;
 		}

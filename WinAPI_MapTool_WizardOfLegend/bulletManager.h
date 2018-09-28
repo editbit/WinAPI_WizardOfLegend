@@ -20,6 +20,7 @@ class BulletManager : public SingletonBase<BulletManager>
 	struct tagTile *_tiles;
 	EnemyManager *_enemyManager;
 	Actor *_player;
+	Actor *_dummy;
 
 	RECT temp;
 public:
@@ -36,9 +37,10 @@ public:
 
 	void setLinkTileMap(tagTile* tiles) { _tiles = tiles; }
 	void setLinkPlayer(Actor * p) { _player = p; }
+	void setLinkDummy(Actor * p) { _dummy = p; }
 	void setLinkEnemyManaer(EnemyManager * em) { _enemyManager = em; }
 
-	BulletManager() : _enemyManager(NULL), _player(NULL) {}
+	BulletManager() : _enemyManager(NULL), _player(NULL), _dummy(NULL) {}
 	~BulletManager() {}
 };
 

@@ -23,6 +23,7 @@ public:
 
 	void frameSetting();
 
+	void settingAttack();
 	virtual void attack();
 	virtual void move();
 
@@ -36,8 +37,9 @@ public:
 	virtual void changeState(int state);
 	virtual void damaged(Actor *e);
 	void settingDir();
+	virtual void freeze(float x, float y);
 
 	EarthBoss() {}
-	~EarthBoss() {}
+	virtual ~EarthBoss() {}
 };
 

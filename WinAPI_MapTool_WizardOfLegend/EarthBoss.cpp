@@ -4,6 +4,8 @@
 
 HRESULT EarthBoss::init()
 {
+	Actor::init();
+
 	_img[WIZARD::IDLE] = IMAGEMANAGER->findImage("earthBoss_idle");
 	_img[WIZARD::WALK] = IMAGEMANAGER->findImage("earthBoss_idle");
 	_img[WIZARD::ATTACK] = IMAGEMANAGER->findImage("earthBoss_attack1");
@@ -28,32 +30,38 @@ HRESULT EarthBoss::init()
 
 	_attack[0] = new StoneThrowAttack;
 	_attack[0]->setLinkBulletList(BULLETMANAGER->getEnemyBullets());
-	_attack[0]->setLinkPlayer(*_player);
+	_attack[0]->setLinkPlayer(this);
 	_attack[0]->setLinkPixelMap(_pixelMap);
 	_attack[0]->setLinkEnemyManager(NULL);
 	_attack[0]->setMotion(0, IMAGEMANAGER->findImage("earthBoss_attack1"));
 	_attack[0]->init();
-
+	_attack[0]->setFrameCount(15);
+	_attack[0]->setAttackIndex(2);
 
 	_attack[1] = new StoneAttack;
 	_attack[1]->setLinkBulletList(BULLETMANAGER->getEnemyBullets());
-	_attack[1]->setLinkPlayer(*_player);
+	_attack[1]->setLinkPlayer(this);
 	_attack[1]->setLinkPixelMap(_pixelMap);
 	_attack[1]->setLinkEnemyManager(NULL);
 	_attack[1]->setMotion(0, IMAGEMANAGER->findImage("earthBoss_attack2"));
 	_attack[1]->setMotion(1, IMAGEMANAGER->findImage("earthBoss_attack2"));
 	_attack[1]->init();
+	_attack[1]->setFrameCount(15);
+	_attack[1]->setAttackIndex(1);
+	_attack[1]->setAttackDistance(125);
+	_attack[1]->setSpeed(10);
 
 
 	_attack[2] = new WaterThrowAttack;
 	_attack[2]->setLinkBulletList(BULLETMANAGER->getEnemyBullets());
-	_attack[2]->setLinkPlayer(*_player);
+	_attack[2]->setLinkPlayer(this);
 	_attack[2]->setLinkPixelMap(_pixelMap);
 	_attack[2]->setLinkEnemyManager(NULL);
 	_attack[2]->setMotion(0, IMAGEMANAGER->findImage("earthBoss_attack3"));
 	_attack[2]->setMotion(1, IMAGEMANAGER->findImage("earthBoss_attack3"));
 	_attack[2]->init();
 	_attack[2]->setFrameCount(15);
+	_attack[2]->setAttackIndex(2);
 
 
 
@@ -108,20 +116,15 @@ void EarthBoss::update()
 	{
 		if (_state != WIZARD::ATTACK_DELAY)
 		{
-			if (getDistance(_x, _y, (*_player)->getX(), (*_player)->getY()) < TILESIZE * 5 && _state != WIZARD::ATTACK)
+			if (_state != WIZARD::ATTACK)
 			{
 				changeState(WIZARD::ATTACK);
-				_shootingAngle = getAnglef(_x, _y, (*_player)->getX(), (*_player)->getY());
-			}
-			else if (_state != WIZARD::ATTACK)
-			{
-				moveToPlayer();
-				//if (_state == ENEMY::WALK)
-				//	move();
+				settingAttack();
 			}
 			if (_state == WIZARD::ATTACK)
 			{
-				if (_index == _img[_state]->getMaxFrameX() && _count % _delay[_state] == 0)
+				//if (_index == _img[_state]->getMaxFrameX() && _count % _delay[_state] == 0)
+				if (_index == _attack[_currentAttack]->getAttackIndeX() && _count % _delay[_state] == 0)
 				{
 					attack();
 				}
@@ -137,6 +140,9 @@ void EarthBoss::update()
 	}
 
 	move();
+
+	if(_state == WIZARD::ATTACK)
+		_attack[_currentAttack]->update();
 
 	collide();
 
@@ -216,13 +222,21 @@ void EarthBoss::settingDir()
 	float angle = _angle * 180 / PI;
 
 	if (angle > 45 && angle < 135)
+	{
 		_dir = WIZARD::UP;
+	}
 	else if (angle >= 135 && angle <= 225)
+	{
 		_dir = WIZARD::LEFT;
+	}
 	else if (angle > 225 && angle < 315)
+	{
 		_dir = WIZARD::DOWN;
+	}
 	else
+	{
 		_dir = WIZARD::RIGHT;
+	}
 }
 
 
@@ -260,13 +274,16 @@ void EarthBoss::frameSetting()
 	}
 }
 
-void EarthBoss::attack()
+void EarthBoss::settingAttack()
 {
 	_currentAttack = RND->getInt(EARTH_BOSS_ATTACK_MAX);
-	_img[WIZARD::ATTACK] = _attack[_currentAttack]->attack(_x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2, _shootingAngle);
+
+	_angle = _shootingAngle = getAnglef(_x, _y, (*_player)->getX(), (*_player)->getY());
+
+	_img[WIZARD::ATTACK] = _attack[_currentAttack]->getImage();
 	_delay[WIZARD::ATTACK] = _attack[_currentAttack]->getFrameCount();
 
-	switch (_img[WIZARD::ATTACK]->getMaxFrameX())
+	switch (_img[WIZARD::ATTACK]->getMaxFrameY())
 	{
 	case 0:
 		_dir = 0;
@@ -284,6 +301,12 @@ void EarthBoss::attack()
 	}
 }
 
+void EarthBoss::attack()
+{
+	_speed = _attack[_currentAttack]->getSpeed();
+	_attack[_currentAttack]->attack(_x, _moveBox.bottom - _img[_state]->getFrameHeight() / 2, _shootingAngle);
+}
+
 void EarthBoss::move()
 {
 	_x += cos(_angle) *_speed;
@@ -291,4 +314,12 @@ void EarthBoss::move()
 
 	if (_routingIndex > 0 && ((int)_x / TILESIZE) == _routing[_routingIndex].x && ((int)_y / TILESIZE) == _routing[_routingIndex].y)
 		_routingIndex--;
+}
+
+void EarthBoss::freeze(float x, float y)
+{
+	_x = x; _y = y;
+	_state = WIZARD::HIT;
+	_delayCount = 2;
+	_speed = 0;
 }

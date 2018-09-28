@@ -24,6 +24,7 @@ void AttackBullet::update()
 		if (_index >= 3)
 			_isActive = false;
 	}
+	_hitBox = RectMakeCenter(_x, _y, _radius * 2, _radius * 2);
 
 	if (_isActive)
 		RENDERMANAGER->addRender(_y + WIZARD::MOVEBOX_HEIGHT, this);

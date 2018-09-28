@@ -325,10 +325,20 @@ void maptoolScene::render(void)
 			}
 			else
 			{
-				_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
-					//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
-					_tiles[selectIdx].rc.left - CAM->getX(),
-					_tiles[selectIdx].rc.bottom - _objectCard._sampleObject[_currentTile.x].objImg->getHeight() - CAM->getY());
+				if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO)
+				{
+					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
+						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
+						(_tiles[selectIdx].rc.right + _tiles[selectIdx].rc.left - _objectCard._sampleObject[_currentTile.x].objImg->getWidth())*0.5f - CAM->getX(),
+						(_tiles[selectIdx].rc.bottom + _tiles[selectIdx].rc.top - _objectCard._sampleObject[_currentTile.x].objImg->getHeight())*0.5f - CAM->getY());
+				}
+				else
+				{
+					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
+						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
+						_tiles[selectIdx].rc.left - CAM->getX(),
+						_tiles[selectIdx].rc.bottom - _objectCard._sampleObject[_currentTile.x].objImg->getHeight() - CAM->getY());
+				}
 			}
 		}
 		else if (_ctrlSelect == CTRL_ENEMYDRAW)
@@ -519,13 +529,7 @@ void maptoolScene::drawTile()
 					if (_tiles[i*TILEX + j].terrain == TR_WALL && getObjectType(_currentTile.x) != OBJECT_DECO) continue;
 
 					_tiles[i*TILEX + j].objIndex = _currentTile.x;
-					//_tiles[i*TILEX + j].objFrameY = _currentTile.y;
 					_tiles[i*TILEX + j].objType = getObjectType(_currentTile.x);
-
-					//miniMapRender
-					//_objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->render(_miniMap->getMemDC(), 
-						//_tiles[i*TILEX + j].rc.left, _tiles[i*TILEX + j].rc.top);
-
 
 					if (_objectCard.getFrameImageIndex() <= _currentTile.x)
 					{
@@ -536,9 +540,18 @@ void maptoolScene::drawTile()
 					}
 					else
 					{
-						_objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->render(_totalMap->getMemDC(),
-							_tiles[i*TILEX + j].rc.left,
-							_tiles[i*TILEX + j].rc.bottom - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getHeight());
+						if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO)
+						{
+							_objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->render(_totalMap->getMemDC(),
+								(_tiles[i*TILEX + j].rc.left + _tiles[i*TILEX + j].rc.right - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getWidth()) * 0.5f,
+								(_tiles[i*TILEX + j].rc.top + _tiles[i*TILEX + j].rc.bottom - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getHeight()) * 0.5f);
+						}
+						else
+						{
+							_objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->render(_totalMap->getMemDC(),
+								_tiles[i*TILEX + j].rc.left,
+								_tiles[i*TILEX + j].rc.bottom - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getHeight());
+						}
 					}
 				}
 				//현재버튼이 지우개냐?
@@ -970,9 +983,18 @@ void maptoolScene::load(void)
 			}
 			else
 			{
-				_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(_totalMap->getMemDC(),
-					_tiles[i].rc.left,
-					_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight());
+				if (_tiles[i].objType == OBJECT_ENTRANCE || _tiles[i].objType == OBJECT_EXIT || _tiles[i].objType == OBJECT_DECO)
+				{
+					_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(_totalMap->getMemDC(),
+						(_tiles[i].rc.right + _tiles[i].rc.left - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getWidth())*0.5f,
+						(_tiles[i].rc.bottom + _tiles[i].rc.top - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight())*0.5f);
+				}
+				else
+				{
+					_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(_totalMap->getMemDC(),
+						_tiles[i].rc.left,
+						_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight());
+				}
 			}
 		}
 		if (_enemyList[i].type != ENEMY_NONE)
@@ -1197,8 +1219,14 @@ OBJECT maptoolScene::getObjectType(int frameX, int frameY)
 	else if ((frameX >= 5 && frameX <= 10) ||
 		(frameX == 13))
 		return OBJECT_BREAKABLE;
-	else if (frameX == 35 || frameX == 30)
+	else if (frameX == 37 || frameX == 30)
 		return OBJECT_TRAP;
+	else if (frameX == 35)
+		return OBJECT_EXIT;
+	else if(frameX == 36)
+		return OBJECT_ENTRANCE;
+
+	//else if()
 
 	return OBJECT_WALL;
 }

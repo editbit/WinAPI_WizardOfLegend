@@ -179,7 +179,7 @@ void StartLoadingScene::loadingImage()
 	_loading->loadFrameImage("earthBoss_attack1", "Texture/Enemy/Boss/bossAttack1_800x216_5x1.bmp", 800, 216, 5, 1);
 	_loading->loadFrameImage("earthBoss_attack2", "Texture/Enemy/Boss/bossAttack2_1220x960_5x4.bmp", 1220, 960, 5, 4);
 	_loading->loadFrameImage("earthBoss_attack3", "Texture/Enemy/Boss/bossAttack3_480x224_3x1.bmp", 480, 224, 3, 1);
-	_loading->loadFrameImage("earthBoss_attackDelay", "Texture/Enemy/Boss/bossAttackDelay_850x208_5x1.bmp", 850, 208, 5, 1);
+	_loading->loadFrameImage("earthBoss_attackDelay", "Texture/Enemy/Boss/bossAttackDelay_510x208_3x1.bmp", 510, 208, 3, 1);
 	_loading->loadFrameImage("earthBoss_dead", "Texture/Enemy/Boss/bossDead_120x172_1x1.bmp", 120, 172, 1, 1);
 	_loading->loadFrameImage("earthBoss_hit", "Texture/Enemy/Boss/bossHit_660x456_5x2.bmp", 660, 456, 5, 2);
 	_loading->loadFrameImage("earthBoss_jumpAttack", "Texture/Enemy/Boss/bossJumpAttack_1440x208_9x1.bmp", 1440, 208, 9, 1);
@@ -248,6 +248,11 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("aim", "Texture/UI/aim_115x115.bmp", 115, 115, true, RGB(255, 0, 255));
 
 	_loading->loadImage("playerHpIcon", "Texture/UI/plyaerIcon_57x60.bmp", 57, 60, true, RGB(255, 0, 255));
+
+	_loading->loadImage("button_f", "Texture/UI/FButton_27x30.bmp", 27, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("button_left", "Texture/UI/buttonleft_31x35.bmp", 31, 35, true, RGB(255, 0, 255));
+	_loading->loadImage("button_right", "Texture/UI/buttonright_31x35.bmp", 31, 35, true, RGB(255, 0, 255));
+
 }
 
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
@@ -303,4 +308,9 @@ void StartLoadingScene::loadingObjectImage()
 	_loading->loadImage("나무4", "Texture/Object/나무4.bmp", 158, 182, true, RGB(255, 0, 255));	// 34
 	_loading->loadFrameImage("함정2", "Texture/Object/프레임_함정2.bmp", 128, 68, 2, 1);
 	_loading->loadFrameImage("보물상자1", "Texture/Object/프레임_보물상자1.bmp", 64, 188, 1, 2);	// 34
+
+
+	_loading->loadImage("출구", "Texture/Object/endButton_259x240.bmp", 259, 240, true, RGB(255, 0, 255));
+	_loading->loadImage("입구", "Texture/Object/startButton_259x240.bmp", 259, 240, true, RGB(255, 0, 255)); // 36
+	
 }

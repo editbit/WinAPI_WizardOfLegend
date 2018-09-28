@@ -4,10 +4,13 @@
 
 HRESULT Wizard::init()
 {
+	Actor::init();
+	rewindInit();
+
 	_speed = WIZARD::WALK_SPEED;
 
-	_oldX = _x = 10 * TILESIZE;
-	_oldY = _y = 27 * TILESIZE;
+	_oldX = _x = SAVEDATA->getStartPos().x;//10 * TILESIZE;
+	_oldY = _y = SAVEDATA->getStartPos().y;//27 * TILESIZE;
 
 	_state = WIZARD::IDLE;
 	_dir = WIZARD::DOWN;
@@ -69,6 +72,9 @@ HRESULT Wizard::init()
 
 void Wizard::release()
 {
+	Actor::release();
+	rewindRelease();
+
 	_inven->release();
 	SAFE_DELETE(_inven);
 
@@ -78,6 +84,20 @@ void Wizard::release()
 
 void Wizard::update()
 {
+	if (KEYMANAGER->isOnceKeyDown('P'))
+	{
+		_isRewind = !_isRewind;
+	}
+	if(_isRewind)
+	{
+		rewind();
+
+		_hpBar->update();
+		_hpBar->setGauge(_hp, _maxHp);
+		return;
+	}
+
+
 	if (_state == WIZARD::DEAD)
 	{
 		frameSetting();
@@ -150,15 +170,29 @@ void Wizard::update()
 		_currentDash->update();
 	}
 
+	_attack[_currentAttack]->update();
+
 	_hpBar->update();
 	_hpBar->setGauge(_hp, _maxHp);
 
 	collide();
 	frameSetting();
+
+
+	_preState[_rewindIndex++] = *this;
+	if (_rewindIndex >= REWIND_SIZE)
+		_rewindIndex = 0;
+	_rewindStartIndex = _rewindIndex;
 }
 
 void Wizard::render()
 {
+	if (_isRewind)
+	{
+		rewindRender();
+		return;
+	}
+
 	_img[_state]->frameRender(getMemDC(), 
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
 		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY() + _z,
@@ -173,6 +207,20 @@ void Wizard::render()
 
 	if (_inven->getIsActive())
 		_inven->render();
+
+	_hpBar->render();
+	_iconImg->render(UIMANAGER->getUIDC(), _iconImg->getX(), _iconImg->getY());
+}
+
+void Wizard::rewindRender()
+{
+	_img[_state]->alphaFrameRender(getMemDC(),
+		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
+		_moveBox.bottom - _img[_state]->getFrameHeight() - CAM->getY() + _z,
+		_index, _dir, 200);
+
+	_inven->renderEquipSkill();
+
 
 	_hpBar->render();
 	_iconImg->render(UIMANAGER->getUIDC(), _iconImg->getX(), _iconImg->getY());
@@ -281,6 +329,8 @@ void Wizard::inputProcess()
 		}
 		changeState(WIZARD::DASH);
 	}
+
+
 }
 
 

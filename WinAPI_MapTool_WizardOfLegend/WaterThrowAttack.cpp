@@ -3,6 +3,7 @@
 
 HRESULT WaterThrowAttack::init()
 {
+	Skill::init();
 	_iconImg = IMAGEMANAGER->findImage("waterThrowIcon");
 	_skillType = ATTACK_SKILL;
 	_attackCount = 0;
