@@ -12,7 +12,8 @@ HRESULT maptoolScene::init(void)
 
 	//맵툴셋팅
 	this->maptoolSetup();
-	_currentStage = 0;
+	_selectStage = 0;
+	_currentStage = -1;
 
 	//지형그리기 버튼으로 초기화
 	_ctrlSelect = CTRL_TERRAINDRAW;
@@ -311,31 +312,7 @@ void maptoolScene::maptoolSetup(void)
 
 	_cardDeckRect = RectMake(1100 + 120, 50, _cardDeck->getWidth(), _cardDeck->getHeight());
 
-
-	//왼쪽 게임화면 렉트 초기화
-	for (int i = 0; i < TILEY; i++)
-	{
-		for (int j = 0; j < TILEX; j++)
-		{
-			_tiles[i * TILEX + j].rc = RectMake(j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE);
-		}
-	}
-
-
-	//왼쪽화면을 모두 물로 기본타일 설정하기
-	for (int i = 0; i < TILEX * TILEY; i++)
-	{
-		_tiles[i].terrainFrameX = 1;
-		_tiles[i].terrainFrameY = 1;
-		_tiles[i].objIndex = 0;
-		//_tiles[i].objFrameY = 0;
-		//_tiles[i].terrain = getTerrainType(_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
-		_tiles[i].terrain = TR_NONE;
-		_tiles[i].objType = OBJECT_NONE;
-
-
-		_enemyList[i].type = ENEMY_NONE;
-	}
+	clearTiles();
 }
 
 bool maptoolScene::selectTerrain()
@@ -770,7 +747,7 @@ void maptoolScene::save(void)
 	HANDLE file;
 	DWORD write;
 
-	file = CreateFile("tiles.map", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+	file = CreateFile(("Stage/stage" + to_string(_selectStage) + ".map").c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL, NULL);
 	/*for (int i = 0; i < 200; ++i)
 	{
@@ -805,13 +782,26 @@ void maptoolScene::save(void)
 	CloseHandle(file);
 }
 
-void maptoolScene::load(void)
+void maptoolScene::load()
 {
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("tiles.map", GENERIC_READ, 0, NULL, OPEN_EXISTING,
+	clearMapImg();
+	memset(_tiles, 0, sizeof(tagTile) * TILEX * TILEY);
+	clearTiles();
+	_camPos = { TILESIZE * TILE_RENDER_RANGE_X / 2, TILESIZE * TILE_RENDER_RANGE_Y / 2 };
+	_roomList.rc.clear();
+	_enemyCount = 0;
+
+	file = CreateFile(( "Stage/stage" + to_string(_selectStage) + ".map").c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (file == INVALID_HANDLE_VALUE )//&& GetLastError() == ERROR_FILE_NOT_FOUND)
+	{
+		return;
+	}
+
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 
 	RECT temp;
@@ -905,11 +895,11 @@ void maptoolScene::load(void)
 void maptoolScene::clearMapImg()
 {
 	brush = CreateSolidBrush(RGB(0, 0, 0));
-	oBrush = (HBRUSH)SelectObject(_tileImg->getMemDC(), brush);
-
-	Rectangle(_tileImg->getMemDC(), RectMake(0, 0, TILESIZEX, TILESIZEY));
-
-	SelectObject(_tileImg->getMemDC(), oBrush);
+	oBrush = (HBRUSH)SelectObject(_totalMap->getMemDC(), brush);
+	
+	Rectangle(_totalMap->getMemDC(), RectMake(0, 0, TILESIZEX, TILESIZEY));
+	
+	SelectObject(_totalMap->getMemDC(), oBrush);
 	DeleteObject(brush);
 
 }
@@ -1043,7 +1033,14 @@ void maptoolScene::renderControl()
 	_stageSelectImg[0]->render(getMemDC(), _stageSelectRect[0].left, _stageSelectRect[0].top);
 
 	char str[30];
-	sprintf_s(str, "stage%s.map", to_string(_currentStage).c_str());
+
+	if (_currentStage != -1)
+	{
+		sprintf_s(str, "stage%s.map", to_string(_currentStage).c_str());
+		TextOut(getMemDC(), _stageSelectRect[0].right + 10, _stageSelectRect[0].top - 25, str, strlen(str));
+	}
+
+	sprintf_s(str, "stage%s.map", to_string(_selectStage).c_str());
 	TextOut(getMemDC(), _stageSelectRect[0].right + 10, _stageSelectRect[0].top + 10, str, strlen(str));
 
 	_stageSelectImg[1]->render(getMemDC(), _stageSelectRect[1].left, _stageSelectRect[1].top);
@@ -1082,6 +1079,26 @@ TERRAIN maptoolScene::getTerrainType(int frameX, int frameY)
 }
 
 
+
+void maptoolScene::clearTiles()
+{
+	for (int i = 0; i < TILEY; i++)
+	{
+		for (int j = 0; j < TILEX; j++)
+		{
+			_tiles[i * TILEX + j].rc = RectMake(j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE);
+
+			_tiles[i * TILEX + j].terrainFrameX = 1;
+			_tiles[i * TILEX + j].terrainFrameY = 1;
+			_tiles[i * TILEX + j].objIndex = 0;
+			_tiles[i * TILEX + j].terrain = TR_NONE;
+			_tiles[i * TILEX + j].objType = OBJECT_NONE;
+			_tiles[i * TILEX + j].obj = NULL;
+
+			_enemyList[i * TILEX + j].type = ENEMY_NONE;
+		}
+	}
+}
 
 void maptoolScene::moveCard()
 {
@@ -1194,11 +1211,25 @@ void maptoolScene::settingControl()
 		{
 			//_ctrlSelect = CTRL_LOAD;
 			this->load();
+			_currentStage = _selectStage;
 		}
 		if (PtInRect(&_rcEraser, _ptMouse))
 		{
 			_ctrlSelect = CTRL_ERASER;
 		}
+
+		if (PtInRect(&_stageSelectRect[0], _ptMouse))
+		{
+			if (_selectStage > 0)
+			{
+				--_selectStage;
+			}
+		}
+		if (PtInRect(&_stageSelectRect[1], _ptMouse))
+		{
+			++_selectStage;
+		}
+
 	}
 }
 

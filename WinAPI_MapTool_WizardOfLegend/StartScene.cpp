@@ -47,7 +47,8 @@ void StartScene::update()
 		_curButton = START;
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			//SCENEMANAGER->loadScene("GameScene");
+			SAVEDATA->setCurrentStage(0);
+			SAVEDATA->setMapName("Stage/Stage0.map");
 			SCENEMANAGER->loadScene("LoadingScene");
 		}
 	}

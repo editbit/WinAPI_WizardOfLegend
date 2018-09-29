@@ -82,6 +82,11 @@ void tileMap::render(void)
 
 bool tileMap::prepareLoading(const char* fileName)
 {
+	release();
+	SAVEDATA->setStartPos(-1, -1);
+
+	SAVEDATA->setEndPos(-1, -1);
+
 	_objectCard.init(0, 0);
 
 	file = CreateFile(fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING,
@@ -129,10 +134,14 @@ bool tileMap::prepareLoading(const char* fileName)
 
 	Rectangle(_miniMap->getMemDC(), RectMake(0, 0, _miniMap->getWidth(), _miniMap->getHeight()));
 
-	SelectObject(_miniMap->getMemDC(), oBrush);
+
+
+	Image * tileGameMap = IMAGEMANAGER->findImage("tileMapImage");
+
+	Rectangle(tileGameMap->getMemDC(), RectMake(0, 0, tileGameMap->getWidth(), tileGameMap->getHeight()));
+
+	SelectObject(tileGameMap->getMemDC(), oBrush);
 	DeleteObject(brush);
-
-
 
 	return false;
 }
@@ -152,8 +161,8 @@ bool tileMap::loadingDone()
 	//¸Ê ¼Ó¼º Á¤ÀÇ
 	Image * tileMap = IMAGEMANAGER->findImage("tilemap");
 	Image * pixelTile = IMAGEMANAGER->findImage("pixel_tile");
-	Image * tankGameMap = IMAGEMANAGER->findImage("tileMapImage");
-	Image * tankGamePixel = IMAGEMANAGER->findImage("tileMapPixel");
+	Image * tileGameMap = IMAGEMANAGER->findImage("tileMapImage");
+	Image * tileGamePixel = IMAGEMANAGER->findImage("tileMapPixel");
 
 	for(int j = 0 ; _loadingIndex < TILEX * TILEY && j< 200;++j, _loadingIndex++)
 	{
@@ -187,7 +196,7 @@ bool tileMap::loadingDone()
 			_tiles[_loadingIndex].terrain == TR_CLIFF)
 			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
 
-		pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
+		pixelTile->frameRender(tileGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
 
 
 		if (_tiles[_loadingIndex].objType == OBJECT_NONE || _tiles[_loadingIndex].objType == OBJECT_BLOCK1)
@@ -197,12 +206,12 @@ bool tileMap::loadingDone()
 			_tiles[_loadingIndex].objType == OBJECT_BLOCK1)
 		{
 			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
-			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, 0, 0);
+			pixelTile->frameRender(tileGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, 0, 0);
 		}
 		if (_tiles[_loadingIndex].objType == OBJECT_BREAKABLE || _tiles[_loadingIndex].objType == OBJECT_TRAP)
 			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
 
-		tileMap->frameRender(tankGameMap->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
+		tileMap->frameRender(tileGameMap->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
 
 		/*if (_tiles[i].objType == OBJECT_BLOCK1) _attribute[i] |= ATTR_UNMOVAL;
 		if (_tiles[i].objType == OBJECT_BLOCK3) _attribute[i] |= ATTR_UNMOVAL;
@@ -230,7 +239,7 @@ bool tileMap::loadingDone()
 			}
 			else if (_tiles[_loadingIndex].objType == OBJECT_ENTRANCE || _tiles[_loadingIndex].objType == OBJECT_EXIT || _tiles[_loadingIndex].objType == OBJECT_DECO)
 			{
-				_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->render(tankGameMap->getMemDC(),
+				_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->render(tileGameMap->getMemDC(),
 					(_tiles[_loadingIndex].rc.right + _tiles[_loadingIndex].rc.left - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getWidth()) * 0.5f,
 					(_tiles[_loadingIndex].rc.bottom + _tiles[_loadingIndex].rc.top - _objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->getHeight()) * 0.5f);
 
@@ -262,13 +271,14 @@ bool tileMap::loadingDone()
 
 	if (_loadingIndex >= TILEX * TILEY)
 	{
-		_objectCard._sampleObject[36].objImg->render(tankGameMap->getMemDC(),
-			SAVEDATA->getStartPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
-			SAVEDATA->getStartPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
-
-		_objectCard._sampleObject[35].objImg->render(tankGameMap->getMemDC(),
-			SAVEDATA->getEndPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
-			SAVEDATA->getEndPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
+		if(SAVEDATA->getStartPos().x != -1)
+			_objectCard._sampleObject[36].objImg->render(tileGameMap->getMemDC(),
+				SAVEDATA->getStartPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
+				SAVEDATA->getStartPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
+		if (SAVEDATA->getEndPos().x != -1)
+			_objectCard._sampleObject[35].objImg->render(tileGameMap->getMemDC(),
+				SAVEDATA->getEndPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
+				SAVEDATA->getEndPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
 	}
 
 	SelectObject(_miniMap->getMemDC(), oPen);

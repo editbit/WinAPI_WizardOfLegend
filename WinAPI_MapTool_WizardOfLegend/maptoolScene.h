@@ -75,6 +75,7 @@ private:
 	Image *_stageSelectImg[2];
 	RECT _stageSelectRect[2];
 	int _currentStage;
+	int _selectStage;
 	string _stageName;
 public:
 	HRESULT init();
@@ -106,7 +107,7 @@ public:
 	void renderTileRect();
 	void renderControl();
 
-
+	void clearTiles();
 	void moveCard();
 	void cameraMove();
 	void settingControl();

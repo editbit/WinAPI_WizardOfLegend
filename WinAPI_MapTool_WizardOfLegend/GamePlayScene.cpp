@@ -65,7 +65,7 @@ HRESULT GamePlayScene::init()
 
 	Bomb::setLinkTileMap(_tileMap->getTiles());
 
-
+	_currentStage = 0;
 	return S_OK;
 }
 
@@ -122,14 +122,16 @@ void GamePlayScene::update()
 	{
 		if (KEYMANAGER->isOnceKeyDown('F'))
 		{
+			SAVEDATA->setCurrentStage(SAVEDATA->getCurrentStage() + 1);
+			SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) +".map");
 			SCENEMANAGER->loadScene("LoadingScene");
 			RENDERMANAGER->clear();
 			return;
 		}
 
 		IMAGEMANAGER->findImage("button_f")->render(UIMANAGER->getUIDC(),
-			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.left + 32 - CAM->getX(),
-			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.top - TILESIZE - CAM->getY());
+			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.left + 22 - CAM->getX(),
+			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.top - TILESIZE * 2 - CAM->getY());
 	}
 }
 

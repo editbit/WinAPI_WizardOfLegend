@@ -12,12 +12,17 @@ private:
 
 	POINT _startPos, _endPos;
 
+	int _currentStage;
+
 	int _hp;
 	char _data[128];
 
 public:
 	HRESULT init();
 	void release();
+
+	void setCurrentStage(int stage) { _currentStage = stage; }
+	int getCurrentStage() { return _currentStage; }
 
 	void setStartPos(int x, int y) { _startPos = { x, y }; }
 	POINT getStartPos() { return _startPos; }
@@ -34,20 +39,7 @@ public:
 	void setMapName(string mapName) { _mapName = mapName; }
 	string getMapName() { return _mapName; }
 
-	SaveData() : _tileMap(NULL) {}
+	SaveData() : _tileMap(NULL), _currentStage(0){}
 	~SaveData() {}
 };
-
-
-//예시
-//체력 저장
-//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-//{
-//	SAVEDATA->setHp(_currentHp);
-//}
-////체력 로드
-//if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-//{
-//	_currentHp = SAVEDATA->getHp();
-//}
 

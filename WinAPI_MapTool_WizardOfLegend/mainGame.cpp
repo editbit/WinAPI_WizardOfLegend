@@ -18,7 +18,7 @@ HRESULT mainGame::init()
 	_tileMap = new tileMap;
 	//_tileMap->init();
 	SAVEDATA->setTileMap(_tileMap);
-	SAVEDATA->setMapName("tiles.map");
+	SAVEDATA->setMapName("Stage/Stage0.map");
 
 	_soundVolume = INIDATA->loadDataFloat("Data/setting", "Sound", "master");
 	_effectVolume = INIDATA->loadDataFloat("Data/setting", "Sound", "effect");

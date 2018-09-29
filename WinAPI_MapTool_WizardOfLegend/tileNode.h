@@ -93,7 +93,7 @@ enum POS
 
 enum TRAP_TYPE
 {
-	BOMB_TRAP = 30, AWL_TRAP = 35
+	BOMB_TRAP = 30, AWL_TRAP = 37
 };
 
 /*타일구조체*/
