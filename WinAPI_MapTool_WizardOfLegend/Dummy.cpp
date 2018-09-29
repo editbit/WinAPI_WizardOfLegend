@@ -116,10 +116,11 @@ void Dummy::generate(float x, float y, int index, int dir)
 {
 	_x = x; _y = y;
 	_moveBox = RectMakeCenter(x, y, WIZARD::MOVEBOX_WIDTH, WIZARD::MOVEBOX_HEIGHT);
-	_hitBox = RectMakeCenter(x, y, WIZARD::HITBOX_WIDTH, WIZARD::HITBOX_HEIGHT);
+	_hitBox = RectMakeCenter(x, y - WIZARD::MOVEBOX_HEIGHT / 2, WIZARD::HITBOX_WIDTH, WIZARD::HITBOX_HEIGHT);
 	_attackBox = RectMakeCenter(x, y, 200, 200);
 	_index = index;
 	_dir = dir;
+	_count = 0;
 	_isActive = true;
 	_isCrash = false;
 	_enemyManager->changeDummy(this);

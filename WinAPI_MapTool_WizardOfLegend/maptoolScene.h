@@ -72,8 +72,9 @@ private:
 
 	RECT _rightBoard;
 
-	Image _selectBtn[2];
-	RECT _stageSelect[2];
+	Image *_stageSelectImg[2];
+	RECT _stageSelectRect[2];
+	int _currentStage;
 	string _stageName;
 public:
 	HRESULT init();
@@ -100,6 +101,10 @@ public:
 	void save();
 	//·Îµå
 	void load();
+
+	void clearMapImg();
+	void renderTileRect();
+	void renderControl();
 
 
 	void moveCard();

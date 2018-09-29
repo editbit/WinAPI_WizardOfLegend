@@ -28,6 +28,8 @@ void RenderManager::render(HDC hdc)
 		for (iter = renderList.begin(); iter != renderList.end(); ++iter)
 		{
 			iter->second->render();	
+			if(KEYMANAGER->isToggleKey(VK_F6))
+				Rectangle(hdc, iter->second->getHitBox(), CAM->getX(), CAM->getY());
 
 			if (iter->second->getState() == FALL_STATE)// && tiles != NULL)
 			{

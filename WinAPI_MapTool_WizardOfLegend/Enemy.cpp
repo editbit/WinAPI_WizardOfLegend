@@ -52,10 +52,10 @@ void Enemy::render()
 
 		}
 
-		char str[50];
-		sprintf_s(str, "%d", _state);
-		TextOut(UIMANAGER->getUIDC(), _moveBox.left + 10 - CAM->getX(), _moveBox.top + 10 - CAM->getY(), str, strlen(str));
-		//Rectangle(getMemDC(),_moveBox, CAM->getX(), CAM->getY());
+		//char str[50];
+		//sprintf_s(str, "%d", _state);
+		//TextOut(UIMANAGER->getUIDC(), _moveBox.left + 10 - CAM->getX(), _moveBox.top + 10 - CAM->getY(), str, strlen(str));
+		Rectangle(getMemDC(),_attackBox, CAM->getX(), CAM->getY());
 	}
 
 	if (_delayCount > 0 && _state == ENEMY::HIT)

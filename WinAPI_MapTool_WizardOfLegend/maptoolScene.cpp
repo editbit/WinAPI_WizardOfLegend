@@ -12,6 +12,7 @@ HRESULT maptoolScene::init(void)
 
 	//맵툴셋팅
 	this->maptoolSetup();
+	_currentStage = 0;
 
 	//지형그리기 버튼으로 초기화
 	_ctrlSelect = CTRL_TERRAINDRAW;
@@ -48,8 +49,7 @@ HRESULT maptoolScene::init(void)
 	_drawMiniMap = false;
 	_miniMapCamPos = { WINSIZEX / 2, WINSIZEY / 2 };
 
-	
-	
+
 	brush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	oBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 
@@ -61,6 +61,8 @@ HRESULT maptoolScene::init(void)
 	SetTextAlign(getMemDC(), TA_LEFT); //텍스트 중앙정렬
 
 	_enemyCount = 0;
+
+	clearMapImg();
 	return S_OK;
 }
 
@@ -68,6 +70,10 @@ void maptoolScene::release(void)
 {
 	SelectObject(getMemDC(), oBrush);
 	DeleteObject(brush);
+
+
+	brush = CreateSolidBrush(RGB(255, 255, 255));
+	oBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 }
 
 void maptoolScene::update(void)
@@ -261,144 +267,28 @@ void maptoolScene::render(void)
 		return;
 	}
 
-	int startX = CAM->getX() / TILESIZE, startY = CAM->getY() / TILESIZE;
 
 	
 	_totalMap->render(getMemDC(), 0, 0, CAM->getSourX(), CAM->getSourY(), CAM->getCamWidth(), CAM->getCamHeight());
 
 	//전체화면 왼쪽에 지형을 그린다
 
-	pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
-	oPen = (HPEN)SelectObject(getMemDC(), pen);
-	POINT ptMouseCam = { _ptMouse.x + CAM->getX(), _ptMouse.y + CAM->getY() };
-	int selectIdx = -1;
-	for (int i = startY; i < startY + TILE_RENDER_RANGE_Y; i++)
-	{
-		for (int j = startX; j < startX + TILE_RENDER_RANGE_X; j++)
-		{
-			if (_tiles[i * TILEX + j].terrain == TR_NONE || _tiles[i * TILEX + j].objType == OBJECT_BLOCK1)
-				Rectangle(getMemDC(), _tiles[i*TILEX + j].rc, CAM->getX(), CAM->getY());
-			
-			//else
-			//	IMAGEMANAGER->frameRender("tilemap", getMemDC(), _tiles[i*TILEX + j].rc.left - CAM->getX(), _tiles[i*TILEX + j].rc.top - CAM->getY(), _tiles[i*TILEX + j].terrainFrameX, _tiles[i*TILEX + j].terrainFrameY);
-			
-			if (_isDrag && _draggedInfo[i*TILEX + j].isDragged)
-			{
-				IMAGEMANAGER->frameRender("tilemap", getMemDC(), _tiles[i*TILEX + j].rc.left - CAM->getX(), _tiles[i*TILEX + j].rc.top - CAM->getY(), _draggedInfo[i*TILEX + j].tile.x, _draggedInfo[i*TILEX + j].tile.y);
-			}
-
-			if (PtInRect(&_tiles[i*TILEX + j].rc, ptMouseCam))
-				selectIdx = i * TILEX + j;
-
-			if (KEYMANAGER->isToggleKey('9'))
-			{
-				char str[20];
-				//sprintf_s(str, "%3d  %3d", j, i);
-				sprintf_s(str, "%3d", _tiles[i * TILEX + j].terrain);
-				TextOut(getMemDC(), _tiles[i * TILEX + j].rc.left - CAM->getX(), _tiles[i * TILEX + j].rc.top + 10 - CAM->getY(), str, strlen(str));
-			}
-		}
-	}
-	SelectObject(getMemDC(), oPen);
-	DeleteObject(pen);
-
-
-	if (selectIdx != -1)
-	{
-		HPEN pen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
-		HPEN oPen = (HPEN)SelectObject(getMemDC(), pen);
-
-		Rectangle(getMemDC(), _tiles[selectIdx].rc, CAM->getX(), CAM->getY());
-
-		SelectObject(getMemDC(), oPen);
-		DeleteObject(pen);
-
-		if (_ctrlSelect == CTRL_OBJDRAW)
-		{
-			if (_objectCard.getFrameImageIndex() <= _currentTile.x)
-			{
-				_objectCard._sampleObject[_currentTile.x].objImg->frameRender(getMemDC(),
-					//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
-					_tiles[selectIdx].rc.left - CAM->getX(),
-					_tiles[selectIdx].rc.bottom - _objectCard._sampleObject[_currentTile.x].objImg->getFrameHeight() - CAM->getY(),
-					0, 0);
-			}
-			else
-			{
-				if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO)
-				{
-					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
-						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
-						(_tiles[selectIdx].rc.right + _tiles[selectIdx].rc.left - _objectCard._sampleObject[_currentTile.x].objImg->getWidth())*0.5f - CAM->getX(),
-						(_tiles[selectIdx].rc.bottom + _tiles[selectIdx].rc.top - _objectCard._sampleObject[_currentTile.x].objImg->getHeight())*0.5f - CAM->getY());
-				}
-				else
-				{
-					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
-						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
-						_tiles[selectIdx].rc.left - CAM->getX(),
-						_tiles[selectIdx].rc.bottom - _objectCard._sampleObject[_currentTile.x].objImg->getHeight() - CAM->getY());
-				}
-			}
-		}
-		else if (_ctrlSelect == CTRL_ENEMYDRAW)
-		{
-			_enemyCard._sampleEnemy[_currentTile.x].img->frameRender(getMemDC(),
-				(_tiles[selectIdx].rc.left + _tiles[selectIdx].rc.right - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameWidth()) * 0.5f - CAM->getX(),
-				//_tiles[selectIdx].rc.bottom - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight(),
-				(_tiles[selectIdx].rc.bottom + _tiles[selectIdx].rc.top) *0.5f + ENEMY::MOVEBOX_HEIGHT / 2 - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight() - CAM->getY(),
-				0, 0);
-		}
-	}
-
-	if (KEYMANAGER->isToggleKey(VK_F1))
-	{
-		//게임타일 렉트 렌더
-		for (int i = startY; i < startY + TILE_RENDER_RANGE_Y; i++)
-		{
-			for (int j = startX; j < startX + TILE_RENDER_RANGE_X; j++)
-			{
-				Rectangle(getMemDC(), _tiles[i*TILEX + j].rc, CAM->getX(), CAM->getY());
-			}
-		}
-	}
-
+	renderTileRect();
 	renderRoomRange();
-
-
-	//버튼렉트 렌더
-	Rectangle(getMemDC(), _rcSave);
-	Rectangle(getMemDC(), _rcLoad);
-	Rectangle(getMemDC(), _rcEraser);
-	//Rectangle(getMemDC(), _rcEnemy);
-	//Rectangle(getMemDC(), _rcTerrain);
-	//Rectangle(getMemDC(), _rcObject);
-
-	//버튼렉트 글씨
-	SetBkMode(getMemDC(), TRANSPARENT);
-	TextOut(getMemDC(), _rcSave.left + 30, _rcSave.top + 20, "SAVE", strlen("SAVE"));
-	TextOut(getMemDC(), _rcLoad.left + 30, _rcLoad.top + 20, "LOAD", strlen("LOAD"));
-	TextOut(getMemDC(), _rcEraser.left + 30, _rcEraser.top + 20, "ERASER", strlen("ERASER"));
-	//TextOut(getMemDC(), _rcTerrain.left + 30, _rcTerrain.top + 20, "TERRAIN", strlen("TERRAIN"));
-	//TextOut(getMemDC(), _rcObject.left + 30, _rcObject.top + 20, "OBJECT", strlen("OBJECT"));
-	//TextOut(getMemDC(), _rcEnemy.left + 30, _rcEnemy.top + 20, "ENEMY", strlen("ENEMY"));
+	renderControl();
 
 	_cardDeck->render(getMemDC(), _cardDeckRect.left, _cardDeckRect.top);
-
-
-
 	if (_currentCard->isActive)
 	{
 		_currentCard->render();
-
-		if (KEYMANAGER->isToggleKey(VK_F1))
-		{
-			char str[100];
-			sprintf_s(str, "%d", _angleWheel);
-			TextOut(getMemDC(), WINSIZEX - 100, 20, str, strlen(str));
-		}
 	}
 	
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		char str[100];
+		sprintf_s(str, "%d", _angleWheel);
+		TextOut(getMemDC(), WINSIZEX - 100, 20, str, strlen(str));
+	}
 }
 
 void maptoolScene::exit()
@@ -409,15 +299,17 @@ void maptoolScene::exit()
 void maptoolScene::maptoolSetup(void)
 {
 	//렉트위치 초기화
-	_rcSave   = RectMake(1050 + 170, 200 + 200, 100, 50);
-	_rcLoad   = RectMake(1050 + 170, 200 + 300, 100, 50);
-	_rcEraser = RectMake(1050 + 170, 200 + 400, 100, 50);
+	_rcSave   = RectMake(1200, 300, 100, 50);
+	_rcLoad   = RectMake(1200, 380, 100, 50);
+	_rcEraser = RectMake(1200, 460, 100, 50);
 
-	//_rcEnemy = RectMake(1000 + 170, 200 + 400, 100, 50);
-	//_rcTerrain= RectMake(1100 + 170, 200 + 200, 100, 50);
-	//_rcObject = RectMake(1100 + 170, 200 + 300, 100, 50);
+	_stageSelectImg[0] = IMAGEMANAGER->findImage("button_left");
+	_stageSelectImg[1] = IMAGEMANAGER->findImage("button_right");
+	_stageSelectRect[0] = RectMake(1175, 600, _stageSelectImg[0]->getWidth(), _stageSelectImg[0]->getHeight());
+	_stageSelectRect[1] = RectMake(1320, 600, _stageSelectImg[0]->getWidth(), _stageSelectImg[0]->getHeight());
 
-	_cardDeckRect = RectMake(1100 + 120, 100, _cardDeck->getWidth(), _cardDeck->getHeight());
+
+	_cardDeckRect = RectMake(1100 + 120, 50, _cardDeck->getWidth(), _cardDeck->getHeight());
 
 
 	//왼쪽 게임화면 렉트 초기화
@@ -1007,6 +899,161 @@ void maptoolScene::load(void)
 		}
 	}
 
+
+}
+
+void maptoolScene::clearMapImg()
+{
+	brush = CreateSolidBrush(RGB(0, 0, 0));
+	oBrush = (HBRUSH)SelectObject(_tileImg->getMemDC(), brush);
+
+	Rectangle(_tileImg->getMemDC(), RectMake(0, 0, TILESIZEX, TILESIZEY));
+
+	SelectObject(_tileImg->getMemDC(), oBrush);
+	DeleteObject(brush);
+
+}
+
+void maptoolScene::renderTileRect()
+{
+
+	int startX = CAM->getX() / TILESIZE, startY = CAM->getY() / TILESIZE;
+
+	pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	oPen = (HPEN)SelectObject(getMemDC(), pen);
+	POINT ptMouseCam = { _ptMouse.x + CAM->getX(), _ptMouse.y + CAM->getY() };
+	int selectIdx = -1;
+	for (int i = startY; i < startY + TILE_RENDER_RANGE_Y; i++)
+	{
+		for (int j = startX; j < startX + TILE_RENDER_RANGE_X; j++)
+		{
+			if (_tiles[i * TILEX + j].terrain == TR_NONE || _tiles[i * TILEX + j].objType == OBJECT_BLOCK1)
+				Rectangle(getMemDC(), _tiles[i*TILEX + j].rc, CAM->getX(), CAM->getY());
+
+			//else
+			//	IMAGEMANAGER->frameRender("tilemap", getMemDC(), _tiles[i*TILEX + j].rc.left - CAM->getX(), _tiles[i*TILEX + j].rc.top - CAM->getY(), _tiles[i*TILEX + j].terrainFrameX, _tiles[i*TILEX + j].terrainFrameY);
+
+			if (_isDrag && _draggedInfo[i*TILEX + j].isDragged)
+			{
+				IMAGEMANAGER->frameRender("tilemap", getMemDC(), _tiles[i*TILEX + j].rc.left - CAM->getX(), _tiles[i*TILEX + j].rc.top - CAM->getY(), _draggedInfo[i*TILEX + j].tile.x, _draggedInfo[i*TILEX + j].tile.y);
+			}
+
+			if (PtInRect(&_tiles[i*TILEX + j].rc, ptMouseCam))
+				selectIdx = i * TILEX + j;
+
+			if (KEYMANAGER->isToggleKey('9'))
+			{
+				char str[20];
+				//sprintf_s(str, "%3d  %3d", j, i);
+				sprintf_s(str, "%3d", _tiles[i * TILEX + j].terrain);
+				TextOut(getMemDC(), _tiles[i * TILEX + j].rc.left - CAM->getX(), _tiles[i * TILEX + j].rc.top + 10 - CAM->getY(), str, strlen(str));
+			}
+		}
+	}
+	SelectObject(getMemDC(), oPen);
+	DeleteObject(pen);
+
+	if (selectIdx != -1)
+	{
+		HPEN pen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
+		HPEN oPen = (HPEN)SelectObject(getMemDC(), pen);
+
+		Rectangle(getMemDC(), _tiles[selectIdx].rc, CAM->getX(), CAM->getY());
+
+		SelectObject(getMemDC(), oPen);
+		DeleteObject(pen);
+
+		if (_ctrlSelect == CTRL_OBJDRAW)
+		{
+			if (_objectCard.getFrameImageIndex() <= _currentTile.x)
+			{
+				_objectCard._sampleObject[_currentTile.x].objImg->frameRender(getMemDC(),
+					//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
+					_tiles[selectIdx].rc.left - CAM->getX(),
+					_tiles[selectIdx].rc.bottom - _objectCard._sampleObject[_currentTile.x].objImg->getFrameHeight() - CAM->getY(),
+					0, 0);
+			}
+			else
+			{
+				if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO)
+				{
+					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
+						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
+						(_tiles[selectIdx].rc.right + _tiles[selectIdx].rc.left - _objectCard._sampleObject[_currentTile.x].objImg->getWidth())*0.5f - CAM->getX(),
+						(_tiles[selectIdx].rc.bottom + _tiles[selectIdx].rc.top - _objectCard._sampleObject[_currentTile.x].objImg->getHeight())*0.5f - CAM->getY());
+				}
+				else
+				{
+					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
+						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
+						_tiles[selectIdx].rc.left - CAM->getX(),
+						_tiles[selectIdx].rc.bottom - _objectCard._sampleObject[_currentTile.x].objImg->getHeight() - CAM->getY());
+				}
+			}
+		}
+		else if (_ctrlSelect == CTRL_ENEMYDRAW)
+		{
+			_enemyCard._sampleEnemy[_currentTile.x].img->frameRender(getMemDC(),
+				(_tiles[selectIdx].rc.left + _tiles[selectIdx].rc.right - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameWidth()) * 0.5f - CAM->getX(),
+				//_tiles[selectIdx].rc.bottom - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight(),
+				(_tiles[selectIdx].rc.bottom + _tiles[selectIdx].rc.top) *0.5f + ENEMY::MOVEBOX_HEIGHT / 2 - _enemyCard._sampleEnemy[_currentTile.x].img->getFrameHeight() - CAM->getY(),
+				0, 0);
+		}
+	}
+
+
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		//게임타일 렉트 렌더
+		for (int i = startY; i < startY + TILE_RENDER_RANGE_Y; i++)
+		{
+			for (int j = startX; j < startX + TILE_RENDER_RANGE_X; j++)
+			{
+				Rectangle(getMemDC(), _tiles[i*TILEX + j].rc, CAM->getX(), CAM->getY());
+			}
+		}
+	}
+}
+
+void maptoolScene::renderControl()
+{
+	HPEN pen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
+	HPEN oPen = (HPEN)SelectObject(getMemDC(), pen);
+	//버튼렉트 렌더
+	
+	if (PtInRect(&_rcSave, _ptMouse))
+		Rectangle(getMemDC(), _rcSave);
+
+	if (PtInRect(&_rcLoad, _ptMouse))
+		Rectangle(getMemDC(), _rcLoad);
+
+	if (PtInRect(&_rcEraser, _ptMouse))
+		Rectangle(getMemDC(), _rcEraser);
+
+	if (PtInRect(&_stageSelectRect[0], _ptMouse))
+		Rectangle(getMemDC(), _stageSelectRect[0]);
+
+	if (PtInRect(&_stageSelectRect[1], _ptMouse))
+		Rectangle(getMemDC(), _stageSelectRect[1]);
+
+	SelectObject(getMemDC(), oPen);
+	DeleteObject(pen);
+	
+	
+	_stageSelectImg[0]->render(getMemDC(), _stageSelectRect[0].left, _stageSelectRect[0].top);
+
+	char str[30];
+	sprintf_s(str, "stage%s.map", to_string(_currentStage).c_str());
+	TextOut(getMemDC(), _stageSelectRect[0].right + 10, _stageSelectRect[0].top + 10, str, strlen(str));
+
+	_stageSelectImg[1]->render(getMemDC(), _stageSelectRect[1].left, _stageSelectRect[1].top);
+
+
+	//버튼렉트 글씨
+	SetBkMode(getMemDC(), TRANSPARENT);
+	TextOut(getMemDC(), _rcSave.left + 30, _rcSave.top + 20, "SAVE", strlen("SAVE"));
+	TextOut(getMemDC(), _rcLoad.left + 30, _rcLoad.top + 20, "LOAD", strlen("LOAD"));
+	TextOut(getMemDC(), _rcEraser.left + 30, _rcEraser.top + 20, "ERASER", strlen("ERASER"));
 
 }
 
