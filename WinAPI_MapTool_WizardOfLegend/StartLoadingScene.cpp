@@ -206,7 +206,12 @@ void StartLoadingScene::loadingImage()
 
 	_loading->loadImage("stoneBullet", "Texture/Effect/stoneBullet_80x78.bmp", 80, 78, true, RGB(255, 0, 255));
 
-
+	
+	_loading->loadFrameImage("appearEnemy", "Texture/Effect/appearEnemy_1200x187_10x1.bmp", 1200, 187, 10, 1);
+	_loading->loadFrameImage("collideEffect1", "Texture/Effect/collideEffect2_240x145_3x1.bmp", 240, 145, 3, 1);
+	_loading->loadFrameImage("collideEffect1", "Texture/Effect/collideEffect1_231x129_3x1.bmp", 231, 129, 3, 1);
+	_loading->loadFrameImage("appearPlayer", "Texture/Effect/appearPlayer_384x512_4x1.bmp", 384, 512, 4, 1);
+	
 
 	//_loading->loadFrameImage("blue_portal", "Texture/Object/portal2_945x171_9x1.bmp", 945, 171, 9, 1);
 	_loading->loadFrameImage("blue_portal", "Texture/Object/portal3_630x171_6x1.bmp", 630, 171, 6, 1);
@@ -223,6 +228,10 @@ void StartLoadingScene::loadingImage()
 	_loading->loadImage("waterThrowIcon", "Texture/Icon/WaterThrowIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("stoneThrowIcon", "Texture/Icon/stoneThrowAttackIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("waterCircleIcon", "Texture/Icon/waterCircleIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
+	//////
+	_loading->loadFrameImage("fireParticles", "Texture/Effect/fireParticles_768x512_6x4.bmp", 468, 512, 6, 4);
+	//////
+
 
 	// ICON - player
 	_loading->loadImage("playerIcon", "Texture/Icon/playerIcon_30x30.bmp", 30, 30, true, RGB(255, 0, 255));
@@ -266,6 +275,11 @@ void StartLoadingScene::loadingEffect()
 	EFFECTMANAGER->addEffect("폭발", "explode", 0.2, 10);
 	EFFECTMANAGER->addEffect("파란포탈", "blue_portal", 0.2, 3);
 	EFFECTMANAGER->addEffect("파란포탈_가장자리", "blue_portal_edge", 0.2, 3);
+
+	EFFECTMANAGER->addEffect("적등장", "appearEnemy", 0.15, 40);
+	EFFECTMANAGER->addEffect("충돌1", "collideEffect1", 0.2, 40);
+	EFFECTMANAGER->addEffect("충돌2", "collideEffect1", 0.2, 40);
+	EFFECTMANAGER->addEffect("플레이어등장", "appearPlayer", 0.2, 2);
 
 }
 

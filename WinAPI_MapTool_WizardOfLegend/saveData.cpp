@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "saveData.h"
-//#include "tileMap.h"
+#include "Wizard.h"
+#include "EnemyManager.h"
 
 HRESULT SaveData::init()
 {
@@ -9,6 +10,16 @@ HRESULT SaveData::init()
 
 void SaveData::release()
 {
+	if (_player != NULL)
+	{
+		_player->release();
+		SAFE_DELETE(_player);
+	}
+	if (_enemyManager != NULL)
+	{
+		_enemyManager->release();
+		SAFE_DELETE(_enemyManager);
+	}
 	
 }
 

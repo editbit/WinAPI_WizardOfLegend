@@ -22,6 +22,8 @@ HRESULT Enemy::init()
 		_hp = 100;	// 현재 에너지(이미지수정때문에29)
 		_hpBar->setGauge(_hp, _maxHp);
 	}
+
+	_state = ENEMY::IDLE;
 	return S_OK;
 }
 

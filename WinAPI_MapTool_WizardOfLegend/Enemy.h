@@ -6,6 +6,7 @@
 #define ENEMY_HPBAR_WIDTH 50
 #define ENEMY_HPBAR_HEIGHT 5
 
+#define APPEAR_COUNT 60
 
 class Enemy :
 	public Actor

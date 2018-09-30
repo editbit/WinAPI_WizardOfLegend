@@ -14,7 +14,7 @@ class EnemyManager :
 	Image * _pixelMap;
 
 	AStarTest *_aStar;
-	int _routingIndex;
+	int _routingIndex, _enemysCount;
 public:
 	virtual HRESULT init();	
 	virtual void release();
@@ -34,6 +34,8 @@ public:
 	void setLinkPlayer(Actor * player) { _playerSour = _player = player; }
 
 	void changeDummy(Actor * player) { _player = player; }
+
+	bool isEnemys() { return !(_enemys[_currentRoom].size() == _enemysCount); }
 
 	EnemyManager() : _aStar(NULL)  {}
 	~EnemyManager() {}

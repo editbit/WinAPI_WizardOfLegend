@@ -19,25 +19,34 @@ HRESULT GamePlayScene::init()
 	
 	_roomList = _tileMap->getRoomList();
 	_enemyList = _tileMap->getEnemyList();
+	
+	_wizard = SAVEDATA->getPlayer();
+	_enemyManager = SAVEDATA->getEnemyManager();
+	if (_wizard == NULL)
+	{
+		_wizard = new Wizard;
+		_wizard->setLinkTileMap(_tileMap);
+		_wizard->setPixelMap(_pixelMapImg);
 
-	_wizard = new Wizard;
-	_wizard->setLinkTileMap(_tileMap);
-	_wizard->setPixelMap(_pixelMapImg);
+		_enemyManager = new EnemyManager;
+		_enemyManager->setLinkPlayer(_wizard);
+		_enemyManager->setLinkTileMap(_tileMap);
+		_enemyManager->setPixelMap(_pixelMapImg);
 
-	_enemyManager = new EnemyManager;
-	_enemyManager->setLinkPlayer(_wizard);
-	_enemyManager->setLinkTileMap(_tileMap);
-	_enemyManager->setPixelMap(_pixelMapImg);
+		_wizard->setLinkEnemyManager(_enemyManager);
+		_wizard->init();
+
+		SAVEDATA->setPlayer(_wizard);
+		SAVEDATA->setEnemyManager(_enemyManager);
+	}
+
 	_enemyManager->init();
+	_wizard->setX(SAVEDATA->getStartPos().x);
+	_wizard->setY(SAVEDATA->getStartPos().y);
 
-
-	//_wizard->setLinkTileMap(_tileMap);
-	_wizard->setLinkEnemyManager(_enemyManager);
-	_wizard->init();
 
 	CAM->setDrawRange(WINSIZEX, WINSIZEY);
 	CAM->setMaxRange(TILESIZEX, TILESIZEY);
-	//CAM->setRoomSize(RectMake(100, WINSIZEY, WINSIZEX * 2, WINSIZEY * 2));
 
 
 	_camPos = {WINSIZEX / 2, WINSIZEY / 2 };
@@ -66,24 +75,29 @@ HRESULT GamePlayScene::init()
 	Bomb::setLinkTileMap(_tileMap->getTiles());
 
 	_currentStage = 0;
+
+	CAM->videoShooting(_wizard->getX(), _wizard->getY());
+	EFFECTMANAGER->play("플레이어등장", _wizard->getX(), _wizard->getY() - 231);
+
 	return S_OK;
 }
 
 void GamePlayScene::release()
 {
-	//_tileMap->release();
-	//SAFE_DELETE(_tileMap);
-
-	_wizard->release();
-	SAFE_DELETE(_wizard);
-
-	_enemyManager->release();
-	SAFE_DELETE(_enemyManager);
-
 }
 
 void GamePlayScene::update()
 {
+	if (!_wizard->getIsActive())
+	{
+		_wizard->setHp(_wizard->getMaxHp());
+		SAVEDATA->setCurrentStage(0);
+		SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) + ".map");
+		SCENEMANAGER->loadScene("LoadingScene");
+		RENDERMANAGER->clear();
+		return;
+	}
+
 	_tileMap->update();
 
 	_wizard->update();
@@ -93,7 +107,7 @@ void GamePlayScene::update()
 	int i;
 	for (i = 0; i < _roomList.rc.size(); ++i)
 	{
-		if (IntersectRect(&temp, &_wizard->getMoveBox(), &_roomList.rc[i]))
+		if (_enemyManager->isEnemys() && IntersectRect(&temp, &_wizard->getMoveBox(), &_roomList.rc[i]))
 		{
 			roomCollisionBox = { _roomList.rc[i].left + TILESIZE * 2, _roomList.rc[i].top + TILESIZE * 2, _roomList.rc[i].right - TILESIZE * 2, _roomList.rc[i].bottom - TILESIZE * 2 };
 			//if(temp.right - temp.left >= WIZARD::MOVEBOX_WIDTH && temp.bottom - temp.top >= WIZARD::MOVEBOX_HEIGHT)
@@ -102,6 +116,20 @@ void GamePlayScene::update()
 				CAM->setRoomSize(_roomList.rc[i]);
 				_enemyManager->setCurrentRoom(i + 1);
 			}
+
+			if (_roomList.rc[i].left > _wizard->getMoveBox().left)
+				_wizard->setX(_roomList.rc[i].left + WIZARD::MOVEBOX_WIDTH / 2);
+
+			else if (_roomList.rc[i].right < _wizard->getMoveBox().right)
+				_wizard->setX(_roomList.rc[i].right - WIZARD::MOVEBOX_WIDTH / 2);
+
+
+			if (_roomList.rc[i].top > _wizard->getMoveBox().top)
+				_wizard->setY(_roomList.rc[i].top + WIZARD::MOVEBOX_HEIGHT / 2);
+
+			else if (_roomList.rc[i].bottom < _wizard->getMoveBox().bottom)
+				_wizard->setY(_roomList.rc[i].bottom - WIZARD::MOVEBOX_HEIGHT / 2);
+
 			break;
 		}
 	}
@@ -117,16 +145,6 @@ void GamePlayScene::update()
 	CAM->videoShooting(_wizard->getX(), _wizard->getY());
 
 
-	if (!_wizard->getIsActive())
-	{
-		SAVEDATA->setCurrentStage(0);
-		SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) + ".map");
-		SCENEMANAGER->loadScene("LoadingScene");
-		RENDERMANAGER->clear();
-		return;
-	}
-
-	
 	if (tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].objType == OBJECT_EXIT)
 	{
 		if (KEYMANAGER->isOnceKeyDown('F'))

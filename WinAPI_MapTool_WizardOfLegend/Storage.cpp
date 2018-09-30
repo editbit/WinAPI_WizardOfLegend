@@ -100,13 +100,13 @@ void Storage::release()
 
 void Storage::update()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		selectSkill();
-
-		if (_selectIndex != -1)
-			changeSkill();
-	}
+	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	//{
+	//	selectSkill();
+	//
+	//	if (_selectIndex != -1)
+	//		changeSkill();
+	//}
 }
 
 void Storage::render()

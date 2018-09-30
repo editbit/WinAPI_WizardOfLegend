@@ -68,7 +68,6 @@ HRESULT EarthBoss::init()
 
 	_routingIndex = 0;
 	_hp = 100;
-	_hitCount = 0;
 	_delayCount = 0;
 	_hitCount = 0;
 
@@ -168,6 +167,12 @@ void EarthBoss::update()
 	_hitCount -= 1;
 	if (_hitCount < 0)
 		_hitCount = 0;
+
+	if (_x > CAM->getX() - 100 && _x < CAM->getX() + WINSIZEX + 100 &&
+		_y > CAM->getY() - 100 && _y < CAM->getY() + WINSIZEY + 100)
+	{
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
+	}
 }
 
 void EarthBoss::render()
@@ -228,6 +233,8 @@ void EarthBoss::damaged(Actor * e)
 		return;
 	}
 
+	if (_hitCount > 0)
+		return;
 
 	_angle = getAnglef(e->getX(), e->getY(), _x, _y);
 	//_angle = _angle + PI;

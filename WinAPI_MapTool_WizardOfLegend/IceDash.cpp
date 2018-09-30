@@ -19,6 +19,8 @@ HRESULT IceDash::init()
 
 void IceDash::release()
 {
+	_dummy->release();
+	SAFE_DELETE(_dummy);
 }
 
 void IceDash::update()

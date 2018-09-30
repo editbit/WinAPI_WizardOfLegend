@@ -22,7 +22,7 @@ HRESULT ShadowEnemy::init()
 	_delay[ENEMY::FALL] = 100;
 	_delay[ENEMY::DEAD] = 5;
 
-	_state = ENEMY::IDLE;
+	_state = ENEMY::APPEAR;
 	_index = _dir = _count = 0;
 	
 	_speed = 0;
@@ -41,6 +41,20 @@ void ShadowEnemy::release()
 
 void ShadowEnemy::update()
 {
+	if (_state == ENEMY::APPEAR)
+	{
+		if (_count == 0)
+		{
+			EFFECTMANAGER->play("ÀûµîÀå", _x, _y - ENEMY::MOVEBOX_HEIGHT / 2);
+		}
+		else if(_count >= APPEAR_COUNT)
+			changeState(ENEMY::IDLE);
+		
+		++_count;
+
+		return;
+	}
+
 	if (_state == ENEMY::FALL)
 	{
 		_z += 7;
@@ -86,6 +100,11 @@ void ShadowEnemy::update()
 	collide();
 	Enemy::update();
 
+	if (_x > CAM->getX() - 100 && _x < CAM->getX() + WINSIZEX + 100 &&
+		_y > CAM->getY() - 100 && _y < CAM->getY() + WINSIZEY + 100)
+	{
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
+	}
 }
 
 void ShadowEnemy::render()

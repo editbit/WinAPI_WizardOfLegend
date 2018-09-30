@@ -3,6 +3,8 @@
 //씬 전환등에 사용하도록 하자
 
 class tileMap;
+class Wizard;
+class EnemyManager;
 
 class SaveData : public SingletonBase <SaveData>
 {
@@ -17,9 +19,18 @@ private:
 	int _hp;
 	char _data[128];
 
+	Wizard * _player;
+	EnemyManager *_enemyManager;
+
 public:
 	HRESULT init();
 	void release();
+
+	void setPlayer(Wizard * player) { _player = player; }
+	Wizard* getPlayer() { return _player; }
+
+	void setEnemyManager(EnemyManager *enemyManager) { _enemyManager = enemyManager; }
+	EnemyManager* getEnemyManager() { return _enemyManager; }
 
 	void setCurrentStage(int stage) { _currentStage = stage; }
 	int getCurrentStage() { return _currentStage; }
@@ -39,7 +50,7 @@ public:
 	void setMapName(string mapName) { _mapName = mapName; }
 	string getMapName() { return _mapName; }
 
-	SaveData() : _tileMap(NULL), _currentStage(0){}
+	SaveData() : _tileMap(NULL), _currentStage(0), _player(NULL), _enemyManager(NULL){}
 	~SaveData() {}
 };
 

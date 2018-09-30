@@ -12,7 +12,7 @@ HRESULT EnemyManager::init()
 		release();
 
 	_enemys.push_back(vector<Enemy *>());
-
+	_enemysCount = 0;
 	return S_OK;
 }
 
@@ -32,6 +32,7 @@ void EnemyManager::release()
 
 void EnemyManager::update()
 {
+	_enemysCount = 0;
 	if (_enemys[_currentRoom].size() <= 0)
 		return;
 
@@ -54,15 +55,13 @@ void EnemyManager::update()
 
 	for (int i = 0; i < _enemys[_currentRoom].size(); ++i)
 	{
-		if (!_enemys[_currentRoom][i]->getIsActive()) continue;
+		if (!_enemys[_currentRoom][i]->getIsActive())
+		{
+			_enemysCount += 1;
+			continue;
+		}
 
 		_enemys[_currentRoom][i]->update();
-
-		if (_enemys[_currentRoom][i]->getX() > camX - 100 && _enemys[_currentRoom][i]->getX() < camX + WINSIZEX + 100 &&
-			_enemys[_currentRoom][i]->getY() > camY - 100 && _enemys[_currentRoom][i]->getY() < camY + WINSIZEY + 100)
-		{
-			RENDERMANAGER->addRender(_enemys[_currentRoom][i]->getMoveBox().bottom - _enemys[_currentRoom][i]->getZ(), _enemys[_currentRoom][i]);
-		}
 	}
 
 
