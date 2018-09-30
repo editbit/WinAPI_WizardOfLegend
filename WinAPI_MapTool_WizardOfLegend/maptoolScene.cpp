@@ -409,7 +409,7 @@ void maptoolScene::drawTile()
 					}
 					else
 					{
-						if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO)
+						if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO || getObjectType(_currentTile.x) == OBJECT_STORAGE)
 						{
 							_objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->render(_totalMap->getMemDC(),
 								(_tiles[i*TILEX + j].rc.left + _tiles[i*TILEX + j].rc.right - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getWidth()) * 0.5f,
@@ -865,7 +865,7 @@ void maptoolScene::load()
 			}
 			else
 			{
-				if (_tiles[i].objType == OBJECT_ENTRANCE || _tiles[i].objType == OBJECT_EXIT || _tiles[i].objType == OBJECT_DECO)
+				if (_tiles[i].objType == OBJECT_ENTRANCE || _tiles[i].objType == OBJECT_EXIT || _tiles[i].objType == OBJECT_DECO || _tiles[i].objType == OBJECT_STORAGE)
 				{
 					_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(_totalMap->getMemDC(),
 						(_tiles[i].rc.right + _tiles[i].rc.left - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getWidth())*0.5f,
@@ -965,7 +965,7 @@ void maptoolScene::renderTileRect()
 			}
 			else
 			{
-				if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO)
+				if (getObjectType(_currentTile.x) == OBJECT_ENTRANCE || getObjectType(_currentTile.x) == OBJECT_EXIT || getObjectType(_currentTile.x) == OBJECT_DECO || getObjectType(_currentTile.x) == OBJECT_STORAGE)
 				{
 					_objectCard._sampleObject[_currentTile.x].objImg->render(getMemDC(),
 						//_tiles[selectIdx].rc.left + _objectCard._sampleObject[_currentTile.x].objImg->getWidth()/2 - CAM->getX(),
@@ -1297,13 +1297,14 @@ OBJECT maptoolScene::getObjectType(int frameX, int frameY)
 	else if ((frameX >= 5 && frameX <= 10) ||
 		(frameX == 13))
 		return OBJECT_BREAKABLE;
-	else if (frameX == 37 || frameX == 30)
+	else if (frameX == AWL_TRAP || frameX == 30)
 		return OBJECT_TRAP;
 	else if (frameX == 35)
 		return OBJECT_EXIT;
-	else if(frameX == 36)
+	else if (frameX == 36)
 		return OBJECT_ENTRANCE;
-
+	else if (frameX == 37)
+		return OBJECT_STORAGE;
 	//else if()
 
 	return OBJECT_WALL;

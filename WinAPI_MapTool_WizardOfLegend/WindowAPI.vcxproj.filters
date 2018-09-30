@@ -147,6 +147,12 @@
     <Filter Include="MyEnemy\Boss\EarthBoss">
       <UniqueIdentifier>{9d1fd87a-4d53-45da-ad21-c001c6761921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyStuff\Storage">
+      <UniqueIdentifier>{e4f0274c-3cfc-4f7d-9401-ba399297b5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyStuff\Trap">
+      <UniqueIdentifier>{c5894815-1db9-49b4-976e-879e7c9dfb12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -290,12 +296,6 @@
     <ClInclude Include="Stuff.h">
       <Filter>MyStuff</Filter>
     </ClInclude>
-    <ClInclude Include="AwlTrap.h">
-      <Filter>MyStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>MyStuff</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>MyEnemy</Filter>
     </ClInclude>
@@ -364,6 +364,15 @@
     </ClInclude>
     <ClInclude Include="EarthBoss.h">
       <Filter>MyEnemy\Boss\EarthBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>MyStuff\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="AwlTrap.h">
+      <Filter>MyStuff\Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>MyStuff\Trap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -499,13 +508,7 @@
     <ClCompile Include="EnemyCard.cpp">
       <Filter>MainGame\씬\타일맵\WizardOfLegendMaptool</Filter>
     </ClCompile>
-    <ClCompile Include="AwlTrap.cpp">
-      <Filter>MyStuff</Filter>
-    </ClCompile>
     <ClCompile Include="Stuff.cpp">
-      <Filter>MyStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="Bomb.cpp">
       <Filter>MyStuff</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
@@ -573,6 +576,15 @@
     </ClCompile>
     <ClCompile Include="EarthBoss.cpp">
       <Filter>MyEnemy\Boss\EarthBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage.cpp">
+      <Filter>MyStuff\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="AwlTrap.cpp">
+      <Filter>MyStuff\Trap</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>MyStuff\Trap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

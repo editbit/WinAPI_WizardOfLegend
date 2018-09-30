@@ -2,6 +2,7 @@
 #include "tileMap.h"
 #include "AwlTrap.h"
 #include "Bomb.h"
+#include "Storage.h"
 
 HRESULT tileMap::init(const char * fileName)
 {
@@ -366,7 +367,7 @@ void tileMap::load(const char * fileName)
 			_attribute[i] |= ATTR_UNMOVAL;
 			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, 0, 0);
 		}
-		if(_tiles[i].objType == OBJECT_BREAKABLE || _tiles[i].objType == OBJECT_TRAP)
+		if(_tiles[i].objType == OBJECT_BREAKABLE || _tiles[i].objType == OBJECT_TRAP || _tiles[i].objType == OBJECT_STORAGE)
 			_attribute[i] |= ATTR_UNMOVAL;
 
 		tileMap->frameRender(tankGameMap->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
@@ -393,6 +394,12 @@ void tileMap::load(const char * fileName)
 					_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
 			}
 
+		}
+		else if (_tiles[i].objType == OBJECT_TRAP)
+		{
+			_tiles[i].obj = new Storage(_objectCard._sampleObject[_tiles[i].objIndex].objImg,
+				{ _tiles[i].rc.left,
+				_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight() });
 		}
 		else if (_tiles[i].objType == OBJECT_ENTRANCE || _tiles[i].objType == OBJECT_EXIT || _tiles[i].objType == OBJECT_DECO)
 		{

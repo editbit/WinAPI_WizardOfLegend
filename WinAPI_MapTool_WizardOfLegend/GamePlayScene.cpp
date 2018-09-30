@@ -117,6 +117,15 @@ void GamePlayScene::update()
 	CAM->videoShooting(_wizard->getX(), _wizard->getY());
 
 
+	if (!_wizard->getIsActive())
+	{
+		SAVEDATA->setCurrentStage(0);
+		SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) + ".map");
+		SCENEMANAGER->loadScene("LoadingScene");
+		RENDERMANAGER->clear();
+		return;
+	}
+
 	
 	if (tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].objType == OBJECT_EXIT)
 	{

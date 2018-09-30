@@ -18,6 +18,7 @@ class EarthBoss :
 
 	Skill * _attack[EARTH_BOSS_ATTACK_MAX];
 	int _currentAttack;
+	int _hitCount;
 
 public:
 

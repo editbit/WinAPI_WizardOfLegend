@@ -77,8 +77,7 @@ void BulletManager::update()
 
 		x = _playerBullets[i]->getX() / TILESIZE, y = _playerBullets[i]->getY() / TILESIZE;
 
-		if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&
-			_tiles[y*TILEX + x].objType != OBJECT_BLOCK1)
+		if (_tiles[y*TILEX + x].obj != NULL)
 		{
 			if (_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys()))
 			{
@@ -103,8 +102,6 @@ void BulletManager::update()
 				_dummy->damaged(_enemyBullets[i]);
 
 		x = _enemyBullets[i]->getX() / TILESIZE, y = _enemyBullets[i]->getY() / TILESIZE;
-		//if (_tiles[y*TILEX + x].objType != OBJECT_NONE &&
-		//	_tiles[y*TILEX + x].objType != OBJECT_BLOCK1)
 		if (_tiles[y*TILEX + x].obj != NULL)
 		{
 			if (_tiles[y*TILEX + x].obj->damaged(_player, _enemyManager->getEnemys()))

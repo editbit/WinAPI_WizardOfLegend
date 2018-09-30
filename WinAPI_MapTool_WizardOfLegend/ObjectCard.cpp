@@ -106,9 +106,10 @@ void ObjectCard::settingSample()
 	_sampleObject[i++].objImg =  IMAGEMANAGER->findImage("나무4");	// 34
 	_sampleObject[i++].objImg = IMAGEMANAGER->findImage("출구");
 	_sampleObject[i++].objImg = IMAGEMANAGER->findImage("입구");	// 36
+	_sampleObject[i++].objImg = IMAGEMANAGER->findImage("창고");	// 37
 	frameImangeIndex = i;
 	_sampleObject[i++].objImg = IMAGEMANAGER->findImage("함정2");
-	_sampleObject[i++].objImg = IMAGEMANAGER->findImage("보물상자1");	// 38
+	_sampleObject[i++].objImg = IMAGEMANAGER->findImage("보물상자1");	// 39
 
 
 

@@ -70,6 +70,7 @@ HRESULT EarthBoss::init()
 	_hp = 100;
 	_hitCount = 0;
 	_delayCount = 0;
+	_hitCount = 0;
 
 	_z = 0;
 
@@ -83,6 +84,7 @@ HRESULT EarthBoss::init()
 		_hpBar->setGauge(_hp, _maxHp);
 	}
 
+	_isActive = true;
 	return S_OK;
 }
 
@@ -110,7 +112,16 @@ void EarthBoss::update()
 	}
 
 	if (_state == WIZARD::DEAD)
+	{
+		_delayCount -= 1;
+		if (_delayCount < 0)
+		{
+			_isActive = false;
+			_delayCount = 0;
+		}
+
 		return;
+	}
 
 	if (_delayCount <= 0)
 	{
@@ -151,6 +162,12 @@ void EarthBoss::update()
 
 	_moveBox = RectMakeCenter(_x, _y, WIZARD::MOVEBOX_WIDTH, WIZARD::MOVEBOX_HEIGHT);
 	_hitBox = RectMakeCenter(_x, _moveBox.top, WIZARD::HITBOX_WIDTH, WIZARD::HITBOX_HEIGHT);
+
+	_hpBar->render();
+
+	_hitCount -= 1;
+	if (_hitCount < 0)
+		_hitCount = 0;
 }
 
 void EarthBoss::render()
@@ -158,8 +175,6 @@ void EarthBoss::render()
 	frameSetting();
 
 	if (!_isActive) return;
-
-	_hpBar->render();
 
 	_img[_state]->frameRender(getMemDC(),
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
@@ -197,6 +212,23 @@ void EarthBoss::damaged(Actor * e)
 	if (_state == WIZARD::DEAD || _state == WIZARD::HIT || _state == WIZARD::FALL)
 		return;
 
+	if (_state == WIZARD::ATTACK)
+	{
+		if (_hitCount > 0)
+			return;
+
+		_hitCount = e->getPower() * 2;
+		_hp -= e->getPower();
+		if (_hp <= 0)
+		{
+			changeState(WIZARD::DEAD);
+			_hp = 0;
+			_delayCount = 50;
+		}
+		return;
+	}
+
+
 	_angle = getAnglef(e->getX(), e->getY(), _x, _y);
 	//_angle = _angle + PI;
 	if (e->getX() > _x)
@@ -204,14 +236,14 @@ void EarthBoss::damaged(Actor * e)
 	else
 		_dir = WIZARD::LEFT;
 
+	_hitCount = e->getPower();
 	_hp -= e->getPower();
 	if (_hp <= 0)
 		changeState(WIZARD::DEAD);
 	else
-	{
 		changeState(WIZARD::HIT);
-		_delayCount = 50;
-	}
+
+	_delayCount = 50;
 }
 
 void EarthBoss::settingDir()
@@ -242,6 +274,11 @@ void EarthBoss::settingDir()
 
 void EarthBoss::frameSetting()
 {
+	if (_state == WIZARD::DEAD)
+	{
+		return;
+	}
+
 	if (_state == WIZARD::HIT)
 	{
 		if (_delayCount <= 0)

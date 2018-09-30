@@ -5,7 +5,7 @@
 HRESULT Wizard::init()
 {
 	Actor::init();
-	rewindInit();
+	//rewindInit();
 
 	_speed = WIZARD::WALK_SPEED;
 
@@ -67,13 +67,15 @@ HRESULT Wizard::init()
 	_iconImg->setX(120 - _iconImg->getWidth());
 	_iconImg->setY(78 - _iconImg->getHeight()/2);
 
+	_isActive = true;
+
 	return S_OK;
 }
 
 void Wizard::release()
 {
 	Actor::release();
-	rewindRelease();
+	//rewindRelease();
 
 	_inven->release();
 	SAFE_DELETE(_inven);
@@ -84,20 +86,18 @@ void Wizard::release()
 
 void Wizard::update()
 {
-	if (KEYMANAGER->isOnceKeyDown('P'))
-	{
-		_isRewind = !_isRewind;
-	}
-	if(_isRewind)
-	{
-		rewind();
-
-		_hpBar->update();
-		_hpBar->setGauge(_hp, _maxHp);
-		return;
-	}
-
-
+	//if (KEYMANAGER->isOnceKeyDown('P'))
+	//{
+	//	_isRewind = !_isRewind;
+	//}
+	//if(_isRewind)
+	//{
+	//	rewind();
+	//
+	//	_hpBar->update();
+	//	_hpBar->setGauge(_hp, _maxHp);
+	//	return;
+	//}
 	if (_state == WIZARD::DEAD)
 	{
 		frameSetting();
@@ -178,20 +178,19 @@ void Wizard::update()
 	collide();
 	frameSetting();
 
-
-	_preState[_rewindIndex++] = *this;
-	if (_rewindIndex >= REWIND_SIZE)
-		_rewindIndex = 0;
-	_rewindStartIndex = _rewindIndex;
+	//_preState[_rewindIndex++] = *this;
+	//if (_rewindIndex >= REWIND_SIZE)
+	//	_rewindIndex = 0;
+	//_rewindStartIndex = _rewindIndex;
 }
 
 void Wizard::render()
 {
-	if (_isRewind)
-	{
-		rewindRender();
-		return;
-	}
+	//if (_isRewind)
+	//{
+	//	rewindRender();
+	//	return;
+	//}
 
 	_img[_state]->frameRender(getMemDC(), 
 		_x - _img[_state]->getFrameWidth() / 2 - CAM->getX(),
@@ -220,7 +219,6 @@ void Wizard::rewindRender()
 		_index, _dir, 200);
 
 	_inven->renderEquipSkill();
-
 
 	_hpBar->render();
 	_iconImg->render(UIMANAGER->getUIDC(), _iconImg->getX(), _iconImg->getY());
@@ -319,12 +317,12 @@ void Wizard::inputProcess()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		if (_state != WIZARD::DASH && _state != WIZARD::FALL)
+		if (_state != WIZARD::DASH &&
+			_state != WIZARD::FALL &&
+			_state != WIZARD::HIT)
 		{
-			//_returnPoint = { _x, _y };
 			settingReturnPoint();
-			/*if(!_dummy->getIsActive())
-				_dummy->generate(_x, _y, _index, _dir);*/
+
 			_currentDash->executeDash(_x, _y);
 		}
 		changeState(WIZARD::DASH);
@@ -568,7 +566,8 @@ void Wizard::frameSetting()
 			}
 			else if (_state == WIZARD::DEAD)
 			{
-				//SCENEMANAGER->loadScene("GameScene");
+				_index = _img[_state]->getMaxFrameX();
+				_isActive = false;
 			}
 		}
 	}

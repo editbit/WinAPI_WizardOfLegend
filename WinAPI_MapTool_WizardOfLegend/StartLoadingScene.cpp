@@ -307,10 +307,12 @@ void StartLoadingScene::loadingObjectImage()
 	_loading->loadImage("나무3", "Texture/Object/나무3.bmp", 158, 182, true, RGB(255, 0, 255));
 	_loading->loadImage("나무4", "Texture/Object/나무4.bmp", 158, 182, true, RGB(255, 0, 255));	// 34
 	_loading->loadFrameImage("함정2", "Texture/Object/프레임_함정2.bmp", 128, 68, 2, 1);
-	_loading->loadFrameImage("보물상자1", "Texture/Object/프레임_보물상자1.bmp", 64, 188, 1, 2);	// 34
-
+	_loading->loadFrameImage("보물상자1", "Texture/Object/프레임_보물상자1.bmp", 64, 188, 1, 2);
+	_loading->loadFrameImage("보물상자1", "Texture/Object/프레임_보물상자1.bmp", 64, 188, 1, 2);	// 37
+	
 
 	_loading->loadImage("출구", "Texture/Object/endButton_259x240.bmp", 259, 240, true, RGB(255, 0, 255));
-	_loading->loadImage("입구", "Texture/Object/startButton_259x240.bmp", 259, 240, true, RGB(255, 0, 255)); // 36
+	_loading->loadImage("입구", "Texture/Object/startButton_259x240.bmp", 259, 240, true, RGB(255, 0, 255)); // 39
+	_loading->loadImage("창고", "Texture/Object/창고.bmp", 149, 130, true, RGB(255, 0, 255)); // 39
 	
 }
