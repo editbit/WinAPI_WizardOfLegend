@@ -84,12 +84,14 @@ void EnemyManager::setCurrentRoom(int room)
 	_routingIndex = 0;
 }
 
-void EnemyManager::addEnemy(Enemy * enemy, int room)
+void EnemyManager::addEnemy(Enemy * enemy, int room, bool isSour)
 {
 	if (room < 0 || room >= _enemys.size())
 		room = 0;
-
-	enemy->setLinkPlayer(&_player);
+	if (isSour)
+		enemy->setLinkPlayer(&_playerSour);
+	else
+		enemy->setLinkPlayer(&_player);
 	enemy->setLinkTileMap(_tileMap);
 	enemy->setPixelMap(_pixelMap);
 

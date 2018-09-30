@@ -19,10 +19,10 @@ public:
 	virtual void update();
 	virtual void render();
 
-
+	virtual void endDash();
 
 	IceDash() {}
-	IceDash(Actor *p, EnemyManager* em) : Dash(p, em) { init(); }
+	IceDash(Actor *p, EnemyManager* em) : Dash(p, em), _dummy(NULL) { init(); }
 	~IceDash() {}
 };
 

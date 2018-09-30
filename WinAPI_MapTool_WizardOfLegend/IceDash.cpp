@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "IceDash.h"
+#include "EnemyManager.h"
 
 
 HRESULT IceDash::init()
@@ -33,6 +34,15 @@ void IceDash::update()
 
 void IceDash::render()
 {
+}
+
+void IceDash::endDash()
+{
+	if (_dummy != NULL)
+	{
+		_enemyManager->changeDummy(_player);
+		_dummy->setIsActive(false);
+	}
 }
 
 void IceDash::executeDash(float x, float y)

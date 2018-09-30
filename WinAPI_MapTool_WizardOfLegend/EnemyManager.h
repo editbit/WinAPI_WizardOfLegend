@@ -27,7 +27,7 @@ public:
 	vector<Enemy *>& getEnemys() { return _enemys[_currentRoom]; }
 
 
-	void addEnemy(Enemy * enemy, int room = 0);
+	void addEnemy(Enemy * enemy, int room = 0, bool isSour = false);
 
 	void setLinkTileMap(tileMap *tile) { _tileMap = tile; }
 	void setPixelMap(Image * pixelMap) { _pixelMap = pixelMap; }

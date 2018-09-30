@@ -67,6 +67,8 @@ public:
 	virtual void collide();
 	virtual void drawUI() {}
 
+	void endDash() { _currentDash->endDash(); }
+
 	float getAttackAngle() { return _attackAngle; }
 
 	Wizard() : _enemyManager(NULL), _iceDash(NULL), _hpBar(NULL) {}

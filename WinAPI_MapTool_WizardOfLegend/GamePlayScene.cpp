@@ -113,8 +113,13 @@ void GamePlayScene::update()
 			//if(temp.right - temp.left >= WIZARD::MOVEBOX_WIDTH && temp.bottom - temp.top >= WIZARD::MOVEBOX_HEIGHT)
 			if (IntersectRect(&temp, &_wizard->getMoveBox(), &roomCollisionBox))
 			{
-				CAM->setRoomSize(_roomList.rc[i]);
-				_enemyManager->setCurrentRoom(i + 1);
+				if (_enemyManager->getCurrentRoom() != i + 1)
+				{
+					_wizard->endDash();
+
+					CAM->setRoomSize(_roomList.rc[i]);
+					_enemyManager->setCurrentRoom(i + 1);
+				}
 			}
 
 			if (_roomList.rc[i].left > _wizard->getMoveBox().left)
@@ -149,6 +154,7 @@ void GamePlayScene::update()
 	{
 		if (KEYMANAGER->isOnceKeyDown('F'))
 		{
+			_wizard->endDash();
 			SAVEDATA->setCurrentStage(SAVEDATA->getCurrentStage() + 1);
 			SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) +".map");
 			SCENEMANAGER->loadScene("LoadingScene");
@@ -210,6 +216,8 @@ void GamePlayScene::loadEnemy()
 	for (int i = 0; i < _roomList.rc.size(); ++i)
 		_enemyManager->addArea();
 
+
+	bool isSour = false;
 	for (int i = 0; i < _enemyList.size(); ++i)
 	{
 		temp = NULL;
@@ -217,15 +225,19 @@ void GamePlayScene::loadEnemy()
 		{
 		case SHADOW:
 			temp = new ShadowEnemy;
+			isSour = false;
 			break;
 		case MAGE:
 			temp = new Magician;
+			isSour = false;
 			break;
 		case ROGUE:
 			temp = new Rogue;
+			isSour = false;
 			break;
 		case EARTH_BOSS:
 			temp = new EarthBoss;
+			isSour = true;
 			break;
 		}
 
@@ -240,12 +252,12 @@ void GamePlayScene::loadEnemy()
 		{
 			if (PtInRect(&_roomList.rc[j], _enemyList[i].pos))
 			{
-				_enemyManager->addEnemy(temp, j + 1);
+				_enemyManager->addEnemy(temp, j + 1, isSour);
 				break;
 			}
 		}
 		if(j == _roomList.rc.size())
-			_enemyManager->addEnemy(temp, 0);
+			_enemyManager->addEnemy(temp, 0, isSour);
 	}
 }
 

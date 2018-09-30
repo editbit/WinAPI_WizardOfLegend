@@ -24,6 +24,8 @@ public:
 	void setX(float x) { _x = x; }
 	void setY(float y) { _y = y; }
 
+	virtual void endDash() {}
+
 	Dash() { init(); }
 	Dash(Actor *p, EnemyManager* em) : Skill(p, em) { init(); }
 	~Dash() {}
