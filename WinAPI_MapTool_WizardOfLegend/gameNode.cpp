@@ -152,7 +152,11 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		{
 		case VK_ESCAPE:						//esc 키를 누르면 화면종료
 			//PostMessage(hWnd, WM_DESTROY, 0, 0);
-			SCENEMANAGER->exit();
+			//SCENEMANAGER->exit();
+			if (!UIMANAGER->getIsBlockingUI())
+				UIMANAGER->openUI(OPTION_MENU);
+			else
+				UIMANAGER->setIsBlockingUI(false);
 			break;
 		}
 		break;

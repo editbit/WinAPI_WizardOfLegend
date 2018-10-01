@@ -2,7 +2,26 @@
 #include "singletonBase.h"
 #include "image.h"
 
+enum UI_TYPE
+{
+	EXIT_MENU, OPTION_MENU
+};
+
 class ProgressBar;
+
+class OptionUI
+{
+public:
+	int x, y;
+
+	Image *optionBtnImg;
+	Image *optionImg;
+
+	RECT volumeRect[2];
+
+	
+	OptionUI();
+};
 
 class UIManager :
 	public SingletonBase<UIManager>
@@ -11,7 +30,6 @@ private:
 	Image * _flickeringImg;
 	Image * _uiDC;
 	
-	int _uiType;
 
 	bool _isDrawUI;
 
@@ -27,6 +45,8 @@ private:
 	
 	///////
 	bool _isBlockingUI;
+	int _uiType;
+	OptionUI _optionUI;
 
 public:
 	HRESULT init();
@@ -47,13 +67,15 @@ public:
 	bool getIsBlockingUI() { return _isBlockingUI; }
 	void setIsBlockingUI(bool isBlocking) { _isBlockingUI = isBlocking; }
 
-	void updateVolumeUI();
-	void renderVolumeUI();
+	void updateOptionUI();
+	void renderOptionUI();
+
+	void openUI(int uiType) { _uiType = uiType; _isBlockingUI = true; }
 
 	/////////////
 
 
-	UIManager() : _isBlockingUI(false), _isDrawUI(false) {}
+	UIManager() : _isDrawUI(false), _isBlockingUI(false) {}
 	~UIManager() {}
 };
 

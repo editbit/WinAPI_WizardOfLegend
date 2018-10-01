@@ -251,6 +251,11 @@ void StartLoadingScene::loadingImage()
 	_loading->loadFrameImage("loadingCircle", "Texture/Loading/loadingCircle_26x1_3328x128.bmp", 3328, 128, 26, 1);
 
 	
+	_loading->loadImage("exitMenu", "Texture/UI/exitMenu_260x315.bmp", 260, 315, true, RGB(255, 0, 255));
+	_loading->loadImage("optionMenu", "Texture/UI/audioOption_570x125.bmp", 570, 125, true, RGB(255, 0, 255));
+	_loading->loadImage("optionButton", "Texture/UI/optionButton_32x17.bmp", 32, 17, true, RGB(255, 0, 255));
+
+	
 	_loading->loadImage("card", "Texture/Tile/card_board_416x637.bmp", 416, 637, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("cardEffect", "Texture/Tile/card_board_effect_2496x637_6x1.bmp", 2496, 637, 6, 1);
 
@@ -268,6 +273,7 @@ void StartLoadingScene::loadingImage()
 void StartLoadingScene::loadingSound()
 {
 	_loading->loadSound("Ω√¿€¿Ωæ«", "SOUND/OST/01WizardOfLegend_Title.mp3", true, true);
+	_loading->loadSound("∞‘¿”¿Ωæ«", "SOUND/OST/05Atlas'sTerrace_Earth.mp3", true, true);
 }
 
 void StartLoadingScene::loadingEffect()

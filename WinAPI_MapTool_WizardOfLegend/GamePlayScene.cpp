@@ -88,6 +88,8 @@ HRESULT GamePlayScene::init()
 	CAM->videoShooting(_wizard->getX(), _wizard->getY());
 	EFFECTMANAGER->play("플레이어등장", _wizard->getX(), _wizard->getY() - 231);
 
+
+	SOUNDMANAGER->playBgm("게임음악", _soundVolume);
 	return S_OK;
 }
 

@@ -25,6 +25,7 @@ HRESULT mainGame::init()
 	_soundVolume = INIDATA->loadDataFloat("Data/setting", "Sound", "master");
 	_effectVolume = INIDATA->loadDataFloat("Data/setting", "Sound", "effect");
 
+
 	//이곳에서 초기화를 한다
 	SCENEMANAGER->addScene("타일맵", new maptoolScene);
 	SCENEMANAGER->addScene("탱크", new tankGameScene);
