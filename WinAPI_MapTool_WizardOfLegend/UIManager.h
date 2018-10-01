@@ -18,9 +18,25 @@ public:
 	Image *optionImg;
 
 	RECT volumeRect[2];
+	bool selectVolumeBtn;
 
-	
+	RECT effectVolumeRect[2];
+	bool selectEffectVolumeBtn;
+
+
 	OptionUI();
+};
+
+class ExitUI
+{
+public:
+	int x, y;
+	Image *exitMenuImg;
+
+	RECT btnRect[4];
+	int selectBtnIndex;
+
+	ExitUI();
 };
 
 class UIManager :
@@ -47,6 +63,7 @@ private:
 	bool _isBlockingUI;
 	int _uiType;
 	OptionUI _optionUI;
+	ExitUI _exitUI;
 
 public:
 	HRESULT init();
@@ -68,7 +85,10 @@ public:
 	void setIsBlockingUI(bool isBlocking) { _isBlockingUI = isBlocking; }
 
 	void updateOptionUI();
-	void renderOptionUI();
+	void renderOptionUI(HDC hdc);
+
+	void updateExitUI();
+	void renderExitUI(HDC hdc);
 
 	void openUI(int uiType) { _uiType = uiType; _isBlockingUI = true; }
 

@@ -252,7 +252,7 @@ void StartLoadingScene::loadingImage()
 
 	
 	_loading->loadImage("exitMenu", "Texture/UI/exitMenu_260x315.bmp", 260, 315, true, RGB(255, 0, 255));
-	_loading->loadImage("optionMenu", "Texture/UI/audioOption_570x125.bmp", 570, 125, true, RGB(255, 0, 255));
+	_loading->loadImage("optionMenu", "Texture/UI/option_570x180.bmp", 570, 180, true, RGB(255, 0, 255));
 	_loading->loadImage("optionButton", "Texture/UI/optionButton_32x17.bmp", 32, 17, true, RGB(255, 0, 255));
 
 	
@@ -274,6 +274,10 @@ void StartLoadingScene::loadingSound()
 {
 	_loading->loadSound("시작음악", "SOUND/OST/01WizardOfLegend_Title.mp3", true, true);
 	_loading->loadSound("게임음악", "SOUND/OST/05Atlas'sTerrace_Earth.mp3", true, true);
+
+	_loading->loadSound("충돌소리", "SOUND/EffectSound/collideSound.wav");
+	_loading->loadSound("공격소리", "SOUND/EffectSound/swingWound.wav");
+	
 }
 
 void StartLoadingScene::loadingEffect()

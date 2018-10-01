@@ -30,7 +30,7 @@ HRESULT Rogue::init()
 
 	_speed = 0;
 
-	_power = 5;
+	_power = 15;
 
 	_delayCount = 0;
 	return S_OK;

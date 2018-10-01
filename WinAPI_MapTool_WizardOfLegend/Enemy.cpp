@@ -87,9 +87,10 @@ void Enemy::damaged(Actor * e)
 		_dir = ENEMY::LEFT;
 
 
+	SOUNDMANAGER->play("충돌소리", _effectVolume);
 	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
 
-	_hitCount = e->getPower();
+	_hitCount = e->getPower() * 2;
 	_hp -= e->getPower();
 	if (_hp <= 0)
 		changeState(ENEMY::DEAD);

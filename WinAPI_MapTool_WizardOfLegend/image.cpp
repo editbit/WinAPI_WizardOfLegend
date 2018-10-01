@@ -2,7 +2,7 @@
 #include "image.h"
 #pragma comment (lib, "msimg32.lib")
 
-Image::Image() : _imageInfo(NULL), _fileName(NULL),_isTrans(FALSE), _blendImage(NULL), _transColor(RGB(0, 0, 0)) // Image 클래스 멤버변수 초기화
+Image::Image() : _imageInfo(NULL), _fileName(NULL),_isTrans(FALSE), _blendImage(NULL), _transColor(RGB(0, 0, 0)), _stretchImage(NULL) // Image 클래스 멤버변수 초기화
 {
 }
 

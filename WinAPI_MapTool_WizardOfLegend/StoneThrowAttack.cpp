@@ -12,7 +12,7 @@ HRESULT StoneThrowAttack::init()
 	for (int i = 0; i < STONE_THROW_BULLET_MAX; ++i)
 	{
 		_bullet[i] = new Bullet;
-		_bullet[i]->init(TILESIZE / 2, 5, 5, 500, "stoneBullet");
+		_bullet[i]->init(TILESIZE / 2, 5, _power, 500, "stoneBullet");
 	}
 
 	_description = "돌을 던지는 스킬";

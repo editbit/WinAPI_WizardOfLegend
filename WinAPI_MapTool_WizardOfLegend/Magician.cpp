@@ -42,6 +42,7 @@ HRESULT Magician::init()
 		_attack->setLinkEnemyManager(NULL);
 		_attack->setMotion(0, IMAGEMANAGER->findImage("player_attack1"));
 		_attack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
+		_attack->setPower(10);
 		_attack->init();
 	}
 	else
@@ -53,6 +54,7 @@ HRESULT Magician::init()
 		_attack->setLinkEnemyManager(NULL);
 		_attack->setMotion(0, IMAGEMANAGER->findImage("player_attack1"));
 		_attack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
+		_attack->setPower(10);
 		_attack->init();
 	}
 

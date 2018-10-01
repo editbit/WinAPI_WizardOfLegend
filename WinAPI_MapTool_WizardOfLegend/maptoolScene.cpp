@@ -79,6 +79,8 @@ void maptoolScene::release(void)
 
 void maptoolScene::update(void)
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
+		exit();
 
 	_isDrag = false;
 

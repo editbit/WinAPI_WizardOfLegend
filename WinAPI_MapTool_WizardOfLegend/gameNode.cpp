@@ -150,13 +150,15 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_KEYDOWN:						//키보드 키가 눌렸을때 메세지 발생
 		switch (wParam)
 		{
-		case VK_ESCAPE:						//esc 키를 누르면 화면종료
-			//PostMessage(hWnd, WM_DESTROY, 0, 0);
-			//SCENEMANAGER->exit();
-			if (!UIMANAGER->getIsBlockingUI())
-				UIMANAGER->openUI(OPTION_MENU);
-			else
-				UIMANAGER->setIsBlockingUI(false);
+		//case VK_ESCAPE:						//esc 키를 누르면 화면종료
+		//	//PostMessage(hWnd, WM_DESTROY, 0, 0);
+		//	//SCENEMANAGER->exit();
+		//	if (!UIMANAGER->getIsBlockingUI())
+		//		UIMANAGER->openUI(OPTION_MENU);
+		//	else
+		//		UIMANAGER->setIsBlockingUI(false);
+		//	break;
+
 			break;
 		}
 		break;

@@ -88,7 +88,6 @@ HRESULT GamePlayScene::init()
 	CAM->videoShooting(_wizard->getX(), _wizard->getY());
 	EFFECTMANAGER->play("플레이어등장", _wizard->getX(), _wizard->getY() - 231);
 
-
 	SOUNDMANAGER->playBgm("게임음악", _soundVolume);
 	return S_OK;
 }
@@ -99,6 +98,19 @@ void GamePlayScene::release()
 
 void GamePlayScene::update()
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
+	{
+		if (!UIMANAGER->getIsBlockingUI())
+			UIMANAGER->openUI(EXIT_MENU);
+		else
+			UIMANAGER->setIsBlockingUI(false);
+	}
+	if (UIMANAGER->getIsBlockingUI())
+	{
+		UIMANAGER->update();
+		return;
+	}
+
 	if (!_wizard->getIsActive())
 	{
 		_wizard->setHp(_wizard->getMaxHp());

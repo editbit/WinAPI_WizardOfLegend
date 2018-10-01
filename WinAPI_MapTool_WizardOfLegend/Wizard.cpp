@@ -331,6 +331,7 @@ void Wizard::damaged(Actor * e)
 		settingReturnPoint();
 
 	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
+	SOUNDMANAGER->play("面倒家府", _effectVolume);
 
 	_hp -= e->getPower();
 	UIMANAGER->flickering(RGB(131, 25, 43), 20, 1);
@@ -446,6 +447,7 @@ void Wizard::collideTileObject()
 			{
 				tiles[index].objType = OBJECT_NONE;
 				attribute[index] = attribute[index] ^ ATTR_UNMOVAL;
+				SOUNDMANAGER->play("面倒家府", _effectVolume);
 				EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(tiles[index].rc.left, tiles[index].rc.right), RND->getFromIntTo(tiles[index].rc.top, tiles[index].rc.bottom));
 			}
 			else if (tiles[index].objType == OBJECT_TRAP)

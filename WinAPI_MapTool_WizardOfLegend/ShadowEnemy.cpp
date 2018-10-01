@@ -27,7 +27,7 @@ HRESULT ShadowEnemy::init()
 	
 	_speed = 0;
 
-	_power = 5;
+	_power = 20;
 	_delayCount = 0;
 
 	return S_OK;

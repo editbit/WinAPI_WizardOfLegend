@@ -5,8 +5,6 @@
 
 HRESULT Skill::init()
 {
-	_power = 10;
-
 	_coolTime = 0;
 	_coolTimeCount = 0;
 	return S_OK;

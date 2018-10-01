@@ -9,7 +9,7 @@ HRESULT StoneAttack::init()
 	_skillType = ATTACK_SKILL;
 	_attackCount = 0;
 
-	_power = 40;
+	//_power = 40;
 
 	for (int i = 0; i < ATTACK_BULLET; ++i)
 	{

@@ -8,7 +8,7 @@ HRESULT WaterCircleAttack::init()
 	_skillType = ATTACK_SKILL;
 	_attackCount = 0;
 
-	_power = 40;
+	//_power = 40;
 	_dir = 1;
 
 	for (int i = 0; i < WATER_CIRCLE_BAX; ++i)

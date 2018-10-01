@@ -34,7 +34,6 @@ HRESULT StartScene::init()
 
 	SetTextAlign(getMemDC(), TA_CENTER); //텍스트 중앙정렬
 
-	_soundVolume = 0.5f;
 	SOUNDMANAGER->playBgm("시작음악", _soundVolume);
 
 	return S_OK;
@@ -46,6 +45,12 @@ void StartScene::release()
 
 void StartScene::update()
 {
+	if (UIMANAGER->getIsBlockingUI())
+	{
+		UIMANAGER->update();
+		return;
+	}
+
 	_curButton = -1;
 
 	if (PtInRect(&_button[START], _ptMouse))
@@ -77,8 +82,11 @@ void StartScene::update()
 	else if (PtInRect(&_button[OPTION], _ptMouse))
 	{
 		_curButton = OPTION;
-		
-		
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			UIMANAGER->openUI(OPTION_MENU);
+		}
 	}
 }
 

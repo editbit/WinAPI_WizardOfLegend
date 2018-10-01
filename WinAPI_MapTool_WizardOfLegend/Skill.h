@@ -57,6 +57,7 @@ public:
 
 	void renderIcon(float x, float y);
 
+	void setPower(float power) { _power = power; }
 
 	float getSpeed() { return _speed; }
 	void setSpeed(float speed) { _speed = speed; }

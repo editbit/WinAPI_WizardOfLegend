@@ -36,6 +36,7 @@ HRESULT Inventory::init()
 	_stoneAttack->setLinkEnemyManager(_enemyManager);
 	_stoneAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack1"));
 	_stoneAttack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
+	_stoneAttack->setPower(20);
 	_stoneAttack->init();
 
 	_waterThrowAttack = new WaterThrowAttack;
@@ -45,6 +46,7 @@ HRESULT Inventory::init()
 	_waterThrowAttack->setLinkEnemyManager(_enemyManager);
 	_waterThrowAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack1"));
 	_waterThrowAttack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
+	_stoneAttack->setPower(5);
 	_waterThrowAttack->init();
 
 	_stoneThrowAttack = new StoneThrowAttack;
@@ -53,6 +55,7 @@ HRESULT Inventory::init()
 	_stoneThrowAttack->setLinkPixelMap(_pixelMap);
 	_stoneThrowAttack->setLinkEnemyManager(_enemyManager);
 	_stoneThrowAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack3"));
+	_stoneAttack->setPower(10);
 	_stoneThrowAttack->init();
 
 	_waterCircleAttack = new WaterCircleAttack;
@@ -63,6 +66,7 @@ HRESULT Inventory::init()
 	_waterCircleAttack->setMotion(0, IMAGEMANAGER->findImage("player_attack1"));
 	_waterCircleAttack->setMotion(1, IMAGEMANAGER->findImage("player_attack2"));
 	_waterCircleAttack->setMotion(2, IMAGEMANAGER->findImage("player_attack3"));
+	_stoneAttack->setPower(5);
 	_waterCircleAttack->init();
 
 

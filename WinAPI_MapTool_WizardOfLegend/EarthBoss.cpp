@@ -34,6 +34,7 @@ HRESULT EarthBoss::init()
 	_attack[0]->setLinkPixelMap(_pixelMap);
 	_attack[0]->setLinkEnemyManager(NULL);
 	_attack[0]->setMotion(0, IMAGEMANAGER->findImage("earthBoss_attack1"));
+	_attack[0]->setPower(20);
 	_attack[0]->init();
 	_attack[0]->setFrameCount(15);
 	_attack[0]->setAttackIndex(2);
@@ -45,6 +46,7 @@ HRESULT EarthBoss::init()
 	_attack[1]->setLinkEnemyManager(NULL);
 	_attack[1]->setMotion(0, IMAGEMANAGER->findImage("earthBoss_attack2"));
 	_attack[1]->setMotion(1, IMAGEMANAGER->findImage("earthBoss_attack2"));
+	_attack[1]->setPower(40);
 	_attack[1]->init();
 	_attack[1]->setFrameCount(15);
 	_attack[1]->setAttackIndex(1);
@@ -59,6 +61,7 @@ HRESULT EarthBoss::init()
 	_attack[2]->setLinkEnemyManager(NULL);
 	_attack[2]->setMotion(0, IMAGEMANAGER->findImage("earthBoss_attack3"));
 	_attack[2]->setMotion(1, IMAGEMANAGER->findImage("earthBoss_attack3"));
+	_attack[2]->setPower(15);
 	_attack[2]->init();
 	_attack[2]->setFrameCount(15);
 	_attack[2]->setAttackIndex(2);
@@ -222,10 +225,11 @@ void EarthBoss::damaged(Actor * e)
 	if (_hitCount > 0)
 		return;
 
-	
+
+	SOUNDMANAGER->play("충돌소리", _effectVolume);
 	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
 
-	_hitCount = e->getPower();
+	_hitCount = e->getPower() * 2;
 	_hp -= e->getPower();
 	if (_hp <= 0)
 		changeState(WIZARD::DEAD);

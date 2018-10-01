@@ -30,6 +30,9 @@ HRESULT LoadingScene::init(void)
 	brush = CreateSolidBrush(RGB(255, 255, 255));
 	oBrush = (HBRUSH)SelectObject(_miniMap->getMemDC(), brush);
 
+	SOUNDMANAGER->stop("Ω√¿€¿Ωæ«");
+	SOUNDMANAGER->stop("∞‘¿”¿Ωæ«");
+
 	return S_OK;
 }
 

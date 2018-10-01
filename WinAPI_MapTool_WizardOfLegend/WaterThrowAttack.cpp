@@ -11,7 +11,7 @@ HRESULT WaterThrowAttack::init()
 	for (int i = 0; i < WATER_THROW_MAX; ++i)
 	{
 		_bullet[i] = new WaterThrowBullet;
-		_bullet[i]->init(TILESIZE / 2, 5, 5, 500, "water_skill");
+		_bullet[i]->init(TILESIZE / 2, 5, _power, 500, "water_skill");
 	}
 
 	_description = "적을 뚫고 지나가는 물을 던지는 스킬";
