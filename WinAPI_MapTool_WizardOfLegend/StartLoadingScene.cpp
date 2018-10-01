@@ -208,7 +208,7 @@ void StartLoadingScene::loadingImage()
 
 	
 	_loading->loadFrameImage("appearEnemy", "Texture/Effect/appearEnemy_1200x187_10x1.bmp", 1200, 187, 10, 1);
-	_loading->loadFrameImage("collideEffect1", "Texture/Effect/collideEffect2_240x145_3x1.bmp", 240, 145, 3, 1);
+	_loading->loadFrameImage("collideEffect2", "Texture/Effect/collideEffect2_240x145_3x1.bmp", 240, 145, 3, 1);
 	_loading->loadFrameImage("collideEffect1", "Texture/Effect/collideEffect1_231x129_3x1.bmp", 231, 129, 3, 1);
 	_loading->loadFrameImage("appearPlayer", "Texture/Effect/appearPlayer_384x512_4x1.bmp", 384, 512, 4, 1);
 	
@@ -267,6 +267,7 @@ void StartLoadingScene::loadingImage()
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
 void StartLoadingScene::loadingSound()
 {
+	_loading->loadSound("시작음악", "SOUND/OST/01WizardOfLegend_Title.mp3", true, true);
 }
 
 void StartLoadingScene::loadingEffect()
@@ -278,7 +279,7 @@ void StartLoadingScene::loadingEffect()
 
 	EFFECTMANAGER->addEffect("적등장", "appearEnemy", 0.15, 40);
 	EFFECTMANAGER->addEffect("충돌1", "collideEffect1", 0.2, 40);
-	EFFECTMANAGER->addEffect("충돌2", "collideEffect1", 0.2, 40);
+	EFFECTMANAGER->addEffect("충돌2", "collideEffect2", 0.2, 40);
 	EFFECTMANAGER->addEffect("플레이어등장", "appearPlayer", 0.2, 2);
 
 }

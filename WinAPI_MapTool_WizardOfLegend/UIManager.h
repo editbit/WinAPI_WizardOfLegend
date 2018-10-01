@@ -8,15 +8,14 @@ class UIManager :
 	public SingletonBase<UIManager>
 {
 private:
-	Image * _magenta;
+	Image * _flickeringImg;
 	Image * _uiDC;
 	
 	int _uiType;
 
-	bool _isBlockingUI;
 	bool _isDrawUI;
 
-	HBRUSH brush;
+	HBRUSH brush, oBrush;
 
 	////// flickering
 	
@@ -25,14 +24,9 @@ private:
 	int _speed;
 	COLORREF _color;
 
-	////// sceneChange
-
-	bool _sceneChanging;
-	bool _startingScene;
-	bool _endScene;
-	int _destX, _destY;
-	int _rcWidth, _rcHeight;
-
+	
+	///////
+	bool _isBlockingUI;
 
 public:
 	HRESULT init();
@@ -41,21 +35,25 @@ public:
 	void render(HDC hdc);
 
 	void flickering(COLORREF color, int speed, int count);
-	void sceneChange(HDC hdc);
-	void startingSceneChange(int x, int y);
 
-	void newSceneStart(HDC hdc);
-	void startingNewScene(int x, int y);
-
-	bool checkEndScene() { return _endScene; }
 	bool checkBlocking() { return _isBlockingUI; }
 	bool checkDrawingUI() { return _isDrawUI; }
 	void clear();
 	HDC getUIDC() { return _uiDC->getMemDC(); }
-	bool isChangingScene() { return (_sceneChanging || _startingScene); }
 
 
-	UIManager() : _isBlockingUI(false), _isDrawUI(false), _endScene(false) {}
+	/////////////
+
+	bool getIsBlockingUI() { return _isBlockingUI; }
+	void setIsBlockingUI(bool isBlocking) { _isBlockingUI = isBlocking; }
+
+	void updateVolumeUI();
+	void renderVolumeUI();
+
+	/////////////
+
+
+	UIManager() : _isBlockingUI(false), _isDrawUI(false) {}
 	~UIManager() {}
 };
 

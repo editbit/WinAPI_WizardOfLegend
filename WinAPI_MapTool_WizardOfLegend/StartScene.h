@@ -1,15 +1,18 @@
 #pragma once
 #include "gameNode.h"
+
+#define BUTTON_MAX 4
+
 class StartScene :
 	public GameNode
 {
-	enum {START, EXIT, MAPTOOL};
+	enum {START, MAPTOOL, OPTION, EXIT};
 
 	Image * _titleImg, *_background;
 
-	RECT _button[3];
-	string text[3];
-	POINT _buttonPos[3];
+	RECT _button[BUTTON_MAX];
+	string text[BUTTON_MAX];
+	POINT _buttonPos[BUTTON_MAX];
 	int _curButton;
 
 	HFONT font;

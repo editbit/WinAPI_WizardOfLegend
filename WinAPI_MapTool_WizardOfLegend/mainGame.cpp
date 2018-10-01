@@ -4,6 +4,8 @@
 float _soundVolume;
 float _effectVolume;
 Image * cursor;
+string collisionKey[2] = { "충돌1", "충돌2" };
+
 
 //=============================================================
 //	## 초기화 ## init()

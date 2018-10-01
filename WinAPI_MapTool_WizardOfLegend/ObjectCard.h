@@ -12,7 +12,7 @@
 */
 
 #define SAMPLE_OBJECT_TYPE 8
-#define SAMPLE_OBJECT_MAX 39
+#define SAMPLE_OBJECT_MAX 40
 #define SAMPLE_OBJECT_RC_SIZE 80
 
 struct SampleObject

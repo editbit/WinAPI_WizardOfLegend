@@ -67,7 +67,6 @@ HRESULT EarthBoss::init()
 
 
 	_routingIndex = 0;
-	_hp = 100;
 	_delayCount = 0;
 	_hitCount = 0;
 
@@ -78,8 +77,8 @@ HRESULT EarthBoss::init()
 	{
 		_hpBar = new ProgressBar;
 		_hpBar->init("bosshpBarFront_300x41", "bosshpBarBack_300x41", WINSIZEX/2 - 150, 50, 300, 41);
-		_maxHp = 100;	// 맥스HP
-		_hp = 100;	// 현재 에너지(이미지수정때문에29)
+		_hp = 800;
+		_maxHp = 800;
 		_hpBar->setGauge(_hp, _maxHp);
 	}
 
@@ -107,18 +106,20 @@ void EarthBoss::update()
 		{
 			_isActive = false;
 		}
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
 	}
 
 	if (_state == WIZARD::DEAD)
 	{
-		_delayCount -= 1;
+		//_delayCount -= 1;
 		if (_delayCount < 0)
 		{
 			_isActive = false;
 			_delayCount = 0;
 		}
 
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
 	}
 
@@ -214,43 +215,37 @@ void EarthBoss::changeState(int state)
 
 void EarthBoss::damaged(Actor * e)
 {
-	if (_state == WIZARD::DEAD || _state == WIZARD::HIT || _state == WIZARD::FALL)
+	if (_state == WIZARD::DEAD || _state == WIZARD::FALL) //|| _state == WIZARD::HIT )
 		return;
 
-	if (_state == WIZARD::ATTACK)
-	{
-		if (_hitCount > 0)
-			return;
-
-		_hitCount = e->getPower() * 2;
-		_hp -= e->getPower();
-		if (_hp <= 0)
-		{
-			changeState(WIZARD::DEAD);
-			_hp = 0;
-			_delayCount = 50;
-		}
-		return;
-	}
 
 	if (_hitCount > 0)
 		return;
 
-	_angle = getAnglef(e->getX(), e->getY(), _x, _y);
-	//_angle = _angle + PI;
-	if (e->getX() > _x)
-		_dir = WIZARD::RIGHT;
-	else
-		_dir = WIZARD::LEFT;
+	
+	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
 
 	_hitCount = e->getPower();
 	_hp -= e->getPower();
 	if (_hp <= 0)
 		changeState(WIZARD::DEAD);
 	else
-		changeState(WIZARD::HIT);
+	{
+		if (_state != WIZARD::ATTACK)
+		{
+			_angle = getAnglef(e->getX(), e->getY(), _x, _y);
+			//_angle = _angle + PI;
+			if (e->getX() > _x)
+				_dir = WIZARD::RIGHT;
+			else
+				_dir = WIZARD::LEFT;
 
-	_delayCount = 50;
+			changeState(WIZARD::HIT);
+
+			if(_delayCount <= 0)
+				_delayCount = 50;
+		}
+	}
 }
 
 void EarthBoss::settingDir()

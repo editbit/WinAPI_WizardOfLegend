@@ -4,6 +4,7 @@
 
 #define REWIND_SIZE 120
 
+
 class Actor : public GameNode
 {
 protected:

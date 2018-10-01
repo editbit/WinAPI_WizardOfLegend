@@ -65,11 +65,15 @@ void Rogue::update()
 		{
 			_isActive = false;
 		}
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
 	}
 
 	if (_state == ENEMY::DEAD)
+	{
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
+	}
 
 	if (_delayCount <= 0)
 	{

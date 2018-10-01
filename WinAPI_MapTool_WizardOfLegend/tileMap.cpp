@@ -58,7 +58,7 @@ void tileMap::update(void)
 			//if (_tiles[i * TILEX + j].objType == OBJECT_NONE || _tiles[i * TILEX + j].objType == OBJECT_BLOCK1) continue;
 			//_objectCard._sampleObject[_tiles[i*TILEX +j].objIndex].objImg->render(getMemDC(), _tiles[i * TILEX + j].rc.left - CAM->getX(), _tiles[i * TILEX + j].rc.bottom - _objectCard._sampleObject[_tiles[i*TILEX + j].objIndex].objImg->getHeight() - CAM->getY());
 
-			if (_tiles[i * TILEX + j].obj == NULL)
+			if (_tiles[i * TILEX + j].obj == NULL || _tiles[i * TILEX + j].objType == OBJECT_NONE)
 				continue;
 			_tiles[i*TILEX + j].obj->update();
 			RENDERMANAGER->addRender(_tiles[i*TILEX + j].rc.bottom, _tiles[i*TILEX + j].obj);
@@ -84,8 +84,8 @@ void tileMap::render(void)
 bool tileMap::prepareLoading(const char* fileName)
 {
 	release();
+	_storageIndex = -1;
 	SAVEDATA->setStartPos(-1, -1);
-
 	SAVEDATA->setEndPos(-1, -1);
 
 	_objectCard.init(0, 0);
@@ -143,6 +143,7 @@ bool tileMap::prepareLoading(const char* fileName)
 
 	SelectObject(tileGameMap->getMemDC(), oBrush);
 	DeleteObject(brush);
+
 
 	return false;
 }
@@ -204,13 +205,15 @@ bool tileMap::loadingDone()
 			_tiles[_loadingIndex].obj = NULL;
 
 		if (_tiles[_loadingIndex].objType == OBJECT_WALL ||
-			_tiles[_loadingIndex].objType == OBJECT_BLOCK1)
+			_tiles[_loadingIndex].objType == OBJECT_BLOCK1 ||
+			_tiles[_loadingIndex].objType == OBJECT_STORAGE)
 		{
 			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
 			pixelTile->frameRender(tileGamePixel->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, 0, 0);
 		}
 		if (_tiles[_loadingIndex].objType == OBJECT_BREAKABLE || _tiles[_loadingIndex].objType == OBJECT_TRAP)
 			_attribute[_loadingIndex] |= ATTR_UNMOVAL;
+
 
 		tileMap->frameRender(tileGameMap->getMemDC(), _tiles[_loadingIndex].rc.left, _tiles[_loadingIndex].rc.top, _tiles[_loadingIndex].terrainFrameX, _tiles[_loadingIndex].terrainFrameY);
 
@@ -238,6 +241,16 @@ bool tileMap::loadingDone()
 				}
 
 			}
+
+			else if (_tiles[_loadingIndex].objType == OBJECT_STORAGE)
+			{
+				_storageIndex = _loadingIndex;
+
+				pixelTile->frameRender(tileGamePixel->getMemDC(), _tiles[_loadingIndex + 1].rc.left, _tiles[_loadingIndex + 1].rc.top, 0, 0);
+				pixelTile->frameRender(tileGamePixel->getMemDC(), _tiles[_loadingIndex + 1 + TILEX].rc.left, _tiles[_loadingIndex + 1 + TILEX].rc.top, 0, 0);
+				pixelTile->frameRender(tileGamePixel->getMemDC(), _tiles[_loadingIndex - TILEX].rc.left, _tiles[_loadingIndex - TILEX].rc.top, 0, 0);
+			}
+
 			else if (_tiles[_loadingIndex].objType == OBJECT_ENTRANCE || _tiles[_loadingIndex].objType == OBJECT_EXIT || _tiles[_loadingIndex].objType == OBJECT_DECO)
 			{
 				_objectCard._sampleObject[_tiles[_loadingIndex].objIndex].objImg->render(tileGameMap->getMemDC(),
@@ -280,6 +293,11 @@ bool tileMap::loadingDone()
 			_objectCard._sampleObject[35].objImg->render(tileGameMap->getMemDC(),
 				SAVEDATA->getEndPos().x - (_objectCard._sampleObject[36].objImg->getWidth()) * 0.5f,
 				SAVEDATA->getEndPos().y - (_objectCard._sampleObject[36].objImg->getHeight()) * 0.5f);
+
+		if(_storageIndex != -1)
+			IMAGEMANAGER->findImage("창고")->render(tileGameMap->getMemDC(),
+				_tiles[_storageIndex].rc.left,
+				_tiles[_storageIndex].rc.bottom - IMAGEMANAGER->findImage("창고")->getHeight());
 	}
 
 	SelectObject(_miniMap->getMemDC(), oPen);
@@ -345,29 +363,23 @@ void tileMap::load(const char * fileName)
 	Image * tankGamePixel = IMAGEMANAGER->findImage("tileMapPixel");
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		//물지형 및 블럭오브젝트들은 탱크가 지나다닐 수 없으니
-		//속성을 attr_unmoval로 정의한다
-		//불변수로 처리해도 상관없다
-
 		
-		
-		if (_tiles[i].terrain == TR_WALL ||
-			_tiles[i].terrain == TR_CLIFF)
-			_attribute[i] |= ATTR_UNMOVAL;
 
 		pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
 		
 
-		if (_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1)
-			_tiles[i].obj = NULL;
-
 		if (_tiles[i].objType == OBJECT_WALL ||
-			_tiles[i].objType == OBJECT_BLOCK1)
+			_tiles[i].objType == OBJECT_BLOCK1 || 
+			_tiles[i].objType == OBJECT_STORAGE)
 		{
 			_attribute[i] |= ATTR_UNMOVAL;
 			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, 0, 0);
 		}
-		if(_tiles[i].objType == OBJECT_BREAKABLE || _tiles[i].objType == OBJECT_TRAP || _tiles[i].objType == OBJECT_STORAGE)
+
+		if(_tiles[i].objType == OBJECT_BREAKABLE ||
+			_tiles[i].objType == OBJECT_TRAP ||
+			_tiles[i].terrain == TR_WALL ||
+			_tiles[i].terrain == TR_CLIFF)
 			_attribute[i] |= ATTR_UNMOVAL;
 
 		tileMap->frameRender(tankGameMap->getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
@@ -377,7 +389,11 @@ void tileMap::load(const char * fileName)
 		if (_tiles[i].objType == OBJECT_BLOCKS) _attribute[i] |= ATTR_UNMOVAL;*/
 
 
-		if (_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1) continue;
+		if (_tiles[i].objType == OBJECT_NONE || _tiles[i].objType == OBJECT_BLOCK1)
+		{
+			_tiles[i].obj = NULL;
+			continue;
+		}
 
 		if (_tiles[i].objType == OBJECT_TRAP)
 		{
@@ -406,6 +422,16 @@ void tileMap::load(const char * fileName)
 			_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(tankGameMap->getMemDC(), 
 				(_tiles[i].rc.right + _tiles[i].rc.left - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getWidth()) * 0.5f,
 				(_tiles[i].rc.bottom + _tiles[i].rc.top - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight()) * 0.5f);
+		}
+		else if (_tiles[i].objType == OBJECT_STORAGE)
+		{
+			_objectCard._sampleObject[_tiles[i].objIndex].objImg->render(tankGameMap->getMemDC(),
+				_tiles[i].rc.left,
+				_tiles[i].rc.bottom - _objectCard._sampleObject[_tiles[i].objIndex].objImg->getHeight());
+
+			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i+1].rc.left, _tiles[i+1].rc.top, 0, 0);
+			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i+1 + TILEX].rc.left, _tiles[i+1 + TILEX].rc.top, 0, 0);
+			pixelTile->frameRender(tankGamePixel->getMemDC(), _tiles[i - TILEX].rc.left, _tiles[i - TILEX].rc.top, 0, 0);
 		}
 		else
 		{

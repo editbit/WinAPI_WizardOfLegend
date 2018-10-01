@@ -24,6 +24,7 @@ HRESULT GamePlayScene::init()
 	_enemyManager = SAVEDATA->getEnemyManager();
 	if (_wizard == NULL)
 	{
+
 		_wizard = new Wizard;
 		_wizard->setLinkTileMap(_tileMap);
 		_wizard->setPixelMap(_pixelMapImg);
@@ -33,7 +34,15 @@ HRESULT GamePlayScene::init()
 		_enemyManager->setLinkTileMap(_tileMap);
 		_enemyManager->setPixelMap(_pixelMapImg);
 
+
+		_inven = new Inventory;
+		_inven->setLinkEnemyManager(_enemyManager);
+		_inven->setLinkPixelMap(_pixelMapImg);
+		_inven->setLinkPlayer(_wizard);
+		_inven->init();
+
 		_wizard->setLinkEnemyManager(_enemyManager);
+		_wizard->setLinkInven(_inven);
 		_wizard->init();
 
 		SAVEDATA->setPlayer(_wizard);
@@ -43,7 +52,7 @@ HRESULT GamePlayScene::init()
 	_enemyManager->init();
 	_wizard->setX(SAVEDATA->getStartPos().x);
 	_wizard->setY(SAVEDATA->getStartPos().y);
-
+	_wizard->settingCurrentSkill();
 
 	CAM->setDrawRange(WINSIZEX, WINSIZEY);
 	CAM->setMaxRange(TILESIZEX, TILESIZEY);
@@ -91,11 +100,37 @@ void GamePlayScene::update()
 	if (!_wizard->getIsActive())
 	{
 		_wizard->setHp(_wizard->getMaxHp());
+		_wizard->changeState(WIZARD::IDLE);
+		_wizard->setIsActive(true);
 		SAVEDATA->setCurrentStage(0);
 		SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) + ".map");
 		SCENEMANAGER->loadScene("LoadingScene");
 		RENDERMANAGER->clear();
 		return;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
+	{
+		if (!_inven->getIsActive())
+		{
+			int startX = (int)(_wizard->getX() / TILESIZE) - 1, startY = (int)(_wizard->getY() / TILESIZE) - 1;
+			for (int i = startY; i < startY + 2; ++i)
+			{
+				for (int j = startX; j < startX + 2; ++j)
+				{
+					if (tiles[i * TILEX + j].objType == OBJECT_STORAGE)
+					{
+						_wizard->openInven();
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			_inven->setIsActive(false);
+			_wizard->settingCurrentSkill();
+		}
 	}
 
 	_tileMap->update();
@@ -107,7 +142,7 @@ void GamePlayScene::update()
 	int i;
 	for (i = 0; i < _roomList.rc.size(); ++i)
 	{
-		if (_enemyManager->isEnemys() && IntersectRect(&temp, &_wizard->getMoveBox(), &_roomList.rc[i]))
+		if (_enemyManager->isEnemys(i+1) && IntersectRect(&temp, &_wizard->getMoveBox(), &_roomList.rc[i]))
 		{
 			roomCollisionBox = { _roomList.rc[i].left + TILESIZE * 2, _roomList.rc[i].top + TILESIZE * 2, _roomList.rc[i].right - TILESIZE * 2, _roomList.rc[i].bottom - TILESIZE * 2 };
 			//if(temp.right - temp.left >= WIZARD::MOVEBOX_WIDTH && temp.bottom - temp.top >= WIZARD::MOVEBOX_HEIGHT)
@@ -152,19 +187,22 @@ void GamePlayScene::update()
 
 	if (tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].objType == OBJECT_EXIT)
 	{
-		if (KEYMANAGER->isOnceKeyDown('F'))
+		if (!_enemyManager->isEnemys())
 		{
-			_wizard->endDash();
-			SAVEDATA->setCurrentStage(SAVEDATA->getCurrentStage() + 1);
-			SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) +".map");
-			SCENEMANAGER->loadScene("LoadingScene");
-			RENDERMANAGER->clear();
-			return;
-		}
+			if (KEYMANAGER->isOnceKeyDown('F'))
+			{
+				_wizard->endDash();
+				SAVEDATA->setCurrentStage(SAVEDATA->getCurrentStage() + 1);
+				SAVEDATA->setMapName("Stage/Stage" + to_string(SAVEDATA->getCurrentStage()) + ".map");
+				SCENEMANAGER->loadScene("LoadingScene");
+				RENDERMANAGER->clear();
+				return;
+			}
 
-		IMAGEMANAGER->findImage("button_f")->render(UIMANAGER->getUIDC(),
-			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.left + 22 - CAM->getX(),
-			tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.top - TILESIZE * 2 - CAM->getY());
+			IMAGEMANAGER->findImage("button_f")->render(UIMANAGER->getUIDC(),
+				tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.left + 22 - CAM->getX(),
+				tiles[(int)(_wizard->getY() / TILESIZE) * TILEX + (int)(_wizard->getX() / TILESIZE)].rc.top - TILESIZE * 2 - CAM->getY());
+		}
 	}
 }
 

@@ -9,12 +9,13 @@
 #include "EarthBoss.h"
 #include "EnemyManager.h"
 #include "Bomb.h"
-
+#include "Inventory.h"
 
 class GamePlayScene :
 	public GameNode
 {
 	Wizard * _wizard;
+	Inventory *_inven;
 
 	EnemyManager * _enemyManager;
 

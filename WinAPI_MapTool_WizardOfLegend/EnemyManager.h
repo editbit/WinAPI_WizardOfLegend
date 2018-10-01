@@ -8,6 +8,7 @@ class EnemyManager :
 {
 	int _currentRoom;
 	vector<vector<Enemy *>> _enemys;
+	vector<bool> _isEnemy;
 
 	Actor *_player, *_playerSour;
 	tileMap * _tileMap;
@@ -21,7 +22,7 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void addArea() { _enemys.push_back(vector<Enemy *>()); }
+	void addArea();
 	void setCurrentRoom(int room);
 	int getCurrentRoom() { return _currentRoom; }
 	vector<Enemy *>& getEnemys() { return _enemys[_currentRoom]; }
@@ -35,7 +36,8 @@ public:
 
 	void changeDummy(Actor * player) { _player = player; }
 
-	bool isEnemys() { return !(_enemys[_currentRoom].size() == _enemysCount); }
+	bool isEnemys(int roomNum) { return _isEnemy[roomNum]; }
+	bool isEnemys();
 
 	EnemyManager() : _aStar(NULL)  {}
 	~EnemyManager() {}

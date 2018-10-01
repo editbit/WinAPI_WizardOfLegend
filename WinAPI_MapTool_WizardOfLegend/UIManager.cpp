@@ -8,6 +8,8 @@ HRESULT UIManager::init(void)
 {
 	_uiDC = new Image;
 	_uiDC->init(WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	_flickeringImg = new Image;
+	_flickeringImg->init(WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 
 	_uiType = 0;
 	_isDrawUI = false;
@@ -15,8 +17,6 @@ HRESULT UIManager::init(void)
 	// flickering
 	_count = 0;
 	_alpha = 200;
-
-	_sceneChanging = _startingScene = false;
 
 
 	SetBkMode(_uiDC->getMemDC(), TRANSPARENT);
@@ -26,27 +26,15 @@ HRESULT UIManager::init(void)
 
 void UIManager::release(void)
 {
+	_flickeringImg->release();
+	SAFE_DELETE(_flickeringImg);
 	_uiDC->release();
 	SAFE_DELETE(_uiDC);
 }
 
 void UIManager::update()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
-	{
-		_isDrawUI = true;
-	}
-	if (!_isDrawUI) return;
-
-	switch (_uiType)
-	{
-	case 0:
-
-		break;
-	case 1:
-
-		break;
-	}
+	
 }
 
 void UIManager::render(HDC hdc)
@@ -54,29 +42,17 @@ void UIManager::render(HDC hdc)
 
 	_uiDC->render(hdc);
 
-
-	if (_sceneChanging)
-	{
-		_count = 0;
-
-		sceneChange(hdc);
-
-	}
-	else if (_startingScene)
-	{
-		_count = 0;
-
-		newSceneStart(hdc);
-	}
-	else if (_count > 0)
+	if (_count > 0)
 	{
 		
 		_alpha -= _speed;
 
-		brush = CreateSolidBrush(_color);
-		SelectObject(_uiDC->getMemDC(), brush);
-		Rectangle(_uiDC->getMemDC(), RectMake(0, 0, WINSIZEX, WINSIZEY));
-		DeleteObject(brush);
+		//brush = CreateSolidBrush(_color);
+		//oBrush = (HBRUSH)SelectObject(_uiDC->getMemDC(), brush);
+		//Rectangle(_uiDC->getMemDC(), RectMake(0, 0, WINSIZEX, WINSIZEY));
+		//SelectObject(_uiDC->getMemDC(), oBrush);
+		//DeleteObject(brush);
+		_flickeringImg->alphaRender(hdc, _alpha);
 
 		_uiDC->alphaRender(hdc, _alpha);
 
@@ -95,90 +71,26 @@ void UIManager::flickering(COLORREF color, int speed, int count)
 	_color = color;
 	_speed = speed;
 	_count = count;
-}
 
-void UIManager::sceneChange(HDC hdc)
-{
-	RECT rc = RectMakeCenter(_destX - CAM->getX(), _destY - CAM->getY(), _rcWidth, _rcHeight);
 
-	brush = CreateSolidBrush(RGB(0, 0, 0));
-	SelectObject(_uiDC->getMemDC(), brush);
-	Rectangle(_uiDC->getMemDC(), RectMake(0, 0, WINSIZEX, WINSIZEY));
+	brush = CreateSolidBrush(_color);
+	oBrush = (HBRUSH)SelectObject(_flickeringImg->getMemDC(), brush);
+	Rectangle(_flickeringImg->getMemDC(), RectMake(0, 0, WINSIZEX, WINSIZEY));
+	SelectObject(_flickeringImg->getMemDC(), oBrush);
 	DeleteObject(brush);
+
+
+	HPEN pen = CreatePen(PS_SOLID, 2, _color);
+	HPEN oPen = (HPEN)SelectObject(_flickeringImg->getMemDC(), pen);
 
 	brush = CreateSolidBrush(RGB(255, 0, 255));
-	SelectObject(_uiDC->getMemDC(), brush);
-	Ellipse(_uiDC->getMemDC(), rc);
+	oBrush = (HBRUSH)SelectObject(_flickeringImg->getMemDC(), brush);
+	Rectangle(_flickeringImg->getMemDC(), { 50, 50, WINSIZEX - 50, WINSIZEY - 50 });
+	SelectObject(_flickeringImg->getMemDC(), oBrush);
 	DeleteObject(brush);
 
-	_uiDC->render(hdc);
-
-
-	if (_rcWidth <= 0 || _rcHeight <= 0)
-	{
-		_sceneChanging = false;
-		_endScene = true;
-	}
-
-	_rcWidth -= WINSIZEX / 50;
-	_rcHeight -= WINSIZEY / 50;
-	if (_rcWidth <= 0 || _rcHeight <= 0)
-	{
-		_rcWidth = 0;
-		_rcHeight = 0;
-	}
-}
-
-void UIManager::startingSceneChange(int x, int y)
-{
-	_sceneChanging = true;
-	_endScene = false;
-	_destX = x;
-	_destY = y;
-	_rcWidth = WINSIZEX * 2;
-	_rcHeight = WINSIZEY * 2;
-}
-
-void UIManager::newSceneStart(HDC hdc)
-{
-	RECT rc = RectMakeCenter(_destX - CAM->getX(), _destY - CAM->getY(), _rcWidth, _rcHeight);
-
-	brush = CreateSolidBrush(RGB(0, 0, 0));
-	SelectObject(_uiDC->getMemDC(), brush);
-	Rectangle(_uiDC->getMemDC(), RectMake(0, 0, WINSIZEX, WINSIZEY));
-	DeleteObject(brush);
-
-	brush = CreateSolidBrush(RGB(255, 0, 255));
-	SelectObject(_uiDC->getMemDC(), brush);
-	Ellipse(_uiDC->getMemDC(), rc);
-	DeleteObject(brush);
-
-	_uiDC->render(hdc);
-
-
-	if (_rcWidth >= WINSIZEX * 2 || _rcHeight >= WINSIZEY * 2)
-	{
-		_startingScene = false;
-		_endScene = false;
-	}
-
-	_rcWidth += WINSIZEX / 50;
-	_rcHeight += WINSIZEY / 50;
-	if (_rcWidth >= WINSIZEX * 2 || _rcHeight >= WINSIZEY*2)
-	{
-		_rcWidth = WINSIZEX * 2;
-		_rcHeight = WINSIZEY * 2;;
-	}
-}
-
-void UIManager::startingNewScene(int x, int y)
-{
-	_endScene = false;
-	_startingScene = true;
-	_destX = x;
-	_destY = y;
-	_rcWidth = 0;
-	_rcHeight = 0;
+	SelectObject(_flickeringImg->getMemDC(), oPen);
+	DeleteObject(pen);
 }
 
 void UIManager::clear()

@@ -15,6 +15,8 @@ private:
 
 	int _loadingIndex;
 
+	int _storageIndex;
+
 	HANDLE file;
 	DWORD read;
 public:

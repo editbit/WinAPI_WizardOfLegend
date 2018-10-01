@@ -12,6 +12,7 @@ HRESULT EnemyManager::init()
 		release();
 
 	_enemys.push_back(vector<Enemy *>());
+	_isEnemy.push_back(false);
 	_enemysCount = 0;
 	return S_OK;
 }
@@ -28,6 +29,7 @@ void EnemyManager::release()
 		_enemys[i].clear();
 	}
 	_enemys.clear();
+	_isEnemy.clear();
 }
 
 void EnemyManager::update()
@@ -64,13 +66,22 @@ void EnemyManager::update()
 		_enemys[_currentRoom][i]->update();
 	}
 
-
+	if (_enemysCount == _enemys[_currentRoom].size())
+	{
+		_isEnemy[_currentRoom] = false;
+	}
 }
 
 void EnemyManager::render()
 {
 }
 
+
+void EnemyManager::addArea()
+{ 
+	_enemys.push_back(vector<Enemy *>());
+	_isEnemy.push_back(false);
+}
 
 void EnemyManager::setCurrentRoom(int room)
 {
@@ -97,6 +108,18 @@ void EnemyManager::addEnemy(Enemy * enemy, int room, bool isSour)
 
 	enemy->init();
 	_enemys[room].push_back(enemy);
+	_isEnemy[room] = true;
+}
+
+bool EnemyManager::isEnemys()
+{
+	for (int i = 0; i < _isEnemy.size(); ++i)
+	{
+		if (_isEnemy[i])
+			return true;
+	}
+
+	return false;
 }
 
 

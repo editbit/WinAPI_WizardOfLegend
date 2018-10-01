@@ -59,6 +59,7 @@ public:
 	void collidePixelMap();
 	
 	void setLinkEnemyManager(EnemyManager *enemys) { _enemyManager = enemys; }
+	void setLinkInven(Inventory *inven) { _inven = inven; }
 
 	virtual void damaged(Actor *e);
 	void attackStuff();
@@ -70,6 +71,9 @@ public:
 	void endDash() { _currentDash->endDash(); }
 
 	float getAttackAngle() { return _attackAngle; }
+
+	void openInven();
+	void settingCurrentSkill();
 
 	Wizard() : _enemyManager(NULL), _iceDash(NULL), _hpBar(NULL) {}
 	virtual ~Wizard() {}

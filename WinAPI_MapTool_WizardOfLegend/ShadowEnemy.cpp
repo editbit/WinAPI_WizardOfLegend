@@ -62,12 +62,14 @@ void ShadowEnemy::update()
 		{
 			_isActive = false;
 		}
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
 	}
 
 	if (_state == ENEMY::DEAD)
 	{
 		frameSetting();
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
 	}
 

@@ -10,18 +10,21 @@ HRESULT StartScene::init()
 
 	text[START] = "Start";
 	text[MAPTOOL] = "Map Tool";
+	text[OPTION] = "Option";
 	text[EXIT] = "Exit";
 	
 	_buttonPos[START].x= WINSIZEX / 2;
 	_buttonPos[MAPTOOL].x = WINSIZEX / 2;
+	_buttonPos[OPTION].x = WINSIZEX / 2;
 	_buttonPos[EXIT].x = WINSIZEX / 2;
 
 	_buttonPos[START].y = WINSIZEY / 2 + 50;
 	_buttonPos[MAPTOOL].y = WINSIZEY / 2 + 100;
-	_buttonPos[EXIT].y = WINSIZEY / 2 + 150;
+	_buttonPos[OPTION].y = WINSIZEY / 2 + 150;
+	_buttonPos[EXIT].y = WINSIZEY / 2 + 200;
 
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < BUTTON_MAX; ++i)
 	{
 		_button[i] = RectMakeCenter(_buttonPos[i].x, _buttonPos[i].y, 100, 50);
 	}
@@ -30,6 +33,9 @@ HRESULT StartScene::init()
 
 
 	SetTextAlign(getMemDC(), TA_CENTER); //≈ÿΩ∫∆Æ ¡ﬂæ”¡§∑ƒ
+
+	_soundVolume = 0.5f;
+	SOUNDMANAGER->playBgm("Ω√¿€¿Ωæ«", _soundVolume);
 
 	return S_OK;
 }
@@ -68,6 +74,12 @@ void StartScene::update()
 			SCENEMANAGER->loadScene("≈∏¿œ∏ ");
 		}
 	}
+	else if (PtInRect(&_button[OPTION], _ptMouse))
+	{
+		_curButton = OPTION;
+		
+		
+	}
 }
 
 void StartScene::render()
@@ -78,7 +90,7 @@ void StartScene::render()
 
 	char str[128];
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < BUTTON_MAX; ++i)
 	{
 		if (_curButton == i)
 		{

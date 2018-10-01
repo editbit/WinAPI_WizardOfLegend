@@ -90,11 +90,15 @@ void Magician::update()
 		{
 			_isActive = false;
 		}
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
 	}
 
 	if (_state == ENEMY::DEAD)
+	{
+		RENDERMANAGER->addRender(_moveBox.bottom - _z, this);
 		return;
+	}
 
 	if (_delayCount <= 0)
 	{
@@ -129,7 +133,6 @@ void Magician::update()
 
 	collide();
 	Enemy::update();
-
 
 	if (_x > CAM->getX() - 100 && _x < CAM->getX() + WINSIZEX + 100 &&
 		_y > CAM->getY() - 100 && _y < CAM->getY() + WINSIZEY + 100)

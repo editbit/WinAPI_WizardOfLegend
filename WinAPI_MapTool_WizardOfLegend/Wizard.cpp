@@ -42,11 +42,6 @@ HRESULT Wizard::init()
 	_attackAngle = 0;
 	_attackCount = 0;
 
-	_inven = new Inventory;
-	_inven->setLinkEnemyManager(_enemyManager);
-	_inven->setLinkPixelMap(_pixelMap);
-	_inven->setLinkPlayer(this);
-	_inven->init();
 
 	_currentDash = (Dash*)_inven->getCurrentDash();
 	_attack[0] = _inven->getAttackSkill(0);
@@ -226,13 +221,6 @@ void Wizard::rewindRender()
 
 void Wizard::inputProcess()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
-	{
-		changeState(WIZARD::IDLE);
-		_inven->openInven();
-		return;
-	}
-
 	_axisX = NONE; _axisY = NONE;
 	if (KEYMANAGER->isStayKeyDown('W'))
 	{
@@ -339,7 +327,13 @@ void Wizard::damaged(Actor * e)
 		_state == WIZARD::DEAD)
 		return;
 
+	if (_state != WIZARD::DASH)
+		settingReturnPoint();
+
+	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
+
 	_hp -= e->getPower();
+	UIMANAGER->flickering(RGB(131, 25, 43), 20, 1);
 	if (_hp <= 0)
 	{
 		_hp = 0;
@@ -353,9 +347,6 @@ void Wizard::damaged(Actor * e)
 	settingDir();
 	_angle = _angle + PI;
 
-	//_returnPoint = { _x, _y };
-	if(_state != WIZARD::DASH)
-		settingReturnPoint();
 }
 
 void Wizard::attackStuff()
@@ -429,6 +420,20 @@ void Wizard::collide()
 	collideTileObject();
 }
 
+void Wizard::openInven()
+{
+	changeState(WIZARD::IDLE);
+	_inven->openInven();
+}
+
+void Wizard::settingCurrentSkill()
+{
+	_currentDash = (Dash*)_inven->getCurrentDash();
+	_attack[0] = _inven->getAttackSkill(0);
+	_attack[1] = _inven->getAttackSkill(2);
+
+}
+
 void Wizard::collideTileObject()
 {
 	RECT rc;
@@ -441,6 +446,7 @@ void Wizard::collideTileObject()
 			{
 				tiles[index].objType = OBJECT_NONE;
 				attribute[index] = attribute[index] ^ ATTR_UNMOVAL;
+				EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(tiles[index].rc.left, tiles[index].rc.right), RND->getFromIntTo(tiles[index].rc.top, tiles[index].rc.bottom));
 			}
 			else if (tiles[index].objType == OBJECT_TRAP)
 			{

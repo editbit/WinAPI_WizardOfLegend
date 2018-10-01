@@ -42,6 +42,10 @@ void Enemy::update()
 
 	_moveBox = RectMakeCenter(_x, _y, ENEMY::MOVEBOX_WIDTH, ENEMY::MOVEBOX_HEIGHT);
 	_hitBox = RectMakeCenter(_x, _moveBox.top, ENEMY::HITBOX_WIDTH, ENEMY::HITBOX_HEIGHT);
+
+	_hitCount -= 1;
+	if (_hitCount < 0)
+		_hitCount = 0;
 }
 
 void Enemy::render()
@@ -69,7 +73,10 @@ void Enemy::render()
 
 void Enemy::damaged(Actor * e)
 {
-	if (_state == ENEMY::DEAD || _state == ENEMY::HIT || _state == ENEMY::FALL)
+	if (_state == ENEMY::DEAD || _state == ENEMY::FALL)
+		return;
+
+	if (_hitCount > 0)
 		return;
 
 	_angle = getAnglef(e->getX(), e->getY(), _x, _y);
@@ -79,6 +86,10 @@ void Enemy::damaged(Actor * e)
 	else
 		_dir = ENEMY::LEFT;
 
+
+	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
+
+	_hitCount = e->getPower();
 	_hp -= e->getPower();
 	if (_hp <= 0)
 		changeState(ENEMY::DEAD);
@@ -258,6 +269,12 @@ void Enemy::changeState(int state)
 
 void Enemy::freeze(float x, float y)
 {
+	if (_hp <= 0)
+	{
+		changeState(ENEMY::DEAD);
+		return;
+	}
+
 	_x = x; _y = y;
 	_state = ENEMY::HIT;
 	_delayCount = 2;

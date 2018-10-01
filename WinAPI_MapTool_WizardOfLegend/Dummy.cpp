@@ -53,7 +53,8 @@ void Dummy::update()
 
 		for (int i = 0; i < _enemys.size(); ++i)
 		{
-			_enemys[i]->freeze(_enemysPos[i].x, _enemysPos[i].y);
+			if(_enemys[i]->getIsActive())
+				_enemys[i]->freeze(_enemysPos[i].x, _enemysPos[i].y);
 		}
 	}
 	if(!_isCrash)
