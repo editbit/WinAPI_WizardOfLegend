@@ -51,9 +51,6 @@ HRESULT maptoolScene::init(void)
 	_miniMapCamPos = { WINSIZEX / 2, WINSIZEY / 2 };
 
 
-	brush = (HBRUSH)GetStockObject(NULL_BRUSH);
-	oBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-
 	_moveCount = 0;
 
 	_roomList.numOfRoom = 0;
@@ -69,18 +66,23 @@ HRESULT maptoolScene::init(void)
 
 void maptoolScene::release(void)
 {
-	SelectObject(getMemDC(), oBrush);
-	DeleteObject(brush);
 
-
-	brush = CreateSolidBrush(RGB(255, 255, 255));
-	oBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 }
 
 void maptoolScene::update(void)
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
-		exit();
+	{
+		if (!UIMANAGER->getIsBlockingUI())
+			UIMANAGER->openUI(EXIT_MENU);
+		else
+			UIMANAGER->setIsBlockingUI(false);
+	}
+	if (UIMANAGER->getIsBlockingUI())
+	{
+		UIMANAGER->update();
+		return;
+	}
 
 	_isDrag = false;
 
@@ -253,6 +255,7 @@ void maptoolScene::update(void)
 
 void maptoolScene::render(void)
 {
+
 	//Å¸ÀÏ¸Ê ÀÌ¹ÌÁö ·»´õ
 	if (KEYMANAGER->isOnceKeyDown('M'))
 	{
@@ -270,6 +273,9 @@ void maptoolScene::render(void)
 		return;
 	}
 
+
+	brush = (HBRUSH)GetStockObject(NULL_BRUSH);
+	oBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 
 	
 	_totalMap->render(getMemDC(), 0, 0, CAM->getSourX(), CAM->getSourY(), CAM->getCamWidth(), CAM->getCamHeight());
@@ -292,6 +298,10 @@ void maptoolScene::render(void)
 		sprintf_s(str, "%d", _angleWheel);
 		TextOut(getMemDC(), WINSIZEX - 100, 20, str, strlen(str));
 	}
+
+
+	SelectObject(getMemDC(), oBrush);
+	DeleteObject(brush);
 }
 
 void maptoolScene::exit()

@@ -98,6 +98,7 @@ void Enemy::damaged(Actor * e)
 	{
 		changeState(ENEMY::HIT);
 		_delayCount = 50;
+		_speed = ENEMY::HIT_SPEED;
 	}
 }
 

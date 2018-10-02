@@ -51,7 +51,7 @@ HRESULT EarthBoss::init()
 	_attack[1]->setFrameCount(15);
 	_attack[1]->setAttackIndex(1);
 	_attack[1]->setAttackDistance(125);
-	_attack[1]->setSpeed(10);
+	_attack[1]->setSpeed(15);
 
 
 	_attack[2] = new WaterThrowAttack;
@@ -221,10 +221,8 @@ void EarthBoss::damaged(Actor * e)
 	if (_state == WIZARD::DEAD || _state == WIZARD::FALL) //|| _state == WIZARD::HIT )
 		return;
 
-
 	if (_hitCount > 0)
 		return;
-
 
 	SOUNDMANAGER->play("충돌소리", _effectVolume);
 	EFFECTMANAGER->play(collisionKey[RND->getInt(2)], RND->getFromIntTo(_hitBox.left, _hitBox.right), RND->getFromIntTo(_hitBox.top, _hitBox.bottom));
